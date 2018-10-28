@@ -1,6 +1,5 @@
 package com.gordon.springboot;
 
-import com.gordon.springboot.demo1.SubUser;
 import com.gordon.springboot.demo1.User;
 import com.gordon.springboot.demo1.UserRepository;
 import org.junit.Assert;
@@ -27,28 +26,34 @@ public class Demo1Test {
         userRepository.save(new User(3,"ccc","广州",26));
         userRepository.save(new User(4,"ddd","深圳",52));
         userRepository.save(new User(5,"eee","杭州",18));
-
+/**
         // 测试findAll
         Assert.assertEquals(5,userRepository.findAll().size());
         System.out.println("插入5条数据，是否全部找出：" + (userRepository.findAll().size() == 5));
 
         // 测试自定义的查询方法findByName
         User aaa = userRepository.findByName("aaa");
-        System.out.println("aaa : "+aaa.toString());
+        System.out.println("findByName aaa : "+aaa.toString());
 
         // 测试自定义的查询方法findByNameAndAge
         User bbb = userRepository.findByNameAndAge("bbb", 25);
-        System.out.println("bbb : " + bbb.toString());
+        System.out.println("findByNameAndAge bbb : " + bbb.toString());
 
         // 测试findOne
-        User user = new User();
+        User user = new User(5,"eee","杭州",18);
         Example userExample = Example.of(user);
-        userRepository.findOne(userExample);
-        // findOne(id) 用 findById(id).orElse(null) 替换。
+        Optional one = userRepository.findOne(userExample);
+        // 版本在2.0以后 findOne(id) 用 findById(id).orElse(null) 替换。
+        System.out.println("findOne example : " + one.get().toString());
+*/
+        // 测试findUser
+        User ddd = userRepository.findyyy("ddd");
+        System.out.println("findUser ddd : " + ddd.toString());
 
 
-
-
+        // 测试原生sql查询
+        User eee = userRepository.findxxx("eee", 18);
+        System.out.println("findUserByNameAndAge eee : " + eee.toString());
 
     }
 

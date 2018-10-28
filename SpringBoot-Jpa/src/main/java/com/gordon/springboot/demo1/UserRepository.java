@@ -11,8 +11,23 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     User findByNameAndAge(String name,Integer age);
 
-    @Query("from User u where u.name = name")
-    User findUser(@Param("name") String name);
+    /*
+        这里Param的值和=:后面的参数匹配，但不需要和方法名对应的参数值对应
+        ？加数字表示占位符，？1代表在方法参数里的第一个参数，区别于其他的index，这里从1开始
+        =:加上变量名，这里是与方法参数中有@Param的值匹配的，而不是与实际参数匹配的
+        JPQL的语法中，表名的位置对应Entity的名称，字段对应Entity的属性,详细语法见相关文档
+        要使用原生SQL需要在@Query注解中设置nativeQuery=true，然后value变更为原生SQL即可
+     */
+    @Query("select u from User u where u.name =:name")// 不能少了 : 号，同时 : 号后面不允许有空格
+    User findyyy(@Param("name") String name2);
+
+    /*
+        select u from User u where u.name =:name and age =:age 原生sql写法不能使用u作为结果
+     */
+    @Query(nativeQuery=true,value="select u.* from User u where u.name =:name and age =:age")
+    User findxxx(@Param("name") String name1,@Param("age") int age2);
+
+    // 当使用 @Query注解后方法名不受JPA规范约束，可以任意起名
 
     /**
     JpaRepository接口又继承PagingAndSortingRepository<T, ID>, QueryByExampleExecutor<T>
