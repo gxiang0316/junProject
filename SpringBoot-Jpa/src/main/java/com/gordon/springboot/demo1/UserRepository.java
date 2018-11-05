@@ -1,5 +1,6 @@
 package com.gordon.springboot.demo1;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,6 +29,10 @@ public interface UserRepository extends JpaRepository<User,Long> {
     User findxxx(@Param("name") String name1,@Param("age") int age2);
 
     // 当使用 @Query注解后方法名不受JPA规范约束，可以任意起名
+
+    @Query("select u from User u where u.name =?1")
+    User findqqq(String ddd);
+
 
     /**
     JpaRepository接口又继承PagingAndSortingRepository<T, ID>, QueryByExampleExecutor<T>
