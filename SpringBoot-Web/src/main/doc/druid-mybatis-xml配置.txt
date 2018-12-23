@@ -1,0 +1,136 @@
+详细参考：https://blog.csdn.net/zhangxing52077/article/details/78457686
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.3.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+         ">
+
+    <context:component-scan base-package="cn.yivi.service.*" />
+    <context:property-placeholder location="classpath:jdbc.properties"
+                                  ignore-unresolvable="false" />
+    <bean id="wall-filter-config" class="com.alibaba.druid.wall.WallConfig"
+          init-method="init">
+        <property name="dir" value="META-INF/druid/wall" />
+        <property name="selelctAllow" value="true" />
+    </bean>
+    <!-- sql防御自定义配置 -->
+    <bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
+        <!-- 指定配置装载的目录 -->
+        <property name="dbType" value="mysql" />
+        <property name="config" ref="wall-filter-config" />
+        <!-- 对被认为是攻击的SQL进行log.error输出 -->
+        <property name="logViolation" value="true" />
+        <!-- 对被认为是攻击的SQL抛出SQLExcepton -->
+        <property name="throwException" value="true" />
+    </bean>
+    <!-- 用于统计监控信息 -->
+    <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+        <!-- 标记为慢查询日志的时间 -->
+        <property name="slowSqlMillis" value="3000" />
+        <!-- 慢查询的日志记录是否开放 -->
+        <property name="logSlowSql" value="true" />
+        <!-- 合并sql -->
+        <property name="mergeSql" value="true" />
+    </bean>
+    <!-- 记录日志信息 -->
+    <bean id="log-filter" class="com.alibaba.druid.filter.logging.Log4jFilter">
+        <property name="resultSetLogEnabled" value="false" />
+        <property name="statementExecutableSqlLogEnable" value="true" />
+    </bean>
+    <bean id="dataSource" class="cn.yivi.util.druidDES.DruidDESDataSource"
+          init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+        <property name="initialSize" value="1"></property>
+        <property name="minIdle" value="1"></property>
+        <property name="maxActive" value="20"></property>
+        <property name="validationQuery" value="SELECT 1" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="true" />
+        <property name="testOnReturn" value="false" />
+        <property name="maxWait" value="60000"></property>
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="3600000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="18000000" />
+        <!-- 超过removeAbandonedTimeout时间后，是否进行没用连接（废弃）的回收 -->
+        <property name="removeAbandoned" value="true"></property>
+        <!-- 1800秒 -->
+        <property name="removeAbandonedTimeout" value="1800"></property>
+        <!-- 关闭abanded连接时输出错误日志，将会在回收事件后，在log中打印出回收Connection的错误信息，包括在哪个地方用了Connection却忘记关闭了，方便调试 -->
+        <property name="logAbandoned" value="true"></property>
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="false" />
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="20" />
+        <property name="proxyFilters">
+            <list>
+                <ref bean="wall-filter" />
+                <ref bean="stat-filter" />
+                <ref bean="log-filter" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--往下才是mybatis和spring真正整合的配置-->
+        <!--注入数据库连接池-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--配置mybatis全局配置文件:mybatis-config.xml-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--扫描entity包,使用别名,多个用;隔开-->
+        <property name="typeAliasesPackage" value="cn.yivi.model"/>
+        <!--扫描sql配置文件:mapper需要的xml文件-->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
+    <!--４:配置扫描Dao接口包,动态实现DAO接口,注入到spring容器-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--注入SqlSessionFactory-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!-- 给出需要扫描的Dao接口-->
+        <property name="basePackage" value="cn.yivi.mapper"/>
+    </bean>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- 拦截器方式配置事务 -->
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!-- SUPPORTS:如果当前在事务中，即以事务的形式运行，如果当前不再一个事务中，那么就以非事务的形式运行 -->
+            <!-- read-only: 只读模式，保证在多个查询中，数据的一致性 -->
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="select*" propagation="SUPPORTS" read-only="true" />
+            <!-- REQUIRED:假如当前正要执行的事务不在另外一个事务里，那么就起一个新的事务 -->
+            <tx:method name="*" propagation="REQUIRED" />
+            <tx:method name="*" rollback-for="java.lang.Exception" />
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- Druid和Spring关联监控配置 -->
+    <bean id="druid-stat-interceptor"
+          class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">
+    </bean>
+    <bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"
+          scope="prototype">
+        <property name="patterns">
+            <list>
+                <value>cn.yivi.service.*</value>
+                <value>cn.yivi.mapper.*</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>

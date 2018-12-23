@@ -1,0 +1,53 @@
+#默认配置
+#配置引擎实现类
+ENGINE=org.beetl.core.engine.DefaultTemplateEngine
+#指定变量占位符的开始符号
+DELIMITER_PLACEHOLDER_START=${
+#指定变量占位符的结束符号
+DELIMITER_PLACEHOLDER_END=}
+#指定语句的定界开始符号
+DELIMITER_STATEMENT_START=<%
+#指定语句的定界结束符号
+DELIMITER_STATEMENT_END=%>
+#IO输出模式，默认是FALSE,即通常的字符输出，在考虑高性能情况下，可以设置成true
+DIRECT_BYTE_OUTPUT = FALSE
+# 指定html标签支持（使用html类似标签调用标签函数或模版文件）
+HTML_TAG_SUPPORT = true
+# 指定调用的符号
+HTML_TAG_FLAG = #
+# 指定如果标签属性有var，则认为是需要绑定变量给模板的标签函数
+HTML_TAG_BINDING_ATTRIBUTE = var
+# 指定是否允许本地Class直接调用
+NATIVE_CALL = TRUE
+# 指定模版字符集
+TEMPLATE_CHARSET = UTF-8
+# 指定异常解析类
+ERROR_HANDLER = org.beetl.core.ConsoleErrorHandler
+# 本地Class调用的安全策略
+NATIVE_SECUARTY_MANAGER= org.beetl.core.DefaultNativeSecurityManager
+# 是否进行严格MVC
+MVC_STRICT = FALSE
+# 资源配置，resource后的属性只限于特定ResourceLoader
+RESOURCE_LOADER=org.beetl.core.resource.ClasspathResourceLoader
+#classpath 根路径
+RESOURCE.root= /
+# 是否检测文件变化,开发用true合适，但线上要改为false
+RESOURCE.autoCheck= true
+# 自定义脚本方法文件的Root目录和后缀（根据实际情况修改）
+RESOURCE.functionRoot = functions
+RESOURCE.functionSuffix = html
+# 自定义标签文件Root目录和后缀
+RESOURCE.tagRoot = htmltag
+RESOURCE.tagSuffix = tag
+#####  扩展 ##############
+## 内置的方法
+FN.date = org.beetl.ext.fn.DateFunction
+......
+##内置的功能包(里面每个public方法都将注册为beetl的方法)
+FNP.strutil = org.beetl.ext.fn.StringUtil
+......
+##内置的默认格式化函数
+FTC.java.util.Date = org.beetl.ext.format.DateFormat
+.....
+## 标签类
+TAG.include= org.beetl.ext.tag.IncludeTag

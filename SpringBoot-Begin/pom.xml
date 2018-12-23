@@ -9,24 +9,88 @@
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
 
+    <name>com.gordon.springboot.begin</name>
 
-   <!-- <name>com.gordon.springboot.begin Maven Webapp</name>
-    <url>http://www.example.com</url>-->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.6.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
-    <!--<properties>
+    <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
-    </properties>-->
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+    </properties>
 
-    <!--<dependencies>
+    <dependencies>
+        <!--后台java bean检验，其实用的是Hibernate Validator
+            其中依赖了spring-boot-starter、hibernate-validator等
+            用法：https://www.bysocket.com/?p=1942
+                 https://www.cnblogs.com/cjsblog/p/8946768.html-->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!--web工程依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--springboot热部署：http://tengj.top/2017/06/01/springboot10/-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <!--2.0以下将依赖关系标记为可选<optional>true</optional>是一种最佳做法，
+                可以防止使用项目将devtools传递性地应用于其他模块。
+            <optional>true</optional>-->
+            <scope>runtime</scope>
+        </dependency>
+
+        <!--日志记录-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!--测试用-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-    </dependencies>-->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--
+                Spring Boot的Maven插件（Spring Boot Maven plugin）
+                    能够以Maven的方式为应用提供Spring Boot的支持，
+                    即为Spring Boot应用提供了执行Maven操作的可能。
+                Spring Boot Maven plugin能够将Spring Boot应用打包为可执行的jar或war文件，
+                    然后以通常的方式运行Spring Boot应用。
+
+                Spring Boot Maven plugin的5个Goals
+                    spring-boot:repackage，默认goal。在mvn package之后，
+                        再次打包可执行的jar/war，同时保留mvn package生成的jar/war为.origin
+                    spring-boot:run，运行Spring Boot应用
+                    spring-boot:start，在mvn integration-test阶段，进行Spring Boot应用生命周期的管理
+                    spring-boot:stop，在mvn integration-test阶段，进行Spring Boot应用生命周期的管理
+                    spring-boot:build-info，生成Actuator使用的构建信息文件build-info.properties
+            -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--2.0以下配合devtools热部署:<fork>true</fork>-->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>

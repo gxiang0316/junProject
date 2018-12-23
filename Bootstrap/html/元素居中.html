@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../css/bootstrap-4.0.0.css">
+
+    <title>元素居中</title>
+
+    <style>
+        .box-border{
+            margin: 5px;
+            border:1px solid black;
+        }
+    </style>
+
+</head>
+<body>
+<h2>原生HTML版</h2>
+<div style="text-align: center">
+    <div class="box-border">
+        <button class="btn btn-primary">提交</button>
+    </div>
+</div>
+<div style="align: center">
+    <div class="box-border" style="align: center">
+        <span>房间里的设计费乐山大佛减肥了</span>
+    </div>
+</div>
+<div class="box-border" style="margin: 0 auto;width: 300px;">
+    <span>margin:0 auto整个div自己针对父元素水平居中，不包括子元素居中</span>
+</div>
+<div class="box-border" style="margin: 0 auto;width: 600px;height: 100px;line-height: 100px;">
+    <span style="height: 100px;width: 500px;border:1px solid burlywood ;margin: 0 auto;">
+        span是行内元素，这种方式不生效，且宽高设置也无效 。height: 100px;line-height: 100px;设置垂直居中
+    </span>
+</div>
+<div class="box-border" style="margin: 0 auto;width: 600px;height: 100px;line-height: 100px;">
+    <span style="height: 50px;line-height: 50px;width: 500px;border:1px solid burlywood ;
+                    float: left;text-align: center;">
+        float: left;设置浮动后宽高生效，text-align: center;内容居中
+    </span>
+</div>
+<div class="box-border" style="text-align: center;margin: 0 auto;width: 600px;height: 100px;line-height: 100px;">
+    <span style="height: 50px;line-height: 50px;width: 500px;
+                    border:1px solid burlywood ;margin:0 auto;
+                    display: block;text-align: center;">
+        span display: block;
+    </span>
+</div>
+<div class="box-border" style="text-align: center;margin: 0 auto;width: 600px;height: 100px;line-height: 100px;">
+    <span style="height: 50px;line-height: 50px;width: 500px;
+                    border:1px solid burlywood ;
+                    display: inline-block;text-align: center;">
+        div 加 text-align: center;  span 加 display: inline-block;
+    </span>
+</div>
+
+
+
+
+<h2>bootstrap版</h2>
+<div class="container mt-3">
+    <div class="m-auto box-border" style="width: 50px;height: 50px;"></div>
+    <div class="box-border">
+        <button class="btn btn-primary m-auto">提交</button>
+    </div>
+    <div class="box-border">
+        <button class="btn btn-primary m-auto" style="display: block;">块级元素加m-auto居中</button>
+    </div>
+    <div class="row box-border">
+        <div class="col-12 text-center">
+            <button class="btn btn-primary col-2">提交</button>
+        </div>
+    </div>
+    <div class="row box-border">
+        <div class="text-xl-center">
+            <button class="btn btn-primary">提交</button>
+        </div>
+    </div>
+    <div class="row box-border">
+        <div class="center-block"><!--4.0.0中没有这个css，且在4以下这个是用于图片居中的-->
+            <button class="btn btn-primary">提交</button>
+        </div>
+    </div>
+    <div class="row box-border">
+        <button class="btn btn-primary col-6 offset-3">提交</button>
+    </div>
+
+    <button class="btn btn-primary m-auto">提交</button>
+    <a class="btn btn-primary m-auto" href="xxx">提交</a>
+    <span>button按钮点击后有边框阴影，需要点其他地方才消失。</span>
+
+    <button class="btn btn-primary m-auto" style="box-shadow:none;display: block;">
+        box-shadow:none;去掉边框阴影。
+    </button>
+
+    <button class="btn btn-primary align-self-center"
+            style="box-shadow:none;display: block;width: 300px;height: 100px;">
+        align-self-center
+    </button>
+
+    <div class="row mt-3 flex-column align-items-center">
+        <button class="btn btn-primary "
+                style="box-shadow:none;">
+            flex-column align-items-center
+        </button>
+    </div>
+
+    <div class="row mt-3 flex-column align-items-center">
+        <div class="align-self-center">
+            <button class="btn btn-primary "
+                    style="box-shadow:none;">
+                align-self-center
+            </button>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+</body>
+</html>

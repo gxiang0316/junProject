@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <!--viewport 标签让页面正确支持响应式布局。-->
+    <!--响应式 meta 标签
+        Bootstrap 本着 移动设备优先 的策略开发的，按照这一策略，我们优先为移动设备优化代码，
+        然后根据每个组件的情况并利用 CSS 媒体查询（CSS media queries）技术为组件设置合适的样式。
+        为了确保在所有设备上能够正确渲染并支持触控缩放，务必将设置 viewport 属性的 meta 标签添加到 <head> 中。-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>bootstrap flex排版学习</title>
+
+    <link rel="stylesheet" href="../css/bootstrap-4.0.0.css">
+
+    <style>
+        .box {
+            height: 50px;
+            background-color: #0c5460;
+            border: 1px solid white;
+            color: white;
+            text-align: center;
+        }
+        span{
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!--
+        rem（font size of the root element）是指相对于根元素的字体大小的单位。
+        简单的说它就是一个相对单位。看到rem大家一定会想起em单位，
+        em（font size of the element）是指相对于父元素的字体大小的单位。它们之间其实很相似，.
+        只不过一个计算的规则是依赖根元素 一个是依赖父元素计算。
+        html{
+            font-size:20px;
+        }
+        .btn {
+            width: 6rem;
+            height: 3rem;
+            line-height: 3rem;
+            font-size: 1.2rem;
+            display: inline-block;
+            background: #06c;
+            color: #fff;
+            border-radius: .5rem;
+            text-decoration: none;
+            text-align: center;
+        }
+        其实从上面两个案例中我们就可以计算出1px多少rem:
+        第一个例子：
+        120px = 6rem * 20px(根元素设置大值)
+
+        第二个例子：
+        240px = 6rem * 40px(根元素设置大值)
+
+        推算出：
+        10px  = 1rem 在根元素（font-size = 10px的时候）；
+        20px  = 1rem 在根元素（font-size = 20px的时候）；
+        40px  = 1rem 在根元素（font-size = 40px的时候）；
+
+        1rem = 根元素设置的尺寸
+    -->
+
+    <span>
+        参考文档：  https://v4.bootcss.com/docs/4.0/utilities/flex/ <br/>
+
+        Flex 是 Flexible Box 的缩写，意为”弹性布局”，用来为盒状模型提供最大的灵活性。
+        flex布局元素称为Flex容器(flex container),简称容器。他的所有子元素自动称为容器成员,称为Flex项目(flex item),简称项目。
+        容器分为两根轴：水平主轴(main axis)和垂直的交叉轴(cross axis)。轴开始和结束分别以轴名+start或end标识。
+
+        flex是根据什么进行排版的：主轴和交错轴(类似x轴和y轴)，轴线有起始点和终止点，<br/>
+            默认主轴是row，从左(起点)至右(终点)。<br/>
+
+        flex-direction：<br/>
+            改变默认主轴及轴的方向，如果主轴是y轴，方向是从上至下。相对于主轴<br/>
+            flex-row(不写，默认值) x轴，flex-column改变主轴为垂直方向，flex-column-reverse主轴为垂直方向且反转
+
+        Justify content：<br/>
+            元素在flexbox里的排列方式，针对所有元素，相对于主轴<br/>
+            justify-content-start/end/center...<br/>
+
+        Align items：<br/>
+            元素对齐方式，针对所有元素(将所有元素看作是一个整体)，且相对于交错轴上的排列<br/>
+            align-items-start/end/center...<br/>
+
+        Align self：<br/>
+            单个元素对齐方式，且相对于交错轴上的排列<br/>
+            align-self-start/end/center....<br/>
+        Auto margins：<br/>
+            元素之间margin<br/>
+
+        Order:<br/>
+            元素排列顺序 order-*-* 第一个*：lg/md/sm/xl(不写 默认为xl)  第二个*:0 ~ 12<br/>
+
+        Wrap:<br/><br/>
+            flex-wrap:多出的部分换行
+            flex-nowrap:多出的部分不换行
+            flex-wrap-reverse:反转并换行
+
+        Align content：<br/>
+            只有在wrap下有效，及warp下所有元素的对齐方式
+            align-content-start/end/center/around/stretch
+    </span>
+
+    <div class="h2 mt-5">开始练习</div><!-- mt-* 最大为5 -->
+
+    <div class="container mt-3">
+        <span>默认主轴为x，默认从左至右方向</span>
+        <div class="row">
+            <div class="col-3">
+                <div class="box">1</div>
+            </div>
+            <div class="col-3">
+                <div class="box">2</div>
+            </div>
+        </div>
+        <span>默认主轴为x，默认从左至右方向，调整元素对齐方式justify-content-end</span>
+        <div class="row justify-content-end">
+            <div class="col-3">
+                <div class="box">1</div>
+            </div>
+            <div class="col-3">
+                <div class="box">2</div>
+            </div>
+        </div>
+        <span>默认主轴为x，默认从左至右方向，调整元素对齐方式justify-content-center</span>
+        <div class="row justify-content-center">
+            <div class="col-3">
+                <div class="box">1</div>
+            </div>
+            <div class="col-3">
+                <div class="box">2</div>
+            </div>
+        </div>
+        <span>默认主轴为x，默认从左至右方向，调整元素对齐方式justify-content-between</span>
+        <div class="row justify-content-between">
+            <div class="col-3">
+                <div class="box">1</div>
+            </div>
+            <div class="col-3">
+                <div class="box">2</div>
+            </div>
+        </div>
+        <span>默认主轴为x，默认从左至右方向，调整元素对齐方式justify-content-around</span>
+        <div class="row justify-content-around">
+            <div class="col-3">
+                <div class="box">1</div>
+            </div>
+            <div class="col-3">
+                <div class="box">2</div>
+            </div>
+        </div>
+        <span>改变主轴为y，默认从上至下方向</span>
+        <div class="row flex-column">
+            <div class="col-3">
+                <div class="box">1</div>
+            </div>
+            <div class="col-3">
+                <div class="box">2</div>
+            </div>
+        </div>
+        <span>改变主轴为y，默认从上至下方向，反转方向</span>
+        <div class="row flex-column-reverse">
+            <div class="col-3">
+                <div class="box">1</div>
+            </div>
+            <div class="col-3">
+                <div class="box">2</div>
+            </div>
+        </div>
+        <span>改变主轴为y，默认从上至下方向，反转方向</span>
+        <div class="row flex-column-reverse">
+            <div class="col-3">
+                <div class="box">1</div>
+            </div>
+            <div class="col-3">
+                <div class="box">2</div>
+            </div>
+        </div>
+        <span>改变主轴为y，默认从上至下方向，align-items-center所有元素相对于交错轴(x)居中,align-self-*相对于交错轴(x)自身调整</span>
+        <div class="row flex-column align-items-center">
+            <div class="col-3 align-self-start order-0">
+                <div class="box">1</div>
+            </div>
+            <div class="col-3 align-self-end order-2">
+                <div class="box">2</div>
+            </div>
+            <div class="col-3 align-self-stretch order-8">
+                <div class="box">3</div>
+            </div>
+            <div class="col-3 align-self-auto order-4">
+                <div class="box">4</div>
+            </div>
+            <div class="col-3 align-self-center order-9">
+                <div class="box">5</div>
+            </div>
+            <div class="col-3 align-self-baseline order-6">
+                <div class="box">6</div>
+            </div>
+        </div>
+        <span>row默认有warp属性，多出部分换行显示</span>
+        <div class="row">
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+        </div>
+        <span>d-flex默认没有warp属性，多出部分不会换行显示，当宽度小于lg/md/sm/xl规定尺寸时下方出现混动条</span>
+        <div class="d-flex" style="background-color: #bee5eb">
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+        </div>
+        <span>d-flex默认没有warp属性，所以用d-flex来测试wrap,多出部分换行显示</span>
+        <div class="d-flex flex-wrap  " style="width: 500px;height: 300px;background-color: #a6ccd2">
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3 ">
+                <div class="box"></div>
+            </div>
+        </div>
+        <span>d-flex默认没有warp属性，所以用d-flex来测试wrap,多出部分换行显示</span>
+        <div class="d-flex flex-wrap  align-content-center" style="width: 400px;height: 300px;background-color: #c4c08a">
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3">
+                <div class="box"></div>
+            </div>
+            <div class="col-3 ">
+                <div class="box"></div>
+            </div>
+        </div>
+        <span>mt-*-* m:margin t:top   pt-*-* p:padding t:top</span>
+        <div class="row">
+            <div class="col-3">
+                <div class="box">1</div>
+            </div>
+            <div class="col-3 ml-auto">
+                <div class="box">2</div>
+            </div>
+            <div class="col-3">
+                <div class="box">3</div>
+            </div>
+        </div>
+        <span>mt-*-* m:margin t:top   pt-*-* p:padding t:top</span>
+        <div class="row">
+            <div class="col-3 m-auto">
+                <div class="box">1</div>
+            </div>
+            <div class="col-3">
+                <div class="box">2</div>
+            </div>
+        </div>
+        <span>mt-*-* m:margin t:top   pt-*-* p:padding t:top</span>
+        <div class="row">
+            <div class="col-3 m-auto">
+                <div class="box">1</div>
+            </div>
+        </div>
+
+    </div>
+
+
+<script src="../js/jquery-3.2.1.js"></script>
+<script src="../js/popper-1.12.9.js"></script>
+<script src="../js/bootstrap-4.0.0.js"></script>
+
+</body>
+</html>

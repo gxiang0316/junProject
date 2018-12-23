@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <!--viewport 标签让页面正确支持响应式布局。-->
+    <!--响应式 meta 标签
+        Bootstrap 本着 移动设备优先 的策略开发的，按照这一策略，我们优先为移动设备优化代码，
+        然后根据每个组件的情况并利用 CSS 媒体查询（CSS media queries）技术为组件设置合适的样式。
+        为了确保在所有设备上能够正确渲染并支持触控缩放，务必将设置 viewport 属性的 meta 标签添加到 <head> 中。-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>bootstrap row-col排版学习</title>
+
+    <link rel="stylesheet" href="../css/bootstrap-4.0.0.css">
+
+    <style>
+        .box {
+            height: 50px;
+            background-color: #0c5460;
+            border: 1px solid white;
+        }
+        /* 修改bootstrap 所有col之间的间距
+        [class*="col-"]{
+            position: relative;
+            width: 100%;
+            min-height: 1px;
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+        */
+    </style>
+</head>
+
+
+<body>
+
+<!--占位图工具：http://lorempixel.com/
+        图片使用方式，http://lorempixel.com/600/200/sports/
+            600，表示宽，200，表示高，sports，表示图片类型
+            可以任意定义图片的宽高
+            图片类型有：abstract,animals,business cats,city,food,nightlife,
+                fashion,people,nature,sports,technics,transport
+        http://lorempixel.com/600/200/sports/1 表示该类型中的第一张图片 总10张
+        http://lorempixel.com/600/200/sports/Dummy-Text 表示该类型中随机选一张
+-->
+<!--<img src="http://lorempixel.com/600/200/sports/Dummy-Text">-->
+
+<!--bootstrap所有内容都需要使用container或container-fluid作为最外层父容器
+    container：优先使用在小于992px的屏幕上，
+        超过992px的屏幕上有左右margin值，内容看起来没有占满整个屏幕宽度
+    container-fluid：无左右margin值
+-->
+<div class="container mt-3">
+    <span>
+        row表示一行，每行占12等份，col表示列，col-4表示占4等份。
+        col-*-*:第一个*表示哪一类的屏幕宽度，第二个*表示宽度占有比
+    </span>
+    <h2>测试一</h2>
+    <div class="row">
+        <div class="col-sm-4 box"></div>
+        <div class="col-sm-4 box"></div>
+        <div class="col-sm-4 box"></div>
+    </div>
+    <span>
+        上面三个div之间是没有间隔的，看起来有间隔是因为border的原因。
+        可见直接把颜色加在col上，隔间会消失。所以这个是错误的用法
+    </span>
+    <h2>测试二</h2>
+    <div class="box"></div>
+    <h2>测试三</h2>
+    <!--
+        快速生产3个col-sm-4的div且内容为.box的div
+        输入.col-sm-4*3>.box 按Tab键
+    -->
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="box"></div>
+        </div>
+        <div class="col-sm-4 pl-0">
+            <div class="box"></div>
+        </div>
+        <div class="col-sm-4 ml-0"><!-- ml-0 测试而已-->
+            <div class="box"></div>
+        </div>
+    </div>
+    <span>row 下面的 所有col之间间距是由padding造成的，
+        所以如果要调整间距也要使用padding来调整，而不是margin。
+        每个col左右两边都有15px的padding，
+        最左和最右的padding由row的margin-left:-15px和margin-right:-15px给减掉了。
+        当然如果想整个改掉，如下：
+            [class*="col-"]{
+                position: relative;
+                width: 100%;
+                min-height: 1px;
+                padding-right: 5px;
+                padding-left: 5px;
+            }
+    </span>
+    <h2>测试四</h2>
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-3"><div class="box"></div></div>
+        <div class="col-md-3 col-sm-6 col-4"><div class="box"></div></div>
+        <div class="col-md-3 col-sm-6 col-6"><div class="box"></div></div>
+        <div class="col-md-3 col-sm-6 col-12"><div class="box"></div></div>
+    </div>
+    <span>
+        col叠加使用：class="col-md-3 col-sm-6 col-3"
+            大于768px宽度的屏幕上占3/12  小于768px时占6/12  小于576时占3/12。拖动浏览器调整宽度试试看
+    </span>
+</div>
+
+
+<script src="../js/jquery-3.2.1.js"></script>
+<script src="../js/popper-1.12.9.js"></script>
+<script src="../js/bootstrap-4.0.0.js"></script>
+
+</body>
+</html>
