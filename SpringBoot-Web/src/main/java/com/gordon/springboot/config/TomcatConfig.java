@@ -7,6 +7,7 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.MultipartConfigElement;
 
@@ -14,6 +15,7 @@ import javax.servlet.MultipartConfigElement;
  * 学习而已，生产环境肯定不会使用内置tomcat，连此项目都被改成这本地tomcat了。内置tomcat路径太深了，不好找
  * tomcat 配置 https://blog.csdn.net/wd2014610/article/details/79587161
  */
+//@Configuration
 public class TomcatConfig {
 
     @Value("${server.port}")
