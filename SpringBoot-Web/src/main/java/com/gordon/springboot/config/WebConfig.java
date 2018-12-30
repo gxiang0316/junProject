@@ -9,6 +9,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import sun.net.httpserver.AuthFilter;
 
 /**
@@ -20,17 +21,19 @@ public class WebConfig {
 
     /**
      * 注册filter
+     * POST提交表单中文乱码解决方案。
      */
-//    @Bean
-//    public FilterRegistrationBean testFilterRegistration() {
-//        FilterRegistrationBean registration = new FilterRegistrationBean();
-//        registration.setFilter(new TestFilter());
-//        registration.addUrlPatterns("/webapi/*"); //
-//        registration.addInitParameter("paramName", "paramValue"); //
-//        registration.setName("testFilter");
-//        registration.setOrder(1);
-//        return registration;
-//    }
+    @Bean
+    public FilterRegistrationBean characterEncodingFilterRegistration() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new CharacterEncodingFilter());
+        registration.addUrlPatterns("/*"); //POST提交表单中文乱码解决方案。
+        registration.addInitParameter("encoding", "UTF-8"); //
+        registration.addInitParameter("forceEncoding", "true"); //
+        registration.setName("characterEncodingFilter");
+        registration.setOrder(1);
+        return registration;
+    }
 
 //    @Bean
 //    public FilterRegistrationBean authFilterRegistration() {
