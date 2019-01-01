@@ -1,0 +1,36 @@
+/*修改placeholder属性提示文字的颜色*/
+/*input::input-placeholder{
+    !**有些资料显示需要写，有些显示不需要，但是在编辑器webstorm中该属性不被识别 *!
+    color:  #000 !important;
+}*/
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: rgb(191, 0, 79) !important;
+    font-size: 12px;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: rgb(191, 0, 79) !important;
+    font-size: 12px;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: rgb(191, 0, 79) !important;
+    font-size: 12px;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: rgb(191, 0, 79) !important;
+    font-size: 12px;
+}
+
+/* 覆写bootstrap自带的模态框样式，水平垂直居中显示 */
+.modal-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    margin: auto;
+    -webkit-transform: translate(-50%, -50%) !important;
+    -moz-transform: translate(-50%, -50%) !important;
+    -ms-transform: translate(-50%, -50%) !important;
+    -o-transform: translate(-50%, -50%) !important;
+    transform: translate(-50%, -50%) !important;
+}
+

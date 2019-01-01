@@ -35,11 +35,36 @@
         </dependency>
 
         <!--beetl模板引擎-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.ibeetl</groupId>
             <artifactId>beetl</artifactId>
             <version>2.9.3</version>
+        </dependency>-->
+        <!--<dependency>
+            <groupId>com.ibeetl</groupId>
+            <artifactId>beetl-framework-starter</artifactId>
+            <version>1.1.70.RELEASE</version>
+        </dependency>-->
+        <!-- 解决 Warning:java: 来自注释处理程序
+            'org.antlr.v4.runtime.misc.NullUsageProcessor'
+            的受支持 source 版本 'RELEASE_6' 低于 -source '1.8' begin-->
+        <!--<dependency>
+            <groupId>com.tunnelvisionlabs</groupId>
+            <artifactId>antlr4-annotations</artifactId>
+            <version>4.7.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.tunnelvisionlabs</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tunnelvisionlabs</groupId>
+            <artifactId>antlr4</artifactId>
+            <version>4.7.2</version>
+        </dependency>-->
+        <!-- 'RELEASE_6' 低于 -source '1.8' end -->
 
         <!--后台java bean检验，其实用的是Hibernate Validator
             其中依赖了spring-boot-starter、hibernate-validator等
@@ -68,7 +93,7 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.10</version>
         </dependency>
-        <!--mybatis依赖-->
+        <!--mybatis依赖 mybatis版本3.4.6-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>

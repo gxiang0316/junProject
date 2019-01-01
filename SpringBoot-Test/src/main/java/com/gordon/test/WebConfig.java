@@ -1,17 +1,14 @@
-package com.gordon.springboot.config;
+package com.gordon.test;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import sun.net.httpserver.AuthFilter;
 
 /**
  * web.xml 配置
@@ -19,15 +16,6 @@ import sun.net.httpserver.AuthFilter;
  */
 @Configuration
 public class WebConfig {
-
-    @Value("${web.classpath}")
-    private String classpath;
-    @Value("${web.templates}")
-    private String templates;
-    @Value("${web.prefix}")
-    private String prefix;
-    @Value("${web.suffix}")
-    private String suffix;
 
     /**
      * 注册filter
@@ -89,11 +77,11 @@ public class WebConfig {
     public WebServerFactoryCustomizer<ConfigurableWebServerFactory> containerCustomizer() {
         return new WebServerFactoryCustomizer<ConfigurableWebServerFactory>() {
             public void customize(ConfigurableWebServerFactory container) {
-                ErrorPage error400Page = new ErrorPage(HttpStatus.BAD_REQUEST, templates+"error/400.html");
-                ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, templates+"error/401.html");
-                ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, templates+"error/403.html");
-                ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, templates+"error/404.html");
-                ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, templates+"error/500.html");
+                ErrorPage error400Page = new ErrorPage(HttpStatus.BAD_REQUEST, "/error/400.html");
+                ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, "/error/401.html");
+                ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, "/error/403.html");
+                ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/error/404.html");
+                ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/500.html");
 
                 container.addErrorPages(error400Page, error401Page,error403Page, error404Page, error500Page);
             }

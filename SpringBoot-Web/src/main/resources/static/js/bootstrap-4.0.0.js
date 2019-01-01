@@ -2114,6 +2114,30 @@ var Modal = function ($$$1) {
       } else {
         transitionComplete();
       }
+      // model 垂直居中
+      // var top = ($(this._element).height() - $($(this._element).find(Selector.DIALOG)[0]).height())/2;
+      // top = top < 0 ? 0 : top;   //避免太大时跑出去了
+      // $($(this._element).find(Selector.DIALOG)[0]).css({'margin-top':top+'px'});
+      // 解决当指定模态框宽度时，水平不居中。效果不对
+      // var right = ($(this._element).width() - $($(this._element).find(Selector.DIALOG)[0]).width())/2;
+      // right = right < 0 ? 0 : right;
+      // $($(this._element).find(Selector.DIALOG)[0]).css({'margin-right':right+'px'});
+
+        /* 终极解决方案 覆写自带的样式 modal-dialog宽度必须写死，不能用 xx% */
+      // .modal-dialog {
+      //         position: absolute;
+      //         top: 50%;
+      //         left: 50%;
+      //         z-index: 3;
+      //         margin: auto;
+      //         -webkit-transform: translate(-50%, -50%) !important;
+      //         -moz-transform: translate(-50%, -50%) !important;
+      //         -ms-transform: translate(-50%, -50%) !important;
+      //         -o-transform: translate(-50%, -50%) !important;
+      //         transform: translate(-50%, -50%) !important;
+      // }
+
+
     };
 
     _proto._enforceFocus = function _enforceFocus() {
@@ -2265,6 +2289,11 @@ var Modal = function ($$$1) {
       if (this._isBodyOverflowing && !isModalOverflowing) {
         this._element.style.paddingRight = this._scrollbarWidth + "px";
       }
+
+        // 让弹出框居中 3.x中的解决方法
+        // var $modal_dialog = $(this.$element[0]).find('.modal-dialog');
+        // var m_top = ( $(window).height() - $modal_dialog.height() )/2;
+        // $modal_dialog.css({'margin': m_top + 'px auto'});
     };
 
     _proto._resetAdjustments = function _resetAdjustments() {

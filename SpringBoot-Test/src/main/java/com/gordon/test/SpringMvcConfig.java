@@ -1,13 +1,15 @@
-package com.gordon.springboot.config;
+package com.gordon.test;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 /**
@@ -26,14 +28,14 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 public class SpringMvcConfig extends WebMvcConfigurationSupport {
 
-    @Value("${web.classpath}")
-    private String classpath;
-    @Value("${web.templates}")
-    private String templates;
-    @Value("${web.prefix}")
-    private String prefix;
-    @Value("${web.suffix}")
-    private String suffix;
+//    @Value("${web.classpath}")
+//    private String classpath;
+//    @Value("${web.templates}")
+//    private String templates;
+//    @Value("${web.prefix}")
+//    private String prefix;
+//    @Value("${web.suffix}")
+//    private String suffix;
 
 
     /**
@@ -56,9 +58,10 @@ public class SpringMvcConfig extends WebMvcConfigurationSupport {
         //registry.viewResolver(new InternalResourceViewResolver("/",".html"));
 
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix(prefix+23);// 前缀
-//        viewResolver.setPrefix("/WEB-INF/classes/templates/");// 前缀
-        viewResolver.setSuffix(suffix);// 后缀
+//        viewResolver.setPrefix(prefix);// 前缀
+        viewResolver.setPrefix("classpath:/templates/");// 前缀
+        viewResolver.setSuffix(".html");// 后缀
+//        viewResolver.setSuffix(suffix);// 后缀
         registry.viewResolver(viewResolver);
     }
 
@@ -74,7 +77,7 @@ public class SpringMvcConfig extends WebMvcConfigurationSupport {
 
         //处理所有静态的请求，到static目录下查找对应的资源
         registry.addResourceHandler("/statics/**") //处理的路径规则
-            .addResourceLocations(classpath+"static/"); //到哪些目录下去查找静态资源
+            .addResourceLocations("classpath:/static/"); //到哪些目录下去查找静态资源
 
     }
 

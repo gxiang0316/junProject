@@ -52,15 +52,16 @@ public class TomcatConfig {
         return tomcat;
     }
 
-    @Bean
-    public MultipartConfigElement initMultipartConfig(){
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        //  单个数据大小
-        factory.setMaxFileSize(maxFileSize); // KB,MB
-        // 总上传数据大小
-        factory.setMaxRequestSize(maxRequestSize);
-        return factory.createMultipartConfig();
-    }
+//    在springmvc里面配置
+//    @Bean
+//    public MultipartConfigElement initMultipartConfig(){
+//        MultipartConfigFactory factory = new MultipartConfigFactory();
+//        //  单个数据大小
+//        factory.setMaxFileSize(maxFileSize); // KB,MB
+//        // 总上传数据大小
+//        factory.setMaxRequestSize(maxRequestSize);
+//        return factory.createMultipartConfig();
+//    }
 
     /**
      * 默认http连接
