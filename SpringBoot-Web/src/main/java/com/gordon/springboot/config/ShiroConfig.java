@@ -1,6 +1,7 @@
 package com.gordon.springboot.config;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -24,12 +25,12 @@ public class ShiroConfig {
 
     private Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
 
-//    @Bean
-//    public EhCacheManager getEhCacheManager() {
-//        EhCacheManager em = new EhCacheManager();
-//        em.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
-//        return em;
-//    }
+    @Bean
+    public EhCacheManager getEhCacheManager() {
+        EhCacheManager em = new EhCacheManager();
+        em.setCacheManagerConfigFile("classpath:ehcache.xml");
+        return em;
+    }
 
 //    @Bean(name = "myShiroRealm")
 //    public MyShiroRealm myShiroRealm(EhCacheManager cacheManager) {
@@ -54,7 +55,10 @@ public class ShiroConfig {
     @Bean
     public DefaultWebSecurityManager securityManager(){
         DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
-//        securityManager.setRealm(myShiroRealm());
+        securityManager.setRealm(this.shiroDbRealm());
+        securityManager.setCacheManager(cacheShiroManager);
+        securityManager.setRememberMeManager(rememberMeManager);
+        securityManager.setSessionManager(sessionManager);
         return securityManager;
     }
 
