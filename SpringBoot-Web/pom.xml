@@ -35,16 +35,19 @@
         </dependency>
 
         <!--beetl模板引擎-->
-        <!--<dependency>
+        <dependency>
             <groupId>com.ibeetl</groupId>
             <artifactId>beetl</artifactId>
             <version>2.9.3</version>
-        </dependency>-->
-        <!--<dependency>
+        </dependency>
+        <!--beetl-framework-starter包含了beetl所有功能-->
+        <!--
+        <dependency>
             <groupId>com.ibeetl</groupId>
             <artifactId>beetl-framework-starter</artifactId>
             <version>1.1.70.RELEASE</version>
-        </dependency>-->
+        </dependency>
+        -->
         <!-- 解决 Warning:java: 来自注释处理程序
             'org.antlr.v4.runtime.misc.NullUsageProcessor'
             的受支持 source 版本 'RELEASE_6' 低于 -source '1.8' begin-->
@@ -129,6 +132,29 @@
             <version>1.4.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.3.2</version>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.54</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -228,6 +254,11 @@
                 </executions>
             </plugin>-->
 
+            <plugin>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr4-maven-plugin</artifactId>
+                <version>4.7.2</version>
+            </plugin>
 
         </plugins>
     </build>

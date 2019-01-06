@@ -146,8 +146,8 @@ contextPath === ${request.contextPath}
 <script src="../static/js/jquery-3.2.1.js"></script>
 <script src="../static/js/popper-1.12.9.js"></script>
 <script src="../static/js/bootstrap-4.0.0.js"></script>
-<script src="../static/js/loading.js"></script>
-<script src="../static/js/common.js"></script>
+<script src="../static/js/module/loading.js"></script>
+<script src="../static/js/module/common.js"></script>
 
 <script>
     /*$(function () {

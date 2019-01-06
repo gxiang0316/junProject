@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <!-- Bootstrap响应式 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Title</title>
+
+    <style>
+        <!--.loadingModel{-->
+            <!--width: 100px;-->
+            <!--height: 100px;-->
+            <!--position: relative;-->
+            <!--margin: 0 auto;-->
+            <!--margin-top:100px;-->
+        <!--}-->
+        <!--.loadingModel span{-->
+            <!--display: inline-block;-->
+            <!--width: 20px;-->
+            <!--height: 20px;-->
+            <!--border-radius: 50%;-->
+            <!--background: #1c391c;-->
+            <!--position: absolute;-->
+            <!-- -webkit-animation: load 1.04s ease infinite;-->
+        <!--}-->
+        @-webkit-keyframes load{
+            0%{
+                 -webkit-transform: scale(1.2);
+                opacity: 1;
+            }
+            100%{
+                 -webkit-transform: scale(.3);
+                opacity: 0.5;
+            }
+        }
+        <!--.loadingModel span:nth-child(1){-->
+            <!--left: 0;-->
+            <!--top: 50%;-->
+            <!--margin-top:-10px;-->
+            <!-- -webkit-animation-delay:0.13s;-->
+        <!--}-->
+        <!--.loadingModel span:nth-child(2){-->
+            <!--left: 14px;-->
+            <!--top: 14px;-->
+            <!-- -webkit-animation-delay:0.26s;-->
+        <!--}-->
+        <!--.loadingModel span:nth-child(3){-->
+            <!--left: 50%;-->
+            <!--top: 0;-->
+            <!--margin-left: -10px;-->
+            <!-- -webkit-animation-delay:0.39s;-->
+        <!--}-->
+        <!--.loadingModel span:nth-child(4){-->
+            <!--top: 14px;-->
+            <!--right:14px;-->
+            <!-- -webkit-animation-delay:0.52s;-->
+        <!--}-->
+        <!--.loadingModel span:nth-child(5){-->
+            <!--right: 0;-->
+            <!--top: 50%;-->
+            <!--margin-top:-10px;-->
+            <!-- -webkit-animation-delay:0.65s;-->
+        <!--}-->
+        <!--.loadingModel span:nth-child(6){-->
+            <!--right: 14px;-->
+            <!--bottom:14px;-->
+            <!-- -webkit-animation-delay:0.78s;-->
+        <!--}-->
+        <!--.loadingModel span:nth-child(7){-->
+            <!--bottom: 0;-->
+            <!--left: 50%;-->
+            <!--margin-left: -10px;-->
+            <!-- -webkit-animation-delay:0.91s;-->
+        <!--}-->
+        <!--.loadingModel span:nth-child(8){-->
+            <!--bottom: 14px;-->
+            <!--left: 14px;-->
+            <!-- -webkit-animation-delay:1.04s;-->
+        <!--}-->
+    </style>
+
+</head>
+<body style="background-color: #17a2b8">
+<!-- 注册模态框 -->
+<div class="modal fade" id="loadingModal">
+    <div class="modal-dialog" style="width: 350px;">
+        <div class="modal-content">
+            <div><img src='../static/imgs/loading.gif' style="background:#17a2b8 "></div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+            <!--<div style="width: 100px;-->
+                        <!--height: 100px;-->
+                        <!--position: relative;-->
+                        <!--margin: 0 auto;-->
+                        <!--margin-top:100px;">-->
+                <!--<span style="display: inline-block;-->
+                        <!--width: 20px;-->
+                        <!--height: 20px;-->
+                        <!--border-radius: 50%;-->
+                        <!--background: #1c391c;-->
+                        <!--position: absolute;-->
+                        <!-- -webkit-animation: load 1.04s ease infinite;-->
+                        <!--left: 0;-->
+                        <!--top: 50%;-->
+                        <!--margin-top:-10px;-->
+                        <!-- -webkit-animation-delay:0.13s;"></span>-->
+                <!--<span style="display: inline-block;-->
+                        <!--width: 20px;-->
+                        <!--height: 20px;-->
+                        <!--border-radius: 50%;-->
+                        <!--background: #1c391c;-->
+                        <!--position: absolute;-->
+                        <!-- -webkit-animation: load 1.04s ease infinite;-->
+                        <!--left: 14px;-->
+                        <!--top: 14px;-->
+                        <!-- -webkit-animation-delay:0.26s;"></span>-->
+                <!--<span style="display: inline-block;-->
+                        <!--width: 20px;-->
+                        <!--height: 20px;-->
+                        <!--border-radius: 50%;-->
+                        <!--background: #1c391c;-->
+                        <!--position: absolute;-->
+                        <!-- -webkit-animation: load 1.04s ease infinite;-->
+                        <!--left: 50%;-->
+                        <!--top: 0;-->
+                        <!--margin-left: -10px;-->
+                        <!-- -webkit-animation-delay:0.39s;"></span>-->
+                <!--<span style="display: inline-block;-->
+                        <!--width: 20px;-->
+                        <!--height: 20px;-->
+                        <!--border-radius: 50%;-->
+                        <!--background: #1c391c;-->
+                        <!--position: absolute;-->
+                        <!-- -webkit-animation: load 1.04s ease infinite;-->
+                        <!--top: 14px;-->
+                        <!--right:14px;-->
+                        <!-- -webkit-animation-delay:0.52s;"></span>-->
+                <!--<span style="display: inline-block;-->
+                        <!--width: 20px;-->
+                        <!--height: 20px;-->
+                        <!--border-radius: 50%;-->
+                        <!--background: #1c391c;-->
+                        <!--position: absolute;-->
+                        <!-- -webkit-animation: load 1.04s ease infinite;-->
+                        <!--right: 0;-->
+                        <!--top: 50%;-->
+                        <!--margin-top:-10px;-->
+                        <!-- -webkit-animation-delay:0.65s;"></span>-->
+                <!--<span style="display: inline-block;-->
+                        <!--width: 20px;-->
+                        <!--height: 20px;-->
+                        <!--border-radius: 50%;-->
+                        <!--background: #1c391c;-->
+                        <!--position: absolute;-->
+                        <!-- -webkit-animation: load 1.04s ease infinite;-->
+                        <!--right: 14px;-->
+                        <!--bottom:14px;-->
+                        <!-- -webkit-animation-delay:0.78s;"></span>-->
+                <!--<span style="display: inline-block;-->
+                        <!--width: 20px;-->
+                        <!--height: 20px;-->
+                        <!--border-radius: 50%;-->
+                        <!--background: #1c391c;-->
+                        <!--position: absolute;-->
+                        <!-- -webkit-animation: load 1.04s ease infinite;-->
+                        <!--bottom: 0;-->
+                        <!--left: 50%;-->
+                        <!--margin-left: -10px;-->
+                        <!-- -webkit-animation-delay:0.91s;"></span>-->
+                <!--<span style="display: inline-block;-->
+                        <!--width: 20px;-->
+                        <!--height: 20px;-->
+                        <!--border-radius: 50%;-->
+                        <!--background: #1c391c;-->
+                        <!--position: absolute;-->
+                        <!-- -webkit-animation: load 1.04s ease infinite;-->
+                        <!--bottom: 14px;-->
+                        <!--left: 14px;-->
+                        <!-- -webkit-animation-delay:1.04s;"></span>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--<div class="loadingModel">-->
+    <!--<span></span>-->
+    <!--<span></span>-->
+    <!--<span></span>-->
+    <!--<span></span>-->
+    <!--<span></span>-->
+    <!--<span></span>-->
+    <!--<span></span>-->
+    <!--<span></span>-->
+<!--</div>-->
+
+var dynamicValue = "33.3";
+var  = "@-webkit-keyframes load{
+    0%{
+        -webkit-transform: scale(1.2);
+        opacity: 1;
+    }
+    100%{
+        -webkit-transform: scale(.3);
+        opacity: 0.5;
+    }
+}";
+
+var style = document.createElement('style');
+style.type = 'text/css';
+style.innerHTML = '';
+document.getElementsByTagName('head')[0].appendChild(style);
+this.stylesheet = document.styleSheets[document.styleSheets.length-1];
+
+try {
+this.stylesheet.insertRule( rule , this.stylesheet.rules.length);
+} catch (e) {
+};
+
+
+</body>
+</html>

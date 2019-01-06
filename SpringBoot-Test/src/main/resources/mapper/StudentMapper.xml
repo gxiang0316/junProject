@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gordon.springboot.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.gordon.springboot.entity.Student">
+    <id column="student_id" jdbcType="VARCHAR" property="studentId" />
+    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+    <result column="student_birth" jdbcType="VARCHAR" property="studentBirth" />
+    <result column="student_sex" jdbcType="VARCHAR" property="studentSex" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    student_id, student_name, student_birth, student_sex
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where student_id = #{studentId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from student
+    where student_id = #{studentId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.gordon.springboot.entity.Student">
+    insert into student (student_id, student_name, student_birth, 
+      student_sex)
+    values (#{studentId,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR}, #{studentBirth,jdbcType=VARCHAR}, 
+      #{studentSex,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gordon.springboot.entity.Student">
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="studentName != null">
+        student_name,
+      </if>
+      <if test="studentBirth != null">
+        student_birth,
+      </if>
+      <if test="studentSex != null">
+        student_sex,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null">
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentBirth != null">
+        #{studentBirth,jdbcType=VARCHAR},
+      </if>
+      <if test="studentSex != null">
+        #{studentSex,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gordon.springboot.entity.Student">
+    update student
+    <set>
+      <if test="studentName != null">
+        student_name = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentBirth != null">
+        student_birth = #{studentBirth,jdbcType=VARCHAR},
+      </if>
+      <if test="studentSex != null">
+        student_sex = #{studentSex,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where student_id = #{studentId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gordon.springboot.entity.Student">
+    update student
+    set student_name = #{studentName,jdbcType=VARCHAR},
+      student_birth = #{studentBirth,jdbcType=VARCHAR},
+      student_sex = #{studentSex,jdbcType=VARCHAR}
+    where student_id = #{studentId,jdbcType=VARCHAR}
+  </update>
+</mapper>

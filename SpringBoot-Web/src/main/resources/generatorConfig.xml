@@ -8,6 +8,12 @@
     <!--<classPathEntry location="${jdbc.driverLocation}"/>-->
 
     <context id="default" targetRuntime="MyBatis3">
+        <!-- 为sql关键字添加分隔符 -->
+        <property name="autoDelimitKeywords" value="true"/>
+
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
         <!-- 生成的Java文件的编码 -->
         <property name="javaFileEncoding" value="UTF-8"/>
 
@@ -23,7 +29,7 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--jdbc的数据库连接 -->
-        <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/mysql-study?characterEncoding=utf8"
+        <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/springboot-web?characterEncoding=utf8"
                         driverClass="com.mysql.jdbc.Driver"
                         userId="root" password="123456">
         </jdbcConnection>
@@ -54,11 +60,33 @@
                              targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
+        
         <!-- 需要生成的表名以及实体类命名 -->
-        <table tableName="student" domainObjectName="Student"
+        <table tableName="gw_user" domainObjectName="GwUser"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
+            <!--这个值原来默认是FALSE的，表示针对字段的下划线转换为驼峰写法，
+                而为TRUE，表示原样输出数据库字段中的值(那么表字段可以写成这样userName)-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+        </table>
+        <!-- 需要生成的表名以及实体类命名 -->
+        <table tableName="gw_log" domainObjectName="GwLog"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <!--这个值原来默认是FALSE的，表示针对字段的下划线转换为驼峰写法，
+                而为TRUE，表示原样输出数据库字段中的值(那么表字段可以写成这样userName)-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+        </table>
+        <!-- 需要生成的表名以及实体类命名 -->
+        <table tableName="gw_dict" domainObjectName="GwDict"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <!--这个值原来默认是FALSE的，表示针对字段的下划线转换为驼峰写法，
+                而为TRUE，表示原样输出数据库字段中的值(那么表字段可以写成这样userName)-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
         </table>
     </context>
 </generatorConfiguration>
