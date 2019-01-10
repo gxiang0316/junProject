@@ -1,14 +1,22 @@
 package com.gordon.springboot.config;
 
+import com.gordon.springboot.shiro.RetryLimitHashedCredentialsMatcher;
+import com.gordon.springboot.shiro.UserRealm;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,39 +33,68 @@ public class ShiroConfig {
 
     private Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
 
-    @Bean
+    @Value("${shiro.hashAlgorithmName}")
+    private String hashAlgorithmName;
+    @Value("${shiro.hashIterations}")
+    private int hashIterations;
+    @Value("${shiro.sessionTimeout}")
+    private long sessionTimeout;
+    @Value("${shiro.ehcache.xml}")
+    private String ehcachePath;
+
+
+    @Bean(name = "ehcacheManager")
     public EhCacheManager getEhCacheManager() {
         EhCacheManager em = new EhCacheManager();
-        em.setCacheManagerConfigFile("classpath:ehcache.xml");
+        em.setCacheManagerConfigFile(ehcachePath);
         return em;
     }
-
-//    @Bean(name = "myShiroRealm")
-//    public MyShiroRealm myShiroRealm(EhCacheManager cacheManager) {
-//        MyShiroRealm realm = new MyShiroRealm();
-//        realm.setCacheManager(cacheManager);
-//        return realm;
-//    }
 
     /**
      * 凭证匹配器
      * （由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了）
      * @return
      */
-    @Bean
-    public HashedCredentialsMatcher hashedCredentialsMatcher(){
-        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
-        hashedCredentialsMatcher.setHashAlgorithmName("md5");//散列算法:这里使用MD5算法;
-        hashedCredentialsMatcher.setHashIterations(2);//散列的次数，比如散列两次，相当于 md5(md5(""));
+    @Bean(name = "RetryLimitCredentialsMatcher")
+    public HashedCredentialsMatcher hashedCredentialsMatcher(
+            @Qualifier("ehcacheManager") CacheManager cacheManager){
+        RetryLimitHashedCredentialsMatcher hashedCredentialsMatcher
+                = new RetryLimitHashedCredentialsMatcher(cacheManager);
+        //散列算法:这里使用SHA-256算法;
+        hashedCredentialsMatcher.setHashAlgorithmName(hashAlgorithmName);
+        //散列的次数，比如散列两次，md5算法的话相当于 md5(md5(""));
+        hashedCredentialsMatcher.setHashIterations(hashIterations);
+        //true表示是否存储散列后的密码为16进制，需要和生成密码时的一样，默认是base64；
+        hashedCredentialsMatcher.setStoredCredentialsHexEncoded(false);
         return hashedCredentialsMatcher;
     }
 
+    @Bean(name = "userRealm")
+    public UserRealm userRealm(
+            @Qualifier("ehcacheManager")CacheManager cacheManager,
+            @Qualifier("RetryLimitCredentialsMatcher") CredentialsMatcher credentialsMatcher) {
+        UserRealm realm = new UserRealm();
+        //realm.setCacheManager(cacheManager);
+        realm.setCredentialsMatcher(credentialsMatcher);
+        return realm;
+    }
+
+    @Bean(name = "shiroSessionManager")
+    public DefaultWebSessionManager sessionManager(){
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setGlobalSessionTimeout(sessionTimeout);
+        return sessionManager;
+    }
+
     @Bean
-    public DefaultWebSecurityManager securityManager(){
+    public DefaultWebSecurityManager securityManager(
+            @Qualifier("ehcacheManager") CacheManager cacheManager,
+            @Qualifier("userRealm") UserRealm userRealm,
+            @Qualifier("shiroSessionManager") SessionManager sessionManager ){
         DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
-        securityManager.setRealm(this.shiroDbRealm());
-        securityManager.setCacheManager(cacheShiroManager);
-        securityManager.setRememberMeManager(rememberMeManager);
+        securityManager.setRealm(userRealm);
+        securityManager.setCacheManager(cacheManager);
+        //securityManager.setRememberMeManager(rememberMeManager);
         securityManager.setSessionManager(sessionManager);
         return securityManager;
     }
