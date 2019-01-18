@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+    <meta charset="UTF-8">
+    <title>zTree Demo2</title>
+    <link rel="stylesheet" href="zTreeStyle/zTreeStyle.css">
+    <!--<link rel="stylesheet" href="zTreeStyle/demo.css">-->
+
+    <style>
+        html,body{
+            font-size: 14px;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<div id="treeDiv" class="ztree" style="width: 200px;">
+    <!--<ul id="treeDemo" class="ztree"></ul>-->
+</div>
+<div style="width: 200px;">
+    <ul id="treeDemo" class="ztree"></ul>
+</div>
+
+<div>
+    <button id="getChecked" onclick="getChecked()">提交</button>
+</div>
+
+<script src="../../js/jquery-3.2.1.js"></script>
+<script src="jquery.ztree.core.js"></script>
+<script src="jquery.ztree.excheck.js"></script>
+<script src="jquery.ztree.exedit.js"></script>
+<SCRIPT LANGUAGE="JavaScript">
+    var zTreeObj;
+    // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+    var setting = {
+        check:{
+            enable:true
+        },
+        view:{
+            showIcon:false,
+            // showLine:false
+            // ,
+            //fontCss:{color:"blue",background:"gray",margin:"5px"}
+        }
+        ,
+        data:{
+            simpleData:{
+                enable:true
+            }
+        }
+    };
+    var zNodes =[
+        { name:"父节点1 - 展开", open:true,icon:"",
+            children: [
+                { name:"父节点11 - 折叠",
+                    children: [
+                        { name:"叶子节点111",icon:""},
+                        { name:"叶子节点112"},
+                        { name:"叶子节点113"},
+                        { name:"叶子节点114"}
+                    ]},
+                { name:"父节点12 - 折叠",
+                    children: [
+                        { name:"叶子节点121"},
+                        { name:"叶子节点122"},
+                        { name:"叶子节点123"},
+                        { name:"叶子节点124"}
+                    ]},
+                { name:"父节点13 - 没有子节点", isParent:true}
+            ]},
+        { name:"父节点2 - 折叠",
+            children: [
+                { name:"父节点21 - 展开", open:true,
+                    children: [
+                        { name:"叶子节点211"},
+                        { name:"叶子节点212"},
+                        { name:"叶子节点213"},
+                        { name:"叶子节点214"}
+                    ]},
+                { name:"父节点22 - 折叠",
+                    children: [
+                        { name:"叶子节点221"},
+                        { name:"叶子节点222"},
+                        { name:"叶子节点223"},
+                        { name:"叶子节点224"}
+                    ]},
+                { name:"父节点23 - 折叠",
+                    children: [
+                        { name:"叶子节点231"},
+                        { name:"叶子节点232"},
+                        { name:"叶子节点233"},
+                        { name:"叶子节点234"}
+                    ]}
+            ]},
+        { name:"父节点3 - 没有子节点", isParent:true}
+
+    ];
+    $(document).ready(function(){
+        //zTreeObj = $.fn.zTree.init($("#treeDiv"), setting, zNodes);
+        zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+    });
+
+    function getChecked(){
+        var checkedList = zTreeObj.getCheckedNodes(true);
+        console.log("checkList : " + JSON.stringify(checkedList[2]));
+        var selectedList = new Array();
+        for(var i in checkedList){
+            selectedList.push(checkedList[i].tId);
+        }
+        console.log("selectList : " + JSON.stringify(selectedList));
+        // ajax commit selectList
+    }
+
+</SCRIPT>
+
+
+
+
+</body>
+</html>

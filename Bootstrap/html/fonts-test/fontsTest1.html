@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>字体测试</title>
+    <link rel="stylesheet" href="../../css/bootstrap-4.0.0.css">
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0.css">
+    <!--bootstrap 图标-->
+    <link rel="stylesheet" href="../../css/bootstrap-fonts.css">
+</head>
+<body style="margin:0 30px;">
+
+bootstrap图标
+<div class="input-group margin-bottom-sm ml-3" style="width: 300px;">
+    <span class="input-group-prepend align-items-center">
+        <i class="glyphicon glyphicon-search"></i>
+    </span>
+    <input class="form-control" type="text" placeholder="您的邮箱地址">
+</div>
+<br>
+<button type="button" class="btn btn-default btn-xs">
+    <span class="glyphicon glyphicon-user"></span> User
+</button>
+<br>
+<br>
+
+font-awesome-4.7.0图标
+<div class="input-group margin-bottom-sm ml-3" style="width: 300px;">
+    <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+    <input class="form-control" type="text" placeholder="您的邮箱地址">
+</div>
+<br>
+
+<form action="" style="width: 400px;">
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <i class="fa fa-user"></i>
+                </div>
+            </div>
+            <input
+                    type="text"
+                    class="form-control"
+                    placeholder="请输入用户名" />
+        </div>
+    </div>
+    <div class="formgroup">
+        <div class="input-group" style="height: 60px;">
+            <input
+                    type="password"
+                    class="form-control"
+                    placeholder="请输入密码" />
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <!--通过应用 icon-large (增大 33%), icon-2x, icon-3x 或 icon-4x 样式让图标变得更大-->
+                    <!--4.7.0版本 图标大小使用fa-x 来控制-->
+                    <i class="fa fa-lock fa-3x"  style="width: 50px;" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<br><br>
+<a class="btn btn-success" href="#">
+    <!--图标会根据主体背景颜色自动变化-->
+    <i class="fa fa-cloud-upload"></i> Checkout
+</a>
+<a class="btn btn-success" href="#">
+    <!--自定义颜色-->
+    <i class="fa fa-cloud-upload fa-2x" style="color: rgba(87,87,87,0.82);"></i> Checkout
+</a>
+
+</body>
+</html>
