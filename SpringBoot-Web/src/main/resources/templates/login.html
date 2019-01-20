@@ -96,7 +96,7 @@
                 <a style="float:right" href="#">忘记密码？</a>
             </div>
             <div class="col-12 form-group mt-3 mb-1">
-               <button id="login" class="col-12 btn btn-success" type="submit" style="box-shadow: none">登录</button>
+               <button id="login" class="col-12 btn btn-success" style="box-shadow: none">登录</button>
             </div>
             <div class="m-auto">
                 <span>没有账号？</span>
@@ -241,6 +241,8 @@
         //     });
         // });
 
+
+        // 点击一次 却提交了两次
         // 推荐使用此方式，不会造成F5刷新时重新提交表单数据
         $("#login").bind("click",function () {
             var url = $("#loginForm").attr("action");
@@ -248,14 +250,17 @@
             var formData = new FormData();
             formData.append("username",$("#username").val());
             formData.append("password",$("#password").val());
-            formData.append("remeberMe",$("#remeberMe").val());
+            formData.append("remeberMe",''+$("#remeberMe").val());
             console.log("ajax url : "+url + "   method : " + method);
             $.ajax({
                 url:url,
                 type:method,
                 data:formData,
                 dataType:'json',
-                contentType:"application/json",
+                // contentType: "application/json;charset=UTF-8",
+                // processData默认为true,为true时提交的data不会序列化，
+                // 导致前端报Uncaught TypeError: Illegal invocation
+                processData:false,
                 success:function (result) {
                     var flag = result.code;
                     if(flag == "0000"){
