@@ -222,6 +222,18 @@
                     <!-- 自动生成的配置 这里会报错 configurationfile不允许定义在这里-->
                     <!--<configurationfile>src/main/resources/mybatisGeneratorConfig.xml</configurationfile>-->
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>Generate MyBatis Artifacts</id>
+                        <!--每次install或者package时候，mybatis-generator都会随编译自动运行，
+                            导致工程中的的mapper和dao都被冲掉-->
+                        <!-- 该配置可避免maven install或者package时候运行该插件，导致本地mapper重新生成 -->
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
 

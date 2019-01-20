@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>登录</title>
 
-    <link rel="stylesheet" href="../static/css/bootstrap-4.0.0.css">
-    <link rel="stylesheet" href="../static/css/font-awesome4.7.0.css">
+    <link rel="stylesheet" href="${ctxPath}/css/bootstrap-4.0.0.css">
+    <link rel="stylesheet" href="${ctxPath}/css/font-awesome4.7.0.css">
 
     <style>
         html{
@@ -16,16 +16,16 @@
         body{
             width:100%;
             height: 100%;
-            background:url('../static/imgs/body-background.jpg') no-repeat;
+            background:url('${ctxPath}/imgs/body-background.jpg') no-repeat;
             background-size: cover;
         }
         .divCenter{
             width: 300px;
-            height: 300px;
+            height: 320px;
             position: absolute;
             left: 50%;
             top: 50%;
-            margin: -150px 0 0 -150px;
+            margin: -150px 0 0 -160px;
             background-color: rgba(229, 229, 229, 0.64);
         }
         /*修改placeholder属性提示文字的颜色*/
@@ -77,26 +77,30 @@
 
 </head>
 <body>
-contextPath === ${request.contextPath}
+
 <div class="divCenter">
-    <a class="pull-right" href="#" style="font-size: 18px;margin-right: 5px;" data-toggle="modal" data-target="#registerModal">注册</a>
-    <div class="container-fluid" style="margin-top: 18px">
+    <!--<a class="pull-right" href="#" style="font-size: 18px;margin-right: 5px;" data-toggle="modal" data-target="#registerModal">注册</a>-->
+    <div class="container-fluid" style="margin-top: 10px">
         <div class="h3 pt-3 pb-3" style="text-align: center">Gordon Web</div>
-        <form class="row m-auto" action="login">
+        <form id="loginForm" class="row m-auto" action="login" method="post">
             <div class="col-12 input-group form-group">
                 <!--<span class="input-group-prepend"><i class="fa fa-envelope-o fa-fw"></i></span>-->
-                <input id="username" type="text" placeholder="用户名" class="form-control" style="box-shadow: none"/>
+                <input id="username" name="username" type="text" placeholder="用户名" class="form-control" style="box-shadow: none"/>
             </div>
             <div class="col-12 form-group" style="margin-bottom: 4px;">
-                <input id="password" type="password" placeholder="密码" class="form-control" style="box-shadow: none"/>
+                <input id="password" name="password" type="password" placeholder="密码" class="form-control" style="box-shadow: none"/>
             </div>
             <div class="col-12 form-check">
-                <input id="remeberMe" type="checkbox" class="form-check-input" style="margin-top: 7px;margin-left: 0px"/>
+                <input id="remeberMe" name="remeberMe" type="checkbox" class="form-check-input" style="margin-top: 7px;margin-left: 0px"/>
                 <label class="form-check-label" for="remeberMe" style="margin-left: 16px">记住我</label>
                 <a style="float:right" href="#">忘记密码？</a>
             </div>
             <div class="col-12 form-group mt-3 mb-1">
                <button id="login" class="col-12 btn btn-success" type="submit" style="box-shadow: none">登录</button>
+            </div>
+            <div class="m-auto">
+                <span>没有账号？</span>
+                <a class="ml-2" href="/register">立即注册</a>
             </div>
             <div class="col-12 form-group" style="text-align: center;">
                <span id="login_msg" style="display:none;color: blue;font-weight:bold">用户名或密码错误</span>
@@ -143,17 +147,18 @@ contextPath === ${request.contextPath}
     </div>
 </div>
 
-<script src="../static/js/jquery-3.2.1.js"></script>
-<script src="../static/js/popper-1.12.9.js"></script>
-<script src="../static/js/bootstrap-4.0.0.js"></script>
-<script src="../static/js/module/loading.js"></script>
-<script src="../static/js/module/common.js"></script>
+<script src="${ctxPath}/js/jquery-3.2.1.js"></script>
+<script src="${ctxPath}/js/popper-1.12.9.js"></script>
+<script src="${ctxPath}/js/bootstrap-4.0.0.js"></script>
+<script src="${ctxPath}/js/module/loading.js"></script>
+<script src="${ctxPath}/js/module/common.js"></script>
 
 <script>
     /*$(function () {
 
     });*/
     $(document).ready(function () {
+
         /*hover() 方法规定当鼠标指针悬停在被选元素上时要运行的两个函数。
                 方法触发 mouseenter(当鼠标指针位于元素上方时) 和 mouseleave(鼠标移出) 事件。*/
         // $("#username").hover(function () {
@@ -212,9 +217,64 @@ contextPath === ${request.contextPath}
         //     $.loading.show();
         // });
 
+        // F5刷新会重新提交表单数据，浏览器弹窗重新提交提示框
+        // $("#loginForm").bind("submit",function (event) {
+        //     var url = $(this).attr("action");
+        //     var method = $(this).attr("method");
+        //     var formData = new FormData(this);
+        //     console.log("ajax from 提交");
+        //     $.ajax({
+        //         url:url,
+        //         type:method,
+        //         data:formData,
+        //         success:function (result) {
+        //             var flag = result.code;
+        //             if(flag == "0000"){
+        //                 console.log("登录成功");
+        //                 $("#login_msg").hide();
+        //                 location.href = "/index";
+        //             }else{
+        //                 console.log("登录失败");
+        //                 $("#login_msg").show();
+        //             }
+        //         }
+        //     });
+        // });
 
-
-
+        // 推荐使用此方式，不会造成F5刷新时重新提交表单数据
+        $("#login").bind("click",function () {
+            var url = $("#loginForm").attr("action");
+            var method = $("#loginForm").attr("method");
+            var formData = new FormData();
+            formData.append("username",$("#username").val());
+            formData.append("password",$("#password").val());
+            formData.append("remeberMe",$("#remeberMe").val());
+            console.log("ajax url : "+url + "   method : " + method);
+            $.ajax({
+                url:url,
+                type:method,
+                data:formData,
+                dataType:'json',
+                contentType:"application/json",
+                success:function (result) {
+                    var flag = result.code;
+                    if(flag == "0000"){
+                        console.log("登录成功");
+                        $("#login_msg").hide();
+                        location.href = "/index";
+                    }else{
+                        console.log("登录失败");
+                        $("#login_msg").show();
+                    }
+                },
+                error:function () {
+                    console.log("请求失败");
+                },
+                complete:function () {
+                    console.log("ajax 执行完成");
+                }
+            });
+        });
 
 
     });

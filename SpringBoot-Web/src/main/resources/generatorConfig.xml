@@ -62,7 +62,7 @@
         </javaClientGenerator>
         
         <!-- 需要生成的表名以及实体类命名 -->
-        <table tableName="gw_user" domainObjectName="GwUser"
+        <table tableName="gw_user" domainObjectName="GwUser" schema="springboot-web"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
@@ -71,7 +71,7 @@
             <!--<property name="useActualColumnNames" value="true"/>-->
         </table>
         <!-- 需要生成的表名以及实体类命名 -->
-        <table tableName="gw_log" domainObjectName="GwLog"
+        <table tableName="gw_log" domainObjectName="GwLog" schema="springboot-web"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
@@ -80,7 +80,7 @@
             <!--<property name="useActualColumnNames" value="true"/>-->
         </table>
         <!-- 需要生成的表名以及实体类命名 -->
-        <table tableName="gw_dict" domainObjectName="GwDict"
+        <table tableName="gw_dict" domainObjectName="GwDict" schema="springboot-web"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

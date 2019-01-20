@@ -6,11 +6,16 @@ import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.Cookie;
+import org.apache.shiro.web.servlet.ShiroHttpSession;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +24,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -39,8 +45,16 @@ public class ShiroConfig {
     private int hashIterations;
     @Value("${shiro.sessionTimeout}")
     private long sessionTimeout;
+    @Value("${shiro.sessionValidationInterval}")
+    private long sessionValidationInterval;
     @Value("${shiro.ehcache.xml}")
     private String ehcachePath;
+    @Value("${shiro.session.id}")
+    private String shiroSessionId;
+    @Value("${shiro.cookieName}")
+    private String cookieName;
+    @Value("${shiro.cookieMaxAge}")
+    private int cookieMaxAge;
 
 
     @Bean(name = "ehcacheManager")
@@ -55,49 +69,76 @@ public class ShiroConfig {
      * （由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了）
      * @return
      */
-    @Bean(name = "RetryLimitCredentialsMatcher")
-    public HashedCredentialsMatcher hashedCredentialsMatcher(
-            @Qualifier("ehcacheManager") CacheManager cacheManager){
-        RetryLimitHashedCredentialsMatcher hashedCredentialsMatcher
-                = new RetryLimitHashedCredentialsMatcher(cacheManager);
-        //散列算法:这里使用SHA-256算法;
-        hashedCredentialsMatcher.setHashAlgorithmName(hashAlgorithmName);
-        //散列的次数，比如散列两次，md5算法的话相当于 md5(md5(""));
-        hashedCredentialsMatcher.setHashIterations(hashIterations);
-        //true表示是否存储散列后的密码为16进制，需要和生成密码时的一样，默认是base64；
-        hashedCredentialsMatcher.setStoredCredentialsHexEncoded(false);
-        return hashedCredentialsMatcher;
-    }
+//    @Bean(name = "RetryLimitCredentialsMatcher")
+//    public HashedCredentialsMatcher hashedCredentialsMatcher(
+//            @Qualifier("ehcacheManager") CacheManager cacheManager){
+//        RetryLimitHashedCredentialsMatcher hashedCredentialsMatcher
+//                = new RetryLimitHashedCredentialsMatcher(cacheManager);
+//        //散列算法:这里使用SHA-256算法;
+//        hashedCredentialsMatcher.setHashAlgorithmName(hashAlgorithmName);
+//        //散列的次数，比如散列两次，md5算法的话相当于 md5(md5(""));
+//        hashedCredentialsMatcher.setHashIterations(hashIterations);
+//        //true表示是否存储散列后的密码为16进制，需要和生成密码时的一样，默认是base64；
+//        hashedCredentialsMatcher.setStoredCredentialsHexEncoded(false);
+//        return hashedCredentialsMatcher;
+//    }
 
     @Bean(name = "userRealm")
     public UserRealm userRealm(
-            @Qualifier("ehcacheManager")CacheManager cacheManager,
-            @Qualifier("RetryLimitCredentialsMatcher") CredentialsMatcher credentialsMatcher) {
+            @Qualifier("ehcacheManager")CacheManager cacheManager) {
         UserRealm realm = new UserRealm();
         //realm.setCacheManager(cacheManager);
-        realm.setCredentialsMatcher(credentialsMatcher);
+        //realm.setCredentialsMatcher(credentialsMatcher);
         return realm;
     }
 
+    /**单机环境*/
     @Bean(name = "shiroSessionManager")
-    public DefaultWebSessionManager sessionManager(){
+    public DefaultWebSessionManager sessionManager(
+            @Qualifier("ehcacheManager") CacheManager cacheManager,
+            @Qualifier("simpleCookie") SimpleCookie cookie){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setGlobalSessionTimeout(sessionTimeout);
+        sessionManager.setCacheManager(cacheManager);
+        sessionManager.setSessionValidationInterval(sessionValidationInterval);
+        sessionManager.setGlobalSessionTimeout(sessionTimeout);
+        sessionManager.setDeleteInvalidSessions(true);
+        sessionManager.setSessionValidationSchedulerEnabled(true);
+        sessionManager.setSessionIdCookie(cookie);
         return sessionManager;
     }
 
-    @Bean
+    @Bean(name = "webSecurityManager")
     public DefaultWebSecurityManager securityManager(
             @Qualifier("ehcacheManager") CacheManager cacheManager,
             @Qualifier("userRealm") UserRealm userRealm,
-            @Qualifier("shiroSessionManager") SessionManager sessionManager ){
+            @Qualifier("cookieRememberMeManager") CookieRememberMeManager rememberMeManager,
+            @Qualifier("shiroSessionManager") SessionManager sessionManager){
         DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
         securityManager.setRealm(userRealm);
         securityManager.setCacheManager(cacheManager);
-        //securityManager.setRememberMeManager(rememberMeManager);
+        securityManager.setRememberMeManager(rememberMeManager);
         securityManager.setSessionManager(sessionManager);
         return securityManager;
     }
+
+    @Bean(name = "cookieRememberMeManager")
+    public CookieRememberMeManager rememberMeManager(@Qualifier("simpleCookie") SimpleCookie cookie){
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        // Shiro 记住密码采用的是AES加密，AES key length 需要是16位，该方法生成16位的key，参考ShiroCipKeyTest
+        cookieRememberMeManager.setCipherKey(Base64.decode("R29yZG9uV2ViAAAAAAAAAA=="));
+        cookieRememberMeManager.setCookie(cookie);
+        return cookieRememberMeManager;
+    }
+
+    @Bean(name = "simpleCookie")
+    public SimpleCookie rememberMeCookie(){
+        SimpleCookie cookie = new SimpleCookie(cookieName);
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(cookieMaxAge);
+        return cookie;
+    }
+
 
     /**
      * 注册DelegatingFilterProxy（Shiro）
@@ -149,7 +190,7 @@ public class ShiroConfig {
     }
 
     /**
-     * 设置spring代理
+     * 设置spring代理，或者使用下面那个方法
      * @return
      */
     @Bean
@@ -160,24 +201,47 @@ public class ShiroConfig {
     }
 
     /**
+     * 在方法中 注入 securityManager,进行代理控制
+     */
+//    @Bean
+//    public MethodInvokingFactoryBean methodInvokingFactoryBean(DefaultWebSecurityManager securityManager) {
+//        MethodInvokingFactoryBean bean = new MethodInvokingFactoryBean();
+//        bean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
+//        bean.setArguments(securityManager);
+//        return bean;
+//    }
+
+    /**
      *  开启shiro aop注解支持.
      *  使用代理方式;所以需要开启代码支持;
      * @param securityManager
      * @return
      */
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager){
-        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(
+            @Qualifier("webSecurityManager") DefaultWebSecurityManager securityManager){
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor
+                = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
     }
 
     /**
+     * 解决创建此类时导致@Value注解无法赋值： https://blog.csdn.net/wuxuyang_7788/article/details/70141812
      * Shiro生命周期处理器
      * @return
      */
     @Bean(name = "lifecycleBeanPostProcessor")
-    public LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
+    public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }
+
+    /**
+     * 解决@Configuration注解的类中无法使用 @Value属性赋值
+     * @return
+     */
+//    @Bean
+//    public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
+//        return new PropertySourcesPlaceholderConfigurer();
+//    }
 }

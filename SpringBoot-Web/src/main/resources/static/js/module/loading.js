@@ -4,7 +4,7 @@ jQuery.loading={
         var loadingHtml = '<div class="modal fade" id="loadingModal" data-backdrop="static">\n' +
             '    <div class="modal-dialog"">\n' +
             '        <div class="modal-content">\n' +
-            '            <div><img src=\'../static/imgs/loading3.gif\'></div>\n' +
+            '            <div><img src='+'imgs/loading3.gif></div>\n' +
             '            \n' +
             '        </div>\n' +
             '    </div>\n' +

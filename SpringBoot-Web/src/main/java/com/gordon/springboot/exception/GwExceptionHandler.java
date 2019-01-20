@@ -1,5 +1,6 @@
 package com.gordon.springboot.exception;
 
+import com.gordon.springboot.contants.ErrorContants;
 import com.gordon.springboot.utils.BRUtils;
 import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
@@ -20,24 +21,24 @@ public class GwExceptionHandler {
      * 处理自定义异常
      */
     @ExceptionHandler(GwException.class)
-    public BRUtils handleRRException(GwException e){
+    public BRUtils handleGwException(GwException e){
         logger.error(e.getMessage(), e);
-        BRUtils brUtils = new BRUtils();
-        brUtils.put(BRUtils.KEY_CODE,e.getCode());
-        brUtils.put(BRUtils.KEY_MSG,e.getMessage());
-        return brUtils;
+//        BRUtils brUtils = new BRUtils();
+//        brUtils.put(BRUtils.KEY_CODE,e.getCode());
+//        brUtils.put(BRUtils.KEY_MSG,e.getMsg());
+        return BRUtils.error(e.getErrorCode());
     }
 
     @ExceptionHandler(AuthorizationException.class)
     public BRUtils handleAuthorizationException(AuthorizationException e){
         logger.error(e.getMessage(), e);
-        return BRUtils.error("没有权限，请联系管理员授权");
+        return BRUtils.error(ErrorContants.ERROR_403);
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
     public BRUtils handleDuplicateKeyException(DuplicateKeyException e){
         logger.error(e.getMessage(), e);
-        return BRUtils.error("数据库中已存在该记录");
+        return BRUtils.error(ErrorContants.ERROR_9000);
     }
 
     @ExceptionHandler(Exception.class)
