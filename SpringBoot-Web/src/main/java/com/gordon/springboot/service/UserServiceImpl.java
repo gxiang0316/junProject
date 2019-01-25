@@ -29,11 +29,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int updateByPrimaryKey(GwUser user) {
-        return userMapper.updateByPrimaryKey(user);
-    }
-
-    @Override
     public List<GwUser> selectUserList() {
         return userMapper.selectUserList();
     }

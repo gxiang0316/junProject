@@ -12,7 +12,5 @@ public interface UserService {
 
     GwUser selectUserByName(String username);
 
-    int updateByPrimaryKey(GwUser user);
-
     List<GwUser> selectUserList();
 }

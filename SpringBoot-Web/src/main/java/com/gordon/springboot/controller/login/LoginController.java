@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class LoginController {
@@ -39,17 +41,22 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public BRUtils login(String username,String password,String remeberMe) throws InterruptedException {
+    public Map<String,Object> login(String username, String password,boolean remeberMe) throws InterruptedException {
         UsernamePasswordToken token = new UsernamePasswordToken(username,password);
-
+        System.out.println(" name : " + username + "   password : " + password + "   remeberMe : " + remeberMe);
+        Map<String,Object> result = new HashMap<>();
         try {
             ShiroUtils.getSubject().login(token);
         } catch (LockedAccountException e){
-            return BRUtils.error(ErrorContants.ERROR_9002);
+            result.put("code","1111");
+//            return BRUtils.error(ErrorContants.ERROR_9002);
         } catch (AuthenticationException e) {
-            return BRUtils.error(ErrorContants.ERROR_9001);
+            result.put("code","2222");
+//            return BRUtils.error(ErrorContants.ERROR_9001);
         }
-        return BRUtils.ok();
+//        return BRUtils.ok();
+        result.put("code","0000");
+        return result;
     }
 
     @RequestMapping("/index")
