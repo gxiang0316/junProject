@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gordon.springboot.mapper.GwLogMapper">
+  <resultMap id="BaseResultMap" type="com.gordon.springboot.entity.GwLog">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="operation" jdbcType="VARCHAR" property="operation" />
+    <result column="clazz" jdbcType="VARCHAR" property="clazz" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="params" jdbcType="VARCHAR" property="params" />
+    <result column="time" jdbcType="BIGINT" property="time" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="test_time" jdbcType="DATE" property="testTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.gordon.springboot.entity.GwLog">
+    <result column="ex_msg" jdbcType="LONGVARCHAR" property="exMsg" />
+  </resultMap>
+  <sql id="Blob_Column_List">
+    ex_msg
+  </sql>
+  <!--<select id="selectGwLogList" resultMap="BaseResultMap">-->
+      <!--select * from gw_log-->
+  <!--</select>-->
+  <insert id="insert" parameterType="com.gordon.springboot.entity.GwLog">
+    insert into gw_log (id, userid, `operation`, 
+      clazz, `method`, params, 
+      `time`, ip, create_date, 
+      update_time, ex_msg)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=VARCHAR}, #{operation,jdbcType=VARCHAR}, 
+      #{clazz,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR}, 
+      #{time,jdbcType=BIGINT}, #{ip,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{exMsg,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gordon.springboot.entity.GwLog">
+    insert into gw_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="operation != null">
+        `operation`,
+      </if>
+      <if test="clazz != null">
+        clazz,
+      </if>
+      <if test="method != null">
+        `method`,
+      </if>
+      <if test="params != null">
+        params,
+      </if>
+      <if test="time != null">
+        `time`,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="exMsg != null">
+        ex_msg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="operation != null">
+        #{operation,jdbcType=VARCHAR},
+      </if>
+      <if test="clazz != null">
+        #{clazz,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null">
+        #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=BIGINT},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exMsg != null">
+        #{exMsg,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
