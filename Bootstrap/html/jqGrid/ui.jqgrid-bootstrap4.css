@@ -1,10 +1,29 @@
 /*Grid*/
+
+/*替换bootstrap中table th table td  padding:0.75rem
+.table th .table td{
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+*/
+.table th {
+    padding: 0.35rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+.table td {
+    padding: 0.45rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
 .ui-jqgrid {
 	position: relative; 
 	border: 1px solid #ddd;      /*default*/
+	/* 不要边框圆角
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
-	border-radius: 3px;
+	border-radius: 3px;*/
 }
 .ui-jqgrid .ui-jqgrid-view {
 	position: relative;
@@ -202,7 +221,8 @@ div.tablediv > .table-bordered {
 	border-top:none; 
 	margin-bottom: 0px
 }
-.ui-jqgrid tr.jqgrow {  
+.ui-jqgrid tr.jqgrow {
+    text-align: center;
 	outline-style: none; 
 }
 .ui-jqgrid tr.jqgroup {  
@@ -342,7 +362,9 @@ div.tablediv > .table-bordered {
 	margin:0;
 	line-height: inherit;
 	/*border: none; */
-	padding: 0px 3px
+	padding: 0px 3px;
+    /**去掉input点击后的边框阴影*/
+    box-shadow: none;
 }
 .ui-jqgrid .ui-pg-selbox, 
 .ui-jqgrid .ui-jqgrid-toppager .ui-pg-selbox {
@@ -353,6 +375,8 @@ div.tablediv > .table-bordered {
 	width : auto;
 	padding: 0px 0px 0px 3px; 
 	border:none;
+    /**去掉input点击后的边框阴影*/
+    box-shadow: none;
 }
 .ui-jqgrid .ui-separator {
 	height: 16px; 
@@ -981,6 +1005,18 @@ ul.ui-search-menu li, ul.ui-nav-menu li {
 .ui-jqgrid .ui-jqgrid-htable .ui-th-div {
 	/*height:17px;
 	margin-top:5px;*/
+    /*字体编码对照表： http://code.ciaoca.com/style/cssfont2unicode/*/
+    /*\5B8B\4F53 : 宋体     \5FAE\8F6F\96C5\9ED1：微软雅黑 */
+    font-family: "\5FAE\8F6F\96C5\9ED1";
+    font-size: 20px;
+    color: rgba(53, 53, 53, 0.86);
+    /**font-weight
+        对象值：从100到900，最常用font-weight的值为bold
+        normal : 正常的字体。相当于number为400
+        bold : 粗体。相当于number为700
+    */
+    font-weight: 500;
+    text-align: center;
 }
 .column-menu, .ui-search-menu {
 	padding: 8px 8px;

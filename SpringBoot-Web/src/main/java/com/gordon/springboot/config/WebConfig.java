@@ -1,6 +1,10 @@
 package com.gordon.springboot.config;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
@@ -10,8 +14,14 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import sun.net.httpserver.AuthFilter;
+import org.springframework.web.filter.CorsFilter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * web.xml 配置
@@ -20,6 +30,22 @@ import sun.net.httpserver.AuthFilter;
 @Configuration
 public class WebConfig {
 
+    /**
+     * 配置跨域
+     */
+    @Bean
+    public FilterRegistrationBean corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);// 允许写cookie
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config); // CORS 配置对所有接口都有效
+        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+        bean.setOrder(0);
+        return bean;
+    }
 
     /**
      * 注册filter
@@ -36,6 +62,31 @@ public class WebConfig {
         registration.setOrder(1);
         return registration;
     }
+
+//    @Bean
+//    public HttpMessageConverters fastJsonHttpMessageConverters() {
+//        //1、创建FastJson信息转换对象
+//        FastJsonHttpMessageConverter fastConverter=new FastJsonHttpMessageConverter();
+//        //2、创建FastJsonConfig对象并设定序列化规则  序列化规则详见SerializerFeature类中，后面会讲
+//        FastJsonConfig fastJsonConfig= new FastJsonConfig();
+//        SerializerFeature writeMapNullValue = SerializerFeature.WriteMapNullValue;
+//        SerializerFeature WriteNullStringAsEmpty = SerializerFeature.WriteNullStringAsEmpty;
+//        SerializerFeature WriteNullNumberAsZero = SerializerFeature.WriteNullNumberAsZero;
+//        SerializerFeature WriteNullListAsEmpty = SerializerFeature.WriteNullListAsEmpty;
+//        fastJsonConfig.setSerializerFeatures(writeMapNullValue, WriteNullStringAsEmpty,
+//                WriteNullNumberAsZero, WriteNullListAsEmpty);
+//        //fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat,SerializerFeature.WriteNonStringKeyAsString);
+//        //本人就坑在WriteNonStringKeyAsString 将不是String类型的key转换成String类型，否则前台无法将Json字符串转换成Json对象
+//
+//        //3、中文乱码解决方案
+//        List<MediaType> fastMedisTypes = new ArrayList<MediaType>();
+//        fastMedisTypes.add(MediaType.APPLICATION_JSON_UTF8);//设定Json格式且编码为utf-8
+//        fastConverter.setSupportedMediaTypes(fastMedisTypes);
+//        //4、将转换规则应用于转换对象
+//        fastConverter.setFastJsonConfig(fastJsonConfig);
+//        return new HttpMessageConverters(fastConverter);
+//    }
+
 
 //    @Bean
 //    public FilterRegistrationBean authFilterRegistration() {

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>jqGrid 3 本地数据</title>
+    <link rel="stylesheet" href="../../css/bootstrap-4.0.0.css">
+    <link rel="stylesheet" href="../../css/bootstrap-fonts.css">
+    <!--<link rel="stylesheet" href="../../css/font-awesome-4.7.0.css">-->
+    <!--<link rel="stylesheet" href="../../css/font-jqgrid-awesome-4.7.0.css">-->
+    <link rel="stylesheet" type="text/css" media="screen" href="ui.jqgrid-bootstrap4.css" />
+
+    <style>
+        /*去除屏幕左右空白间隙*/
+        .container-fluid {
+            width: 100%;
+            padding-right: 0px;
+            padding-left: 0px;
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container-fluid">
+<div class="row">
+    <div id="leftMenuDiv" class="col-2">
+        <div  style="height:400px;background-color: rgba(0,0,0,0.13)">
+
+        </div>
+    </div>
+    <!--<div class="clearfix"></div>-->
+    <div id="jqGrid_div" class="col-10">
+    <!--<div class="float-right" style="margin-left:20px;margin-right:20px;width:100%;">-->
+
+        <div  style="height: 500px;background-color: rgba(49,254,91,0.06)">
+            <!-- jqGrid在这里设置宽度无效 只能在初始化时利用width属性-->
+            <table id="jqGrid" class="col-8"></table>
+            <div id="jqGridPager" style="width: 100%"></div>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/ecmascript" src="../../js/jquery-3.2.1.js"></script>
+<!--<script type="text/ecmascript" src="../../../js/jquery-ui.min.js"></script>-->
+<script type="text/ecmascript" src="../../js/popper-1.12.9.js"></script>
+<script type="text/ecmascript" src="../../js/bootstrap-4.0.0.js"></script>
+<script type="text/ecmascript" src="grid.locale-cn.js"></script>
+<script type="text/ecmascript" src="jquery.jqGrid5.3.2.js"></script>
+<!--<script type="text/ecmascript" src="jquery.jqGrid.min.js"></script>-->
+<!-- 使用bootstrap4  并使用font-awesome字体图标 -->
+<!--<script>-->
+    <!--$.jgrid.defaults.width = 1780;-->
+    <!--$.jgrid.defaults.responsive = true;-->
+    <!--$.jgrid.defaults.styleUI = 'Bootstrap4';-->
+    <!--$.jgrid.defaults.iconSet = "fontAwesome";-->
+<!--</script>-->
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var screenWidth = document.body.scrollWidth;
+        var width = screenWidth - $("#leftMenuDiv").width() - 20 - 30 - 20; // 30:两个大div中间的padding 20：左右margin
+        // console.log("leftMenuDivWidth:" + $("#leftMenuDiv").width()+"width:" + width);
+        $("#jqGrid").jqGrid({
+            url: 'http://localhost:8080/springboot-web/logList2',
+            datatype: "json",
+            jsonReader:{// 返回值映射，5.3收费，无法映射
+                root: "data",
+                page: "currPage",
+                total: "totalPage",
+                records: "totalNum"
+                //,repeatitems:false // 行数据是否可以重复
+            },
+            prmNames : {// 参数别名
+                page:"pageNum",
+                rows:"pageSize"
+            },
+            colModel: [
+                { label: '用户id', name: 'userid', width: 175, editable: true },
+                { label: '用户操作', name: 'operation', width: 190, editable: true },
+                { label: '请求的类', name: 'clazz', width: 100, sortable: false, editable: true },
+                { label: '请求方法', name: 'method', width: 180, align:'left',sorttype: 'integer', editable: true },
+                { label: '请求参数', name: 'params', width: 180, sorttype: 'number', editable: true },
+                { label: 'IP地址', name: 'ip', width: 175, editable: true },
+                { label: '异常信息', name: 'ex_msg', width: 190, editable: true },
+                { label: '执行时长(毫秒)', name: 'time', width: 100, sortable: false, editable: true },
+                { label: '创建时间', name: 'createDate', width: 180, sorttype: 'integer', editable: true }
+            ],
+            // 改成Bootstrap4后，找不到默认的图标
+            styleUI : 'Bootstrap',
+            loadonce: true,// 如果为ture则数据只从服务器端抓取一次，之后所有操作都是在客户端执行，翻页功能会被禁用
+            altRows : true,//设置表格 zebra-striped 值
+            //rownumbers : true,
+            //multiselect : true,
+            width: width,// 表格宽度
+            height: 200,// 表格高度
+            //colMenu : true,// 列上的菜单
+            //menubar: true,
+            viewrecords : true,//定义是否要显示总记录数
+            hoverrows : true,//当为false时mouse hovering会被禁用
+            rowNum: 3,//在grid上显示记录条数，这个参数是要被传递到后台
+            rowList:[3,6,9],// 一个下拉选择框，用来改变显示记录数，当选择时会覆盖rowNum参数传递到后台
+            caption : '系统日志',// 表格名称(标题)
+            sortable: true,//是否可排序
+            grouping: true,
+            shrinkToFit:false,// 横向滚动条，默认为true，false：按照colMode中设置的宽度进行展示
+            rownumbers:true,//如果为ture则会在表格左边新增一列，显示行顺序号，从1开始递增。此列名为'rn'.
+            // groupingView: { 分组
+            //     groupField: ["CategoryName"],
+            //     groupColumnShow: [true],
+            //     groupText: ["<b>{0}</b>"],
+            //     groupOrder: ["asc"],
+            //     groupSummary: [false],
+            //     groupCollapse: false
+            // },
+            //altRows: true, This does not work in boostrarap
+            // altclass: '....'
+            pager: "#jqGridPager"
+        });
+
+    //     $('#jqGrid').navGrid('#jqGridPager',
+    //         // the buttons to appear on the toolbar of the grid
+    //         { edit: true, add: true, del: true, search: true, refresh: true, view: true, position: "left", cloneToTop: false },
+    //         // options for the Edit Dialog
+    //         {
+    //             editCaption: "The Edit Dialog",
+    //             recreateForm: true,
+    //             checkOnUpdate : true,
+    //             checkOnSubmit : true,
+    //             closeAfterEdit: true,
+    //             errorTextFormat: function (data) {
+    //                 return 'Error: ' + data.responseText
+    //             }
+    //         },
+    //         // options for the Add Dialog
+    //         {
+    //             closeAfterAdd: true,
+    //             recreateForm: true,
+    //             errorTextFormat: function (data) {
+    //                 return 'Error: ' + data.responseText
+    //             }
+    //         },
+    //         // options for the Delete Dailog
+    //         {
+    //             errorTextFormat: function (data) {
+    //                 return 'Error: ' + data.responseText
+    //             }
+    //         },
+    //         { multipleSearch: true,
+    //             showQuery: true} // search options - define multiple search
+    //     );
+    });
+
+</script>
+
+
+
+</body>
+</html>

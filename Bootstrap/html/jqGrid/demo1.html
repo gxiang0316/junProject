@@ -12,7 +12,7 @@
     <script type="text/ecmascript" src="../../js/popper-1.12.9.js"></script>
     <script type="text/ecmascript" src="../../js/bootstrap-4.0.0.js"></script>
     <script type="text/ecmascript" src="grid.locale-cn.js"></script>
-    <script type="text/ecmascript" src="jquery.jqGrid.js"></script>
+    <script type="text/ecmascript" src="jquery.jqGrid5.3.2.js"></script>
     <script>
         $.jgrid.defaults.width = 780;
         $.jgrid.defaults.responsive = true;
@@ -39,15 +39,38 @@
         //$.jgrid.styleUI.Bootstrap.base.rowTable = "table table-bordered table-striped";
 
         $("#jqGrid").jqGrid({
-            url: 'data.json',
+            url: 'http://localhost:8080/springboot-web/logList2',
+            // url: 'data.json',
             datatype: "json",
+            jsonReader:{// 返回值映射
+                root: "data",
+                page: "currPage",
+                total: "totalPage",
+                records: "totalNum"
+                //,repeatitems:false // 行数据是否可以重复
+            },
+            prmNames : {// 参数别名
+                page:"pageNum",
+                rows:"pageSize"
+            },
+            // colModel: [
+            //     { label: 'Category Name', name: 'CategoryName', width: 75, editable: true },
+            //     { label: 'Product Name', name: 'ProductName', width: 90, editable: true },
+            //     { label: 'Country', name: 'Country', width: 100, sortable: false, editable: true },
+            //     { label: 'Price', name: 'Price', width: 80, sorttype: 'integer', editable: true },
+            //     // sorttype is used only if the data is loaded locally or loadonce is set to true
+            //     { label: 'Quantity', name: 'Quantity', width: 80, sorttype: 'number', editable: true }
+            // ],
             colModel: [
-                { label: 'Category Name', name: 'CategoryName', width: 75, editable: true },
-                { label: 'Product Name', name: 'ProductName', width: 90, editable: true },
-                { label: 'Country', name: 'Country', width: 100, sortable: false, editable: true },
-                { label: 'Price', name: 'Price', width: 80, sorttype: 'integer', editable: true },
-                // sorttype is used only if the data is loaded locally or loadonce is set to true
-                { label: 'Quantity', name: 'Quantity', width: 80, sorttype: 'number', editable: true }
+                { label: '用户id', name: 'userid', width: 175, editable: true },
+                { label: '用户操作', name: 'operation', width: 190, editable: true },
+                { label: '请求的类', name: 'clazz', width: 100, sortable: false, editable: true },
+                { label: '请求方法', name: 'method', width: 180, align:'left',sorttype: 'integer', editable: true },
+                { label: '请求参数', name: 'params', width: 180, sorttype: 'number', editable: true },
+                { label: 'IP地址', name: 'ip', width: 175, editable: true },
+                { label: '异常信息', name: 'ex_msg', width: 190, editable: true },
+                { label: '执行时长(毫秒)', name: 'time', width: 100, sortable: false, editable: true },
+                { label: '创建时间', name: 'createDate', width: 180, sorttype: 'integer', editable: true }
             ],
             loadonce: true,
             altRows : true,
@@ -59,18 +82,19 @@
             viewrecords : true,
             hoverrows : true,
             height: 200,
-            rowNum: 20,
+            rowNum: 3,
+            rowList:[3,6,9],
             caption : 'Test',
             sortable: true,
-            grouping: true,
-            groupingView: {
-                groupField: ["CategoryName"],
-                groupColumnShow: [true],
-                groupText: ["<b>{0}</b>"],
-                groupOrder: ["asc"],
-                groupSummary: [false],
-                groupCollapse: false
-            },
+            // grouping: true,
+            // groupingView: {
+            //     groupField: ["CategoryName"],
+            //     groupColumnShow: [true],
+            //     groupText: ["<b>{0}</b>"],
+            //     groupOrder: ["asc"],
+            //     groupSummary: [false],
+            //     groupCollapse: false
+            // },
             //altRows: true, This does not work in boostrarap
             // altclass: '....'
             pager: "#jqGridPager"

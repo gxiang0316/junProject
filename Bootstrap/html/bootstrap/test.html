@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <!--viewport 标签让页面正确支持响应式布局。-->
+    <!--响应式 meta 标签
+        Bootstrap 本着 移动设备优先 的策略开发的，按照这一策略，我们优先为移动设备优化代码，
+        然后根据每个组件的情况并利用 CSS 媒体查询（CSS media queries）技术为组件设置合适的样式。
+        为了确保在所有设备上能够正确渲染并支持触控缩放，务必将设置 viewport 属性的 meta 标签添加到 <head> 中。-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>bootstrap test</title>
+
+    <link rel="stylesheet" href="../../css/bootstrap-4.0.0.css">
+
+    <style>
+        .box {
+            height: 50px;
+            background-color: #0c5460;
+            border: 1px solid white;
+        }
+        /* 修改bootstrap 所有col之间的间距
+        [class*="col-"]{
+            position: relative;
+            width: 100%;
+            min-height: 1px;
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+        */
+        .container-fluid {
+            width: 100%;
+            padding-right: 0px;
+            padding-left: 0px;
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-4 box"></div>
+        <div class="col-4 box"></div>
+        <div class="col-4 box"></div>
+    </div>
+
+
+</div>
+
+
+<script src="../../js/jquery-3.2.1.js"></script>
+<script src="../../js/popper-1.12.9.js"></script>
+<script src="../../js/bootstrap-4.0.0.js"></script>
+
+</body>
+</html>

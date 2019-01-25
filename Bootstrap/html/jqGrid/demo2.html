@@ -9,21 +9,44 @@
     <!--<link rel="stylesheet" href="../../css/font-jqgrid-awesome-4.7.0.css">-->
     <link rel="stylesheet" type="text/css" media="screen" href="ui.jqgrid-bootstrap4.css" />
 
+    <style>
+        /*去除屏幕左右空白间隙*/
+        .container-fluid {
+            width: 100%;
+            padding-right: 0px;
+            padding-left: 0px;
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+    </style>
+
 </head>
 <body>
+<div class="container-fluid">
+<div class="row">
+    <div id="leftMenuDiv" class="col-2">
+        <div  style="height:400px;background-color: rgba(0,0,0,0.13)">
 
-<div style="margin-left:20px">
-    <table id="jqGrid"></table>
-    <div id="jqGridPager"></div>
+        </div>
+    </div>
+    <!--<div class="clearfix"></div>-->
+    <div id="jqGrid_div" class="col-10">
+    <!--<div class="float-right" style="margin-left:20px;margin-right:20px;width:100%;">-->
+
+        <div  style="height: 500px;background-color: rgba(49,254,91,0.06)">
+            <!-- jqGrid在这里设置宽度无效 只能在初始化时利用width属性-->
+            <table id="jqGrid" class="col-8"></table>
+            <div id="jqGridPager" style="width: 100%"></div>
+        </div>
+    </div>
 </div>
-
-
+</div>
 <script type="text/ecmascript" src="../../js/jquery-3.2.1.js"></script>
 <!--<script type="text/ecmascript" src="../../../js/jquery-ui.min.js"></script>-->
 <script type="text/ecmascript" src="../../js/popper-1.12.9.js"></script>
 <script type="text/ecmascript" src="../../js/bootstrap-4.0.0.js"></script>
 <script type="text/ecmascript" src="grid.locale-cn.js"></script>
-<script type="text/ecmascript" src="jquery.jqGrid.js"></script>
+<script type="text/ecmascript" src="jquery.jqGrid5.3.2.js"></script>
 <!-- 使用bootstrap4  并使用font-awesome字体图标 -->
 <!--<script>-->
     <!--$.jgrid.defaults.width = 1780;-->
@@ -31,36 +54,59 @@
     <!--$.jgrid.defaults.styleUI = 'Bootstrap4';-->
     <!--$.jgrid.defaults.iconSet = "fontAwesome";-->
 <!--</script>-->
+
 <script type="text/javascript">
 
     $(document).ready(function () {
-
+        var availWidth = window.screen.availWidth;//屏幕可用工作区宽度 1366
+        var screenWidth = document.body.scrollWidth;//网页正文全文宽 1349
+        var screen_width = window.screen.width;//屏幕物理分辨率的宽 1366
+        var clientWidth = document.body.clientWidth;// 网页可见区域宽 1349
+        var offsetWidth = document.body.offsetWidth;//网页可见区域宽(包括边线的宽) 1349
+        console.log("availWidth:" + availWidth + "   screenWidth:" + screenWidth);
+        console.log("screen_width:" + screen_width + "   clientWidth:" + clientWidth);
+        console.log("offsetWidth:" + offsetWidth);
+        console.log("jqGridDivWidth:" + $("#jqGrid_div").width());
+        var width = screenWidth - 90; // 90 = 左边div的宽 + 自身左右margin
+        width = $("#jqGrid_div").width();
+        width = screenWidth - $("#leftMenuDiv").width() - 20 - 30 - 20; // 30:两个大div中间的padding 20：左右margin
+        console.log("leftMenuDivWidth:" + $("#leftMenuDiv").width());
+        console.log("width:" + width);
         $("#jqGrid").jqGrid({
             url: 'data.json',
             datatype: "json",
             colModel: [
-                { label: 'Category Name', name: 'CategoryName', width: 75, editable: true },
-                { label: 'Product Name', name: 'ProductName', width: 90, editable: true },
-                { label: 'Country', name: 'Country', width: 100, sortable: false, editable: true },
-                { label: 'Price', name: 'Price', width: 80, sorttype: 'integer', editable: true },
+                { label: '语文', name: 'CategoryName', width: 175, editable: true },
+                { label: '数学', name: 'ProductName', width: 190, editable: true },
+                { label: '英语', name: 'Country', width: 100, sortable: false, editable: true },
+                { label: '历史', name: 'Price', width: 180, align:'left',sorttype: 'integer', editable: true },
                 // sorttype is used only if the data is loaded locally or loadonce is set to true
-                { label: 'Quantity', name: 'Quantity', width: 80, sorttype: 'number', editable: true }
+                { label: '物理', name: 'Quantity', width: 180, sorttype: 'number', editable: true },
+                { label: '政治', name: 'CategoryName1', width: 175, editable: true },
+                { label: '化学', name: 'ProductName1', width: 190, editable: true },
+                { label: '生物', name: 'Country1', width: 100, sortable: false, editable: true },
+                { label: '体育', name: 'Price1', width: 180, sorttype: 'integer', editable: true },
+                // sorttype is used only if the data is loaded locally or loadonce is set to true
+                { label: '地理', name: 'Quantity1', width: 220, sorttype: 'number', editable: true }
             ],
             styleUI : 'Bootstrap',
             loadonce: true,
             altRows : true,
             //rownumbers : true,
             //multiselect : true,
-            width: 1780,
+            width: width,
             colMenu : true,
             menubar: true,
             viewrecords : true,
             hoverrows : true,
-            height: 300,
-            rowNum: [10,20,50],
+            height: 200,
+            rowNum: 1,
+            rowList:[1,2,50],// 每页显示数据 选项
             caption : 'Test',
             sortable: true,
             grouping: true,
+            shrinkToFit:false,// 横向滚动条，默认为true，false：按照colMode中设置的宽度进行展示
+            //autowidth:true,
             groupingView: {
                 groupField: ["CategoryName"],
                 groupColumnShow: [true],
@@ -107,7 +153,6 @@
     });
 
 </script>
-
 
 
 

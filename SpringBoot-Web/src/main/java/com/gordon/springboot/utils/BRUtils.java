@@ -1,5 +1,6 @@
 package com.gordon.springboot.utils;
 
+import com.github.pagehelper.Page;
 import com.gordon.springboot.contants.ErrorContants;
 
 import java.util.HashMap;
@@ -17,6 +18,14 @@ public class BRUtils extends HashMap<String,Object> {
     public static final String KEY_DATA = "data";
     public static final String KEY_SUCCESS_CODE = "0000";
     public static final String KEY_SUCCESS_MSG = "success";
+    /**当前页码*/
+    public static final String KEY_CURR_PAGE = "currPage";
+    /**当前页记录数*/
+    public static final String KEY_CURR_PAGE_NUM = "currPageNum";
+    /**总页数*/
+    public static final String KEY_TOTAL_PAGE = "totalPage";
+    /**总记录数*/
+    public static final String KEY_TOTAL_NUM = "totalNum";
 
     /**默认成功标志*/
     public BRUtils(){
@@ -76,8 +85,29 @@ public class BRUtils extends HashMap<String,Object> {
         return brUtils;
     }
 
+    public static BRUtils pageData(int totalPage,long totalNum,Object data){
+        BRUtils brUtils = new BRUtils();
+        brUtils.put(KEY_TOTAL_PAGE,totalPage);
+        brUtils.put(KEY_TOTAL_NUM,totalNum);
+        brUtils.put(KEY_DATA,data);
+        return brUtils;
+    }
+
+    public static BRUtils pageData(Page<?> page){
+        BRUtils brUtils = new BRUtils();
+        brUtils.put(KEY_CURR_PAGE,""+page.getPageNum());
+        brUtils.put(KEY_CURR_PAGE_NUM,""+page.getPageSize());
+        brUtils.put(KEY_TOTAL_PAGE,""+page.getPages());
+        brUtils.put(KEY_TOTAL_NUM,""+page.getTotal());
+        brUtils.put(KEY_DATA,page.getResult());
+//        brUtils.put("total",""+page.getTotal());
+//        brUtils.put("rows",page.getResult());
+        return brUtils;
+    }
+
+
     @Override
-    public Object put(String key, Object value) {
+    public BRUtils put(String key, Object value) {
         super.put(key,value);
         return this;
     }

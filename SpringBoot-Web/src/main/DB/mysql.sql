@@ -33,7 +33,7 @@ CREATE TABLE `gw_log` (
   `ip` varchar(64) COMMENT 'IP地址',
   `create_date` datetime default current_timestamp COMMENT '创建时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY (`class`,`method`),
+  KEY (`clazz`,`method`),
   index `idx_userid` (`userid`)
 ) ENGINE=`InnoDB` DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT='系统日志';
 

@@ -31,7 +31,7 @@
         <!--jdbc的数据库连接 -->
         <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/springboot-web?characterEncoding=utf8"
                         driverClass="com.mysql.jdbc.Driver"
-                        userId="root" password="123456">
+                        userId="root" password="123">
         </jdbcConnection>
         <!-- 非必需，类型处理器，在数据库类型和java类型之间的转换控制-->
         <javaTypeResolver>
@@ -62,14 +62,14 @@
         </javaClientGenerator>
         
         <!-- 需要生成的表名以及实体类命名 -->
-        <table tableName="gw_user" domainObjectName="GwUser" schema="springboot-web"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <!--这个值原来默认是FALSE的，表示针对字段的下划线转换为驼峰写法，
-                而为TRUE，表示原样输出数据库字段中的值(那么表字段可以写成这样userName)-->
-            <!--<property name="useActualColumnNames" value="true"/>-->
-        </table>
+        <!--<table tableName="gw_user" domainObjectName="GwUser" schema="springboot-web"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+            <!--&lt;!&ndash;这个值原来默认是FALSE的，表示针对字段的下划线转换为驼峰写法，-->
+                <!--而为TRUE，表示原样输出数据库字段中的值(那么表字段可以写成这样userName)&ndash;&gt;-->
+            <!--&lt;!&ndash;<property name="useActualColumnNames" value="true"/>&ndash;&gt;-->
+        <!--</table>-->
         <!-- 需要生成的表名以及实体类命名 -->
         <table tableName="gw_log" domainObjectName="GwLog" schema="springboot-web"
                enableCountByExample="false" enableUpdateByExample="false"
@@ -80,13 +80,13 @@
             <!--<property name="useActualColumnNames" value="true"/>-->
         </table>
         <!-- 需要生成的表名以及实体类命名 -->
-        <table tableName="gw_dict" domainObjectName="GwDict" schema="springboot-web"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <!--这个值原来默认是FALSE的，表示针对字段的下划线转换为驼峰写法，
-                而为TRUE，表示原样输出数据库字段中的值(那么表字段可以写成这样userName)-->
-            <!--<property name="useActualColumnNames" value="true"/>-->
-        </table>
+        <!--<table tableName="gw_dict" domainObjectName="GwDict" schema="springboot-web"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+            <!--&lt;!&ndash;这个值原来默认是FALSE的，表示针对字段的下划线转换为驼峰写法，-->
+                <!--而为TRUE，表示原样输出数据库字段中的值(那么表字段可以写成这样userName)&ndash;&gt;-->
+            <!--&lt;!&ndash;<property name="useActualColumnNames" value="true"/>&ndash;&gt;-->
+        <!--</table>-->
     </context>
 </generatorConfiguration>
