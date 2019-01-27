@@ -3,14 +3,14 @@ package com.gordon.springboot.config;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
-import org.springframework.boot.web.server.ConfigurableWebServerFactory;
-import org.springframework.boot.web.server.ErrorPage;
-import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.boot.web.server.*;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.boot.web.servlet.support.ErrorPageFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -19,6 +19,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +31,10 @@ import java.util.List;
  * https://blog.csdn.net/IT_faquir/article/details/79521417
  */
 @Configuration
-public class WebConfig {
+@SuppressWarnings("unchecked")
+public class WebConfig  implements WebMvcConfigurer {
+
+
 
     /**
      * 配置跨域
@@ -47,21 +53,21 @@ public class WebConfig {
         return bean;
     }
 
-    /**
-     * 注册filter
-     * POST提交表单中文乱码解决方案。
-     */
-    @Bean
-    public FilterRegistrationBean characterEncodingFilterRegistration() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new CharacterEncodingFilter());
-        registration.addUrlPatterns("/*"); //POST提交表单中文乱码解决方案。
-        registration.addInitParameter("encoding", "UTF-8"); //
-        registration.addInitParameter("forceEncoding", "true"); //
-        registration.setName("characterEncodingFilter");
-        registration.setOrder(1);
-        return registration;
-    }
+//    /**
+//     * 注册filter
+//     * POST提交表单中文乱码解决方案。
+//     */
+//    @Bean
+//    public FilterRegistrationBean characterEncodingFilterRegistration() {
+//        FilterRegistrationBean registration = new FilterRegistrationBean();
+//        registration.setFilter(new CharacterEncodingFilter());
+//        registration.addUrlPatterns("/*"); //POST提交表单中文乱码解决方案。
+//        registration.addInitParameter("encoding", "UTF-8"); //
+//        registration.addInitParameter("forceEncoding", "true"); //
+//        registration.setName("characterEncodingFilter");
+//        registration.setOrder(1);
+//        return registration;
+//    }
 
 //    @Bean
 //    public HttpMessageConverters fastJsonHttpMessageConverters() {
@@ -128,20 +134,37 @@ public class WebConfig {
      *      AOP日志打印：https://blog.csdn.net/qq_22860341/article/details/81236256
      * @return
      */
-    @Bean
-    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> containerCustomizer() {
-        return new WebServerFactoryCustomizer<ConfigurableWebServerFactory>() {
-            public void customize(ConfigurableWebServerFactory container) {
-                ErrorPage error400Page = new ErrorPage(HttpStatus.BAD_REQUEST, "/error/400.html");
-                ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, "/error/401.html");
-                ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, "/error/403.html");
-                ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/error/404.html");
-                ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/500.html");
+//    @Bean
+//    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> containerCustomizer() {
+//        return new WebServerFactoryCustomizer<ConfigurableWebServerFactory>() {
+//            public void customize(ConfigurableWebServerFactory container) {
+//                ErrorPage error400Page = new ErrorPage(HttpStatus.BAD_REQUEST, "/error/400.html");
+//                ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, "/error/401.html");
+//                ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, "/error/403.html");
+//                ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/error/404.html");
+//                ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/500.html");
+//
+//                container.addErrorPages(error400Page, error401Page,error403Page, error404Page, error500Page);
+//            }
+//        };
+//    }
 
-                container.addErrorPages(error400Page, error401Page,error403Page, error404Page, error500Page);
-            }
-        };
-    }
+    // 两种方式都可以。线上打开，开发还是使用tomcat默认的，因为它会打印出错误信息
+//    @Bean
+//    public ErrorPageRegistrar errorPageRegistrar(){
+//        return new ErrorPageRegistrar() {
+//            @Override
+//            public void registerErrorPages(ErrorPageRegistry registry) {
+//                ErrorPage error400Page = new ErrorPage(HttpStatus.BAD_REQUEST, "/error/400.html");
+//                ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, "/error/401.html");
+//                ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, "/error/403.html");
+//                ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/error/404.html");
+//                ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/500.html");
+//                registry.addErrorPages(error400Page, error401Page,error403Page, error404Page, error500Page);
+//            }
+//        };
+//    }
+
 
     /**
      // 在主类采用bean方法注册

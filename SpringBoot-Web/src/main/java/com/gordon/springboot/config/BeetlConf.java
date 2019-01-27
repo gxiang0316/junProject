@@ -88,7 +88,7 @@ public class BeetlConf {
         // WARN  org.beetl.ext.spring.BeetlSpringViewResolver- Beetl不建议使用使用spring前缀，
         // 会导致include,layout找不到对应的模板，请使用beetl的配置RESOURCE.ROOT来配置模板根目录
 //        beetlSpringViewResolver.setPrefix("/templates/");
-        beetlSpringViewResolver.setSuffix(suffix);
+//        beetlSpringViewResolver.setSuffix(suffix);//这里配置了后缀，controller中返回时就不要xxx.html了，直接xxx
         beetlSpringViewResolver.setOrder(0);
         beetlSpringViewResolver.setConfig(beetlGroupUtilConfiguration);
         return beetlSpringViewResolver;

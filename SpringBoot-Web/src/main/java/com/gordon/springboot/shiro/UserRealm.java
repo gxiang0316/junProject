@@ -6,13 +6,15 @@ import com.gordon.springboot.entity.GwUser;
 import com.gordon.springboot.exception.GwException;
 import com.gordon.springboot.service.UserService;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 public class UserRealm  extends AuthorizingRealm {
-
 
     @Autowired
     private UserService userServiceImpl;
@@ -52,4 +54,16 @@ public class UserRealm  extends AuthorizingRealm {
             PrincipalCollection principalCollection) {
         return null;
     }
+
+    /**
+     * 设置认证加密方式
+     */
+//    @Override
+//    public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
+//        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+//        matcher.setHashAlgorithmName(ShiroUtils.hashAlgorithmName);
+//        matcher.setHashIterations(ShiroUtils.hashIterations);
+//        matcher.setStoredCredentialsHexEncoded(true);
+//        super.setCredentialsMatcher(matcher);
+//    }
 }

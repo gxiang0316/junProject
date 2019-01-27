@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>登录</title>
-
+    <!--标签页图标-->
+    <link rel="icon" type="image/x-icon" href="${ctxPath}/imgs/favicon.ico">
     <link rel="stylesheet" href="${ctxPath}/css/bootstrap-4.0.0.css">
     <link rel="stylesheet" href="${ctxPath}/css/font-awesome4.7.0.css">
 
@@ -82,7 +83,8 @@
     <!--<a class="pull-right" href="#" style="font-size: 18px;margin-right: 5px;" data-toggle="modal" data-target="#registerModal">注册</a>-->
     <div class="container-fluid" style="margin-top: 10px">
         <div class="h3 pt-3 pb-3" style="text-align: center">Gordon Web</div>
-        <form id="loginForm" class="row m-auto" action="login" method="post">
+        <form id="loginForm" class="row m-auto">
+        <!--<form id="loginForm" class="row m-auto" action="login" method="post">-->
             <div class="col-12 input-group form-group">
                 <!--<span class="input-group-prepend"><i class="fa fa-envelope-o fa-fw"></i></span>-->
                 <input id="username" name="username" type="text" placeholder="用户名" class="form-control" style="box-shadow: none"/>
@@ -100,7 +102,8 @@
             </div>
             <div class="m-auto">
                 <span>没有账号？</span>
-                <a class="ml-2" href="/register">立即注册</a>
+                <!--<a class="ml-2" href="/register">立即注册</a>-->
+                <a class="ml-2" href="#" data-toggle="modal" data-target="#registerModal">立即注册</a>
             </div>
             <div class="col-12 form-group" style="text-align: center;">
                <span id="login_msg" style="display:none;color: blue;font-weight:bold">用户名或密码错误</span>
@@ -246,40 +249,39 @@
 
         // 推荐使用此方式，不会造成F5刷新时重新提交表单数据
         $("#login").bind("click",function () {
-            var url = $("#loginForm").attr("action");
-            var method = $("#loginForm").attr("method");
+            // var url = $("#loginForm").attr("action");
+            // var method = $("#loginForm").attr("method");
             var formData = new FormData();
             formData.append("username",$("#username").val());
             formData.append("password",$("#password").val());
-            formData.append("remeberMe",''+$("#remeberMe").val());
-            console.log("ajax url : "+url + "   method : " + method);
+            formData.append("remeberMe",$("#remeberMe").is(":checked"));
+            // 不要使用checked属性，高版本不准，jquery1.6版本后选中时是true ，没选中是undefined
+            console.log("remeberMe = "+$("#remeberMe").is(":checked"));
+            // console.log("ajax url : "+url + "   method : " + method);
             $.ajax({
-                url:url,
-                type:method,
-                data:formData,
-                dataType:'json',
+                url:"login",
+                type:"post",
+                data:formData,// form标签不能写action method 否则会提交两次(ajax一次，form本身一次)
+                dataType:"json",
                 // contentType: "application/json;charset=UTF-8",
                 // processData默认为true,为true时提交的data不会序列化，
                 // 导致前端报Uncaught TypeError: Illegal invocation
                 processData:false,
+                contentType:false,
                 success:function (result) {
                     var flag = result.code;
                     if(flag == "0000"){
                         console.log("登录成功");
-                        $("#login_msg").hide();
-                        location.href = "/index";
+                        location.href = "index.html";
                     }else{
                         console.log("登录失败");
-                        $("#login_msg").show();
+                        $("#login_msg").show().html(result.msg);
                     }
+                    $.loading.hide();
                 },
-                error:function () {
-                    console.log("请求失败");
-                },
-                complete:function () {
-                    console.log("ajax 执行完成");
-                }
             });
+            // 必须返回false，否则form或formData提交时会自动跳转页面
+            return false;
         });
 
 

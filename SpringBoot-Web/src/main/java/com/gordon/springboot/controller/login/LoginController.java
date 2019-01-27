@@ -22,16 +22,16 @@ import java.util.Map;
 @Controller
 public class LoginController {
 
-    @RequestMapping("/")
+    @RequestMapping(value = "/")
     public String toLogin(){
         System.out.println(" ============= / ===========");
-        return "login";
+        return "login.html";
     }
 
-    @RequestMapping("/register")
+    @RequestMapping(value = "/register")
     public String register(String name,String password){
         System.out.println(" === register name:"+name+"   password:"+password);
-        return "login";
+        return "register.html";
     }
 
     @RequestMapping("/logout")
@@ -42,27 +42,24 @@ public class LoginController {
     @ResponseBody
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public Map<String,Object> login(String username, String password,boolean remeberMe) throws InterruptedException {
+        System.out.println("=========== login ==========");
         UsernamePasswordToken token = new UsernamePasswordToken(username,password);
         System.out.println(" name : " + username + "   password : " + password + "   remeberMe : " + remeberMe);
-        Map<String,Object> result = new HashMap<>();
         try {
             ShiroUtils.getSubject().login(token);
         } catch (LockedAccountException e){
-            result.put("code","1111");
-//            return BRUtils.error(ErrorContants.ERROR_9002);
+            return BRUtils.error(ErrorContants.ERROR_9002);
         } catch (AuthenticationException e) {
-            result.put("code","2222");
-//            return BRUtils.error(ErrorContants.ERROR_9001);
+            return BRUtils.error(ErrorContants.ERROR_9001);
         }
-//        return BRUtils.ok();
-        result.put("code","0000");
-        return result;
+        Thread.sleep(5000);
+        return BRUtils.ok();
     }
 
-    @RequestMapping("/index")
-    public String toIndex(){
+    @RequestMapping(value = {"index","index.html"})
+    public String toIndex() throws InterruptedException {
         System.out.println("============= index ============");
-        return "index";
+        return "index.html";
     }
 
 //    @RequestMapping("/login")
