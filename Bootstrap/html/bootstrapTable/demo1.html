@@ -2,31 +2,32 @@
 <html lang="zh_CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>bootstrap table demo1</title>
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+    <title>btable demo1</title>
     <link rel="stylesheet" href="../../css/bootstrap-4.0.0.css">
+    <link rel="stylesheet" href="../../css/bootstrap-fonts.css">
     <link rel="stylesheet" href="bootstrap-table-1.13.2.css">
 
     <style>
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            z-index: 1000;
-            display: none;
-            float: left;
-            min-width: 4rem;/**覆盖 原来的7rem*/
-            padding: 0.5rem 0;
-            margin: 0.125rem 0 0;
-            font-size: 1rem;
-            color: #212529;
-            text-align: left;
-            list-style: none;
-            background-color: #fff;
-            background-clip: padding-box;
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            border-radius: 0.25rem;
-        }
+        /*.dropdown-menu {*/
+            /*position: absolute;*/
+            /*top: 100%;*/
+            /*left: 0;*/
+            /*z-index: 1000;*/
+            /*display: none;*/
+            /*float: left;*/
+            /*min-width: 4rem;!**覆盖 原来的7rem*!*/
+            /*padding: 0.5rem 0;*/
+            /*margin: 0.125rem 0 0;*/
+            /*font-size: 1rem;*/
+            /*color: #212529;*/
+            /*text-align: left;*/
+            /*list-style: none;*/
+            /*background-color: #fff;*/
+            /*background-clip: padding-box;*/
+            /*border: 1px solid rgba(0, 0, 0, 0.15);*/
+            /*border-radius: 0.25rem;*/
+        /*}*/
         /*每页显示数下拉框按钮样式*/
         /*.btn-custom{*/
             /*padding: 0.125em 0.75em; !**覆盖 .btn 的padding：0.375em 0.75em*!*/
@@ -45,7 +46,8 @@
     <script src="../../js/jquery-3.2.1.js"></script>
     <script src="../../js/popper-1.12.9.js"></script>
     <script src="../../js/bootstrap-4.0.0.js"></script>
-    <script src="bootstrap-table-1.13.2.js"></script>
+    <script src="bootstrap-table-1.13.2--.js"></script>
+    <!--<script src="bootstrap-table-1.13.2.js"></script>-->
     <script src="bootstrap-table-zh-CN-1.13.2.js"></script><!--要在table.js之后加载-->
 
     <script>
@@ -66,9 +68,20 @@
                 // ajaxOptions:{
                 //   method:'GET'
                 // },
-
-                buttonsClass:'custom',// table.js中会拼接成.btn-custom
-
+                // paginationPreText:'上一页',
+                // paginationNextText:'下一页',
+                // buttonsClass:'custom-dropdown-black',// table.js中会拼接成.btn-custom
+                // paginationStyle:'jqGrid',
+                paginationDetailHAlign:'right',
+                paginationHAlign:'left',
+                clickToSelect: true, //是否启用点击选中行
+                maintainSelected:true,//设置为 true 在点击分页按钮或搜索按钮时，将记住checkbox的选择项。
+                checkboxHeader:true,//设置 false 将在列头隐藏全选复选框。默认为true
+                // onClickRow:function(item, $element){// 点击行时，修改行背景颜色
+                //     $element.addClass('onClickRow-bg');
+                //     return false;
+                // },
+                paginationCRUD:true,
                 method:'GET',
                 dataType:'json',
                 totalField:'totalNum',// 总条数对应的key
@@ -80,17 +93,26 @@
                 showRefresh : true,
                 paginationUseIntermediate:false,//计算中间页面以便快速访问
                 paginationSuccessivelySize: 3,//连续最多页数
-                paginationPagesBySide:1,//当前页面每侧（右侧，左侧）的页数
+                paginationPagesBySide:0,//当前页面每侧（右侧，左侧）的页数
                 undefinedText:'',// 为空的数据显示 默认显示 '-'
                 pagination: true,//分页
                 sidePagination : 'server',//服务器端分页
                 pageNumber : 1,
-                pageSize:1,
-                pageList: [1, 3, 10, 50],//分页步进值
-                search: true,//显示搜索框
+                pageSize:3,
+                pageList: [3, 5, 10, 50],//分页步进值
+                //search: true,//显示搜索框
                 //表格的列，返回的结果数据 key必须为 rows[]   总数据条数key为total
                 // 插件自动根据总条数和当前每页显示数计算分页
                 columns: [
+                    {   /**服务端分页 多选翻页时保留之前的选择 https://www.cnblogs.com/nmnm/p/8074044.html*/
+                        field: '#',
+                        checkbox:true,
+                        title: '',
+                        width: '30',
+                        align:'center',
+                        //visible:false,// 必须显示才能选择，才会走onCheck()方法
+                        switchable:false,
+                    },
                     {
                         field: 'number',
                         title: '序号',
@@ -108,17 +130,26 @@
                         }
                     },
                     {
+                        field: 'id',//域值
+                        title: '记录id',//标题
+                        visible: false,//false表示不显示
+                        sortable: true,//启用排序
+                        width : '50',
+                        align:'center',
+                    },
+                    {
                         field: 'userid',//域值
                         title: '用户id',//标题
                         visible: true,//false表示不显示
                         sortable: true,//启用排序
                         width : '50',
+                        align:'center',
                     },
                     {
                         field: 'operation',//域值
                         title: '用户操作',//标题
                         visible: true,//false表示不显示
-                        sortable: true,//启用排序
+                        //sortable: true,//启用排序
                         width : '150',
                         editable:true,
                     },
@@ -181,7 +212,19 @@
                         sortable: true,//启用排序
                         width : '250'
                     }
-                ]
+                ],
+                onCheck: function onCheck(row) {
+                    console.log('onCheck === ');
+                    return false;
+                },
+                onCheckAll: function onCheckAll(rows) {
+                    console.log('onCheckAll === ');
+                    return false;
+                },
+                onCheckSome: function onCheckSome(rows) {
+                    console.log('onCheckSome === ');
+                    return false;
+                },
             });
         });
     </script>

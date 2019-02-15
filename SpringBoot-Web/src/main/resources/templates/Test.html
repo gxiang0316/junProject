@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>登录Test</title>
+    <!--标签页图标-->
+    <link rel="icon" type="image/x-icon" href="../static/imgs/favicon.ico">
+    <link rel="stylesheet" href="../static/css/bootstrap-4.0.0.css">
+    <link rel="stylesheet" href="../static/css/font-awesome4.7.0.css">
+
+    <style>
+        html{
+            width:100%;
+            height: 100%;
+        }
+        body{
+            width:100%;
+            height: 100%;
+            background:url('../static/imgs/body-background.jpg') no-repeat;
+            background-size: cover;
+        }
+        .divCenter{
+            width: 340px;
+            height: 400px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -170px 0 0 -200px;
+            background-color: rgba(229, 229, 229, 0.64);
+        }
+        /*修改placeholder属性提示文字的颜色*/
+        /*input::input-placeholder{
+            !**有些资料显示需要写，有些显示不需要，但是在编辑器webstorm中该属性不被识别 *!
+            color:  #000 !important;
+        }*/
+        ::-webkit-input-placeholder { /* WebKit browsers */
+            color: rgb(191, 0, 79) !important;
+            font-size: 12px;
+        }
+        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            /*color: rgba(255, 0, 0, 0.21);*/
+            color: #000 !important;
+            font-size: 12px;
+        }
+        ::-moz-placeholder { /* Mozilla Firefox 19+ */
+            /*color: rgba(255, 0, 0, 0.21);*/
+            color: #000 !important;
+            font-size: 12px;
+        }
+        :-ms-input-placeholder { /* Internet Explorer 10+ */
+            /*color: rgba(255, 0, 0, 0.21);*/
+            color: #000 !important;
+            font-size: 12px;
+        }
+        a{
+            text-decoration:none;
+        }
+        /**a标签鼠标移入移出是的样式*/
+        a:hover{
+            text-decoration:none;/*下掉下划线*/
+            color: #0c0c0c;/*鼠标移入时的颜色*/
+        }
+        /* 覆写自带的样式 */
+        .modal-dialog {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 3;
+            margin: auto;
+            -webkit-transform: translate(-50%, -50%) !important;
+            -moz-transform: translate(-50%, -50%) !important;
+            -ms-transform: translate(-50%, -50%) !important;
+            -o-transform: translate(-50%, -50%) !important;
+            transform: translate(-50%, -50%) !important;
+        }
+
+        /**覆盖 选项卡背景颜色*/
+        .nav-pills .nav-link.active,
+        .nav-pills .show > .nav-link {
+            color: #fff;
+            background-color: transparent !important;
+            /*background-color: rgba(210, 202, 118, 0.38);*/
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="divCenter">
+    <div>
+        <ul class="nav nav-pills nav-justified" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" style="text-align: center;font-size:20px;  line-height:40px; border-radius: 0px;background-color: rgba(210, 202, 118, 0.38);"
+                   data-toggle="pill" href="#loginDiv">登录</a>
+            </li>
+            <li class="nav-item" >
+                <a class="nav-link" style="text-align: center;font-size:20px; line-height:40px; border-radius: 0px;background-color: rgba(210, 202, 118, 0.38);"
+                   data-toggle="pill" href="#registerDiv">注册</a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="loginDiv" class="container tab-pane active">
+            <div class="h3 pt-2 pb-2" style="text-align: center">Gordon Web</div>
+            <form id="loginForm" class="row m-auto">
+                <!--<form id="loginForm" class="row m-auto" action="login" method="post">-->
+                <div class="col-12 input-group form-group">
+                    <!--<span class="input-group-prepend"><i class="fa fa-envelope-o fa-fw"></i></span>-->
+                    <input id="username" name="username" type="text" placeholder="用户名" class="form-control" style="box-shadow: none"/>
+                </div>
+                <div class="col-12 input-group form-group">
+                    <input id="password" name="password" type="password" placeholder="密码" class="form-control" style="box-shadow: none"/>
+                </div>
+                <div class="col-12 form-group" style="margin-bottom: 4px;">
+                    <input id="viCode" name="viCode" type="text" placeholder="验证码" class="form-control" style="box-shadow: none"/>
+                </div>
+                <div class="col-12 form-check">
+                    <input id="remeberMe" name="remeberMe" type="checkbox" class="form-check-input" style="margin-top: 7px;margin-left: 0px"/>
+                    <label class="form-check-label" for="remeberMe" style="margin-left: 16px">记住我</label>
+                    <a style="float:right" href="#">忘记密码？</a>
+                </div>
+                <div class="col-12 form-group mt-3 mb-1">
+                    <button id="login" class="col-12 btn btn-success" style="box-shadow: none">登录</button>
+                </div>
+                <div class="m-auto">
+                    <span>没有账号？</span>
+                    <!--<a class="ml-2" href="/register">立即注册</a>-->
+                    <a class="ml-2" href="#" data-toggle="modal" data-target="#registerModal">立即注册</a>
+                </div>
+                <div class="col-12 form-group" style="text-align: center;">
+                    <span id="login_msg" style="display:none;color: blue;font-weight:bold">用户名或密码错误</span>
+                </div>
+            </form>
+        </div>
+        <div id="registerDiv" class="container tab-pane fade" style="height: 344px;">
+            <form class="row m-auto pt-4" action="/register">
+                <div class="col-12 input-group form-group">
+                    <!--<span class="input-group-prepend"><i class="fa fa-envelope-o fa-fw"></i></span>-->
+                    <input id="rusername" type="text" placeholder="用户名" class="form-control" style="box-shadow: none"/>
+                </div>
+                <div class="col-12 form-group">
+                    <input id="rpassword" type="password" placeholder="密码" class="form-control" style="box-shadow: none"/>
+                </div>
+                <div class="col-12 form-group" >
+                    <input id="rspassword" type="password" placeholder="确认密码" class="form-control" style="box-shadow: none"/>
+                </div>
+                <div class="col-12 form-group" >
+                    <input id="rviCode" name="rviCode" type="text" placeholder="验证码" class="form-control" style="box-shadow: none"/>
+                </div>
+                <div class="col-12 form-group mt-2 mb-1">
+                    <button id="btnRegister" class="col-12 btn btn-success" type="submit" style="box-shadow: none">注册</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--<button id="showLoading" class="btn-success btn">测试loading</button>-->
+</div>
+
+<!-- 注册模态框 -->
+<div class="modal fade" id="registerModal">
+    <div class="modal-dialog" style="width: 350px;">
+        <div class="modal-content">
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title" style="width: 100%;text-align: center;" >用户注册</h4>
+                <button type="button" class="close pull-right" data-dismiss="modal" style="padding: 0 5px 5px 0;">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                <form class="row m-auto" action="${request.contextPath}/register">
+                    <div class="col-12 input-group form-group">
+                        <!--<span class="input-group-prepend"><i class="fa fa-envelope-o fa-fw"></i></span>-->
+                        <input id="registerusername" type="text" placeholder="用户名" class="form-control" style="box-shadow: none"/>
+                    </div>
+                    <div class="col-12 form-group">
+                        <input id="registerpassword" type="password" placeholder="密码" class="form-control" style="box-shadow: none"/>
+                    </div>
+                    <div class="col-12 form-group" style="margin-bottom: 4px;">
+                        <input id="reregisterpassword" type="password" placeholder="确认密码" class="form-control" style="box-shadow: none"/>
+                    </div>
+                    <div class="col-12 form-group mt-3 mb-1">
+                        <button id="register" class="col-12 btn btn-success" type="submit" style="box-shadow: none">注册</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 模态框底部 -->
+            <!--<div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            </div>-->
+        </div>
+    </div>
+</div>
+
+<script src="../static/js/jquery-3.2.1.js"></script>
+<script src="../static/js/popper-1.12.9.js"></script>
+<script src="../static/js/bootstrap-4.0.0.js"></script>
+<script src="../static/js/module/loading.js"></script>
+<script src="../static/js/module/common.js"></script>
+
+<script>
+    /*$(function () {
+
+    });*/
+    $(document).ready(function () {
+
+        /*hover() 方法规定当鼠标指针悬停在被选元素上时要运行的两个函数。
+                方法触发 mouseenter(当鼠标指针位于元素上方时) 和 mouseleave(鼠标移出) 事件。*/
+        // $("#username").hover(function () {
+        //     $(this).attr("placeholder","");
+        // },function () {
+        //     $(this).attr("placeholder","用户名");
+        // });
+
+        $("#username").bind("focus",function () {
+            $(this).attr("placeholder","");
+            $("#login_msg").hide();
+        });
+        $("#username").bind("blur",function () {
+            $(this).attr("placeholder","用户名");
+        });
+        $("#password").bind("focus",function () {
+            $(this).attr("placeholder","");
+            $("#login_msg").hide();
+        });
+        $("#password").bind("blur",function () {
+            $(this).attr("placeholder","密码");
+        });
+        $("#registerusername").bind("focus",function () {
+            $(this).attr("placeholder","");
+            $("#login_msg").hide();
+        });
+        $("#registerusername").bind("blur",function () {
+            $(this).attr("placeholder","用户名");
+        });
+        $("#registerpassword").bind("focus",function () {
+            $(this).attr("placeholder","");
+            $("#login_msg").hide();
+        });
+        $("#registerpassword").bind("blur",function () {
+            $(this).attr("placeholder","密码");
+        });
+        $("#reregisterpassword").bind("focus",function () {
+            $(this).attr("placeholder","");
+            $("#login_msg").hide();
+        });
+        $("#reregisterpassword").bind("blur",function () {
+            $(this).attr("placeholder","确认密码");
+        });
+
+        // 推荐使用此方式，不会造成F5刷新时重新提交表单数据
+        $("#login").bind("click",function () {
+            // var url = $("#loginForm").attr("action");
+            // var method = $("#loginForm").attr("method");
+            var formData = new FormData();
+            formData.append("username",$("#username").val());
+            formData.append("password",$("#password").val());
+            formData.append("remeberMe",$("#remeberMe").is(":checked"));
+            // 不要使用checked属性，高版本不准，jquery1.6版本后选中时是true ，没选中是undefined
+            console.log("remeberMe = "+$("#remeberMe").is(":checked"));
+            // console.log("ajax url : "+url + "   method : " + method);
+            $.ajax({
+                url:"login",
+                type:"post",
+                data:formData,// form标签不能写action method 否则会提交两次(ajax一次，form本身一次)
+                dataType:"json",
+                // contentType: "application/json;charset=UTF-8",
+                // processData默认为true,为true时提交的data不会序列化，
+                // 导致前端报Uncaught TypeError: Illegal invocation
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    var flag = result.code;
+                    if(flag == "0000"){
+                        console.log("登录成功");
+                        location.href = "index.html";
+                    }else{
+                        console.log("登录失败");
+                        $("#login_msg").show().html(result.msg);
+                    }
+                    $.loading.hide();
+                },
+            });
+            // 必须返回false，否则form或formData提交时会自动跳转页面
+            return false;
+        });
+
+
+    });
+
+
+</script>
+
+
+
+</body>
+</html>

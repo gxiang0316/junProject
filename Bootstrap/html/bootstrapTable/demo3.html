@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+    <title>btable demo3</title>
+    <link rel="stylesheet" href="../../css/bootstrap-4.0.0.css">
+    <link rel="stylesheet" href="../../css/bootstrap-fonts.css">
+    <link rel="stylesheet" href="bootstrap-table-1.13.2.css">
+
+    <style>
+    </style>
+</head>
+<body>
+
+    <table id="table"></table>
+
+    <script src="../../js/jquery-3.2.1.js"></script>
+    <script src="../../js/popper-1.12.9.js"></script>
+    <script src="../../js/bootstrap-4.0.0.js"></script>
+    <script src="bootstrap-table-1.13.2--.js"></script>
+    <!--<script src="bootstrap-table-1.13.2.js"></script>-->
+    <script src="bootstrap-table-zh-CN-1.13.2.js"></script><!--要在table.js之后加载-->
+
+    <script>
+        $(document).ready(function () {
+            $("#table").bootstrapTable('destroy');
+            $('#table').bootstrapTable({
+                url:"http://localhost:8080/springboot-web/logList2",//请求数据url
+                queryParams: function (params) {// 请求参数
+                    return {
+                        pageNum: params.pageNumber,  //页码
+                        pageSize: params.pageSize,   //页面大小
+                        search : this.search, //搜索
+                        order : this.sortOrder, //排序
+                        ordername : this.sortName, //排序
+                        customeParam:'测试自定义参数'
+                    };
+                },
+                buttonsClass:'custom-dropdown-black',// table.js中会拼接成.btn-custom-dropdown-black
+                paginationStyle:'jqGrid',
+                paginationDetailHAlign:'right',
+                paginationHAlign:'left',
+                clickToSelect: true, //是否启用点击选中行
+                maintainSelected:true,//设置为 true 在点击分页按钮或搜索按钮时，将记住checkbox的选择项。
+                checkboxHeader:true,//设置 false 将在列头隐藏全选复选框。默认为true
+                // onClickRow:function(item, $element){// 点击行时，修改行背景颜色
+                //     $element.addClass('onClickRow-bg');
+                //     return false;
+                // },
+                paginationCRUD:true,
+                // paginationAddClass:'pagination-crud-hide',
+                method:'GET',
+                dataType:'json',
+                totalField:'totalNum',// 总条数对应的key
+                dataField:'data',// 数据列表对应的key
+                // queryParamsType:'limit',设置为这个后 queryParams中pageNum只能对应offset,pageSize只能对应limit
+                queryParamsType:'',// 这种只能提交pageNum和pageSize，search/order/ordername都不能提交，可以使用上面的方法当成自定义参数提交
+                //showHeader : true,
+                //showColumns : true,
+                //showRefresh : true,
+                paginationUseIntermediate:false,//计算中间页面以便快速访问
+                paginationSuccessivelySize: 3,//连续最多页数
+                paginationPagesBySide:0,//当前页面每侧（右侧，左侧）的页数
+                undefinedText:'',// 为空的数据显示 默认显示 '-'
+                pagination: true,//分页
+                sidePagination : 'server',//服务器端分页
+                pageNumber : 1,
+                pageSize:3,
+                pageList: [3, 5, 10, 50],//分页步进值
+                //search: true,//显示搜索框
+                //表格的列，返回的结果数据 key必须为 rows[]   总数据条数key为total
+                // 插件自动根据总条数和当前每页显示数计算分页
+                columns: [
+                    {   /**服务端分页 多选翻页时保留之前的选择 https://www.cnblogs.com/nmnm/p/8074044.html*/
+                        field: '#',
+                        checkbox:true,
+                        width: '30',
+                        align:'center',
+                        formatter: function (i,row) {            // 每次加载 checkbox 时判断当前 row 的 id 是否已经存在全局 Set() 里
+                            if($.inArray(row.id,overAllIds)!=-1){// 因为 判断数组里有没有这个 id
+                                return {
+                                    checked : true               // 存在则选中
+                                }
+                            }
+                        }
+                    },
+                    {
+                        field: 'number',
+                        title: '序号',
+                        width: '30',
+                        align:'center',
+                        switchable:false,
+                        formatter:function(value,row,index){
+                            //return index+1; //序号正序排序从1开始
+                            //通过表的#id 可以得到每页多少条
+                            var pageSize=$('#table').bootstrapTable('getOptions').pageSize;
+                            //通过表的#id 可以得到当前第几页
+                            var pageNumber=$('#table').bootstrapTable('getOptions').pageNumber;
+                            //返回每条的序号： 每页条数 * （当前页 - 1 ）+ 序号
+                            return pageSize * (pageNumber - 1) + index + 1;
+                        }
+                    },
+                    {
+                        field: 'id',//域值
+                        title: '记录id',//标题
+                        visible: false,//false表示不显示
+                        sortable: true,//启用排序
+                        width : '50',
+                        align:'center',
+                    },
+                    {
+                        field: 'userid',//域值
+                        title: '用户id',//标题
+                        visible: true,//false表示不显示
+                        sortable: true,//启用排序
+                        width : '50',
+                        align:'center',
+                    },
+                    {
+                        field: 'operation',//域值
+                        title: '用户操作',//标题
+                        visible: true,//false表示不显示
+                        //sortable: true,//启用排序
+                        width : '150',
+                        editable:true,
+                        align:'center'
+                    },
+                    {
+                        field: 'clazz',//域值
+                        title: '请求的类',//内容
+                        visible: true,//false表示不显示
+                        sortable: true,//启用排序
+                        width : '150',
+                        editable:true,
+                    },
+                    {
+                        field: 'method',//域值
+                        title: '请求方法',//内容
+                        visible: true,//false表示不显示
+                        sortable: true,//启用排序
+                        width : '150'
+                        // ,formatter : function (value, row, index) {
+                        //     if (row['status'] === 1) {
+                        //         return '正常';
+                        //     }
+                        //     if (row['status'] === 0) {
+                        //         return '禁用';
+                        //     }
+                        //     return value;
+                        // }
+                    },
+                    {
+                        field: 'params',//域值
+                        title: '请求参数',//内容
+                        visible: true,//false表示不显示
+                        sortable: true,//启用排序
+                        width : '150'
+                    },
+                    {
+                        field: 'ip',//域值
+                        title: 'IP地址',//内容
+                        visible: true,//false表示不显示
+                        sortable: true,//启用排序
+                        width : '100'
+                    },
+                    {
+                        field: 'ex_msg',//域值
+                        title: '异常信息',//内容
+                        visible: true,//false表示不显示
+                        sortable: true,//启用排序
+                        width : '150'
+                    },
+                    {
+                        field: 'time',//域值
+                        title: '执行时长(毫秒)',//内容
+                        visible: true,//false表示不显示
+                        sortable: true,//启用排序
+                        width : '150'
+                    },
+                    {
+                        field: 'createDate',//域值
+                        title: '创建时间',//内容
+                        visible: true,//false表示不显示
+                        sortable: true,//启用排序
+                        width : '250'
+                    }
+                ],
+                onCheck: function onCheck(row) {
+                    console.log('onCheck === ');
+                    return false;
+                },
+                onCheckAll: function onCheckAll(rows) {
+                    console.log('onCheckAll === ');
+                    return false;
+                },
+                onCheckSome: function onCheckSome(rows) {
+                    console.log('onCheckSome === ');
+                    return false;
+                },
+                onAdd: function onAdd() {
+                    console.log('onAdd === ');
+                    return false;
+                },
+                onUpdate: function onUpdate(row,enable) {
+                    console.log('onUpdate === ');
+                    return false;
+                },
+                onDelete: function onDelete(rows) {// rows 参数对客户端分页有效，服务端分页请使用收集id的方式
+                    console.log('onDelete === ');
+                    return false;
+                },
+                onSpare: function onSpare() {
+                    console.log('onSpare === ');
+                    return false;
+                },
+                onExport: function onExport() {
+                    console.log('onExport === ');
+                    return false;
+                }
+
+            });
+
+            $('#table').on('uncheck.bs.table check.bs.table check-all.bs.table uncheck-all.bs.table',function(e,rows){
+                var datas = $.isArray(rows) ? rows : [rows];        // 点击时获取选中的行或取消选中的行
+                examine(e.type,datas);                              // 保存到全局 Array() 里
+            });
+
+            $('#table').on('onClickAdd.bs.table',function () {
+                console.log('onAdd ==22= ');
+            });
+            $('#table').on('onClickUpdate.bs.table',function (event,row,enable) {
+                console.log('onUpdate ==22= ');
+            });
+            $('#table').on('onClickDelete.bs.table',function (event,rows) {
+                console.log('onDelete ==22= ');
+            });
+            $('#table').on('onClickSpare.bs.table',function () {
+                console.log('onSpare ==22= ');
+            });
+            $('#table').on('onClickExport.bs.table',function () {
+                console.log('onExport ==22= ');
+            });
+        });
+
+        var overAllIds = new Array();  //全局数组
+
+        function examine(type,datas) {
+            if (type.indexOf('uncheck') == -1) {
+                $.each(datas, function (i, v) {
+                    // 添加时，判断一行或多行的 id 是否已经在数组里 不存则添加　
+                    overAllIds.indexOf(v.id) == -1 ? overAllIds.push(v.id) : -1;
+                });
+            } else {
+                $.each(datas, function (i, v) {
+                    overAllIds.splice(overAllIds.indexOf(v.id), 1);    //删除取消选中行
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>

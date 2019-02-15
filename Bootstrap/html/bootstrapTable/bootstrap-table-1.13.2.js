@@ -573,7 +573,7 @@
 
       pagination: false,
       onlyInfoPagination: false,
-      paginationLoop: true,
+      paginationLoop: false,// 无限循环
       sidePagination: 'client', // client or server
       totalRows: 0, // server side need to set
       pageNumber: 1,
@@ -624,7 +624,9 @@
       clickToSelect: false,
       ignoreClickToSelectOn: function ignoreClickToSelectOn(_ref5) {
         var tagName = _ref5.tagName;
-
+        /**包含一个参数：
+         element: 点击的元素。
+         返回 true 是点击事件会被忽略，返回 false 将会自动选中。该选项只有在 clickToSelect 为 true 时才生效。*/
         return ['A', 'BUTTON'].includes(tagName);
       },
 
@@ -1766,7 +1768,7 @@
             html.push('\n          <li class="page-item page-next">\n          <a class="page-link" href="#">' + this.options.paginationNextText + '</a>\n          </li>\n          </ul>\n                  ');
           }
 
-          /**修改 begin */
+          /**修改 每页显示记录条数框显示的位置 begin */
                 /**拷贝 begin*/
                 html.push('<span class="page-list ml-1">');
 
@@ -1863,7 +1865,8 @@
       }, {
         key: 'updatePagination',
         value: function updatePagination(event) {
-          // Fix #171: IE disabled button can be clicked bug.
+            console.log("BBBBBBBBBBBBB "+$(event.currentTarget).hasClass('disabled'));
+            // Fix #171: IE disabled button can be clicked bug.
           if (event && $(event.currentTarget).hasClass('disabled')) {
             return;
           }
@@ -1897,9 +1900,10 @@
       }, {
         key: 'onPagePre',
         value: function onPagePre(event) {
+            // preventDefault() 方法阻止元素发生默认的行为（例如，当点击提交按钮时阻止对表单的提交）
           event.preventDefault();
           if (this.options.pageNumber - 1 === 0) {
-            this.options.pageNumber = this.options.totalPages;
+              this.options.pageNumber = this.options.totalPages;
           } else {
             this.options.pageNumber--;
           }
@@ -1910,8 +1914,12 @@
         key: 'onPageNext',
         value: function onPageNext(event) {
           event.preventDefault();
+          if($(event.currentTarget).hasClass('disabled')){
+
+              return false;
+          }
           if (this.options.pageNumber + 1 > this.options.totalPages) {
-            this.options.pageNumber = 1;
+              this.options.pageNumber = 1;
           } else {
             this.options.pageNumber++;
           }

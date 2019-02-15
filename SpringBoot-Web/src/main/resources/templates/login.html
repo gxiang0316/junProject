@@ -74,44 +74,90 @@
             -o-transform: translate(-50%, -50%) !important;
             transform: translate(-50%, -50%) !important;
         }
+
+        /**覆盖 选项卡背景颜色*/
+        .nav-pills .nav-link.active,
+        .nav-pills .show > .nav-link {
+            color: #fff;
+            background-color: transparent !important;
+            /*background-color: rgba(210, 202, 118, 0.38);*/
+        }
     </style>
 
 </head>
 <body>
 
+
 <div class="divCenter">
-    <!--<a class="pull-right" href="#" style="font-size: 18px;margin-right: 5px;" data-toggle="modal" data-target="#registerModal">注册</a>-->
-    <div class="container-fluid" style="margin-top: 10px">
-        <div class="h3 pt-3 pb-3" style="text-align: center">Gordon Web</div>
-        <form id="loginForm" class="row m-auto">
-        <!--<form id="loginForm" class="row m-auto" action="login" method="post">-->
-            <div class="col-12 input-group form-group">
-                <!--<span class="input-group-prepend"><i class="fa fa-envelope-o fa-fw"></i></span>-->
-                <input id="username" name="username" type="text" placeholder="用户名" class="form-control" style="box-shadow: none"/>
-            </div>
-            <div class="col-12 form-group" style="margin-bottom: 4px;">
-                <input id="password" name="password" type="password" placeholder="密码" class="form-control" style="box-shadow: none"/>
-            </div>
-            <div class="col-12 form-check">
-                <input id="remeberMe" name="remeberMe" type="checkbox" class="form-check-input" style="margin-top: 7px;margin-left: 0px"/>
-                <label class="form-check-label" for="remeberMe" style="margin-left: 16px">记住我</label>
-                <a style="float:right" href="#">忘记密码？</a>
-            </div>
-            <div class="col-12 form-group mt-3 mb-1">
-               <button id="login" class="col-12 btn btn-success" style="box-shadow: none">登录</button>
-            </div>
-            <div class="m-auto">
-                <span>没有账号？</span>
-                <!--<a class="ml-2" href="/register">立即注册</a>-->
-                <a class="ml-2" href="#" data-toggle="modal" data-target="#registerModal">立即注册</a>
-            </div>
-            <div class="col-12 form-group" style="text-align: center;">
-               <span id="login_msg" style="display:none;color: blue;font-weight:bold">用户名或密码错误</span>
-            </div>
-        </form>
+    <div>
+        <ul class="nav nav-pills nav-justified" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" style="text-align: center;font-size:20px;  line-height:40px; border-radius: 0px;background-color: rgba(210, 202, 118, 0.38);"
+                   data-toggle="pill" href="#loginDiv">登录</a>
+            </li>
+            <li class="nav-item" >
+                <a class="nav-link" style="text-align: center;font-size:20px; line-height:40px; border-radius: 0px;background-color: rgba(210, 202, 118, 0.38);"
+                   data-toggle="pill" href="#registerDiv">注册</a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="loginDiv" class="container tab-pane active">
+            <div class="h3 pt-2 pb-2" style="text-align: center">Gordon Web</div>
+            <form id="loginForm" class="row m-auto">
+                <!--<form id="loginForm" class="row m-auto" action="login" method="post">-->
+                <div class="col-12 input-group form-group">
+                    <!--<span class="input-group-prepend"><i class="fa fa-envelope-o fa-fw"></i></span>-->
+                    <input id="username" name="username" type="text" placeholder="用户名" class="form-control" style="box-shadow: none"/>
+                </div>
+                <div class="col-12 input-group form-group">
+                    <input id="password" name="password" type="password" placeholder="密码" class="form-control" style="box-shadow: none"/>
+                </div>
+                <div class="col-12 form-group" style="margin-bottom: 4px;">
+                    <input id="viCode" name="viCode" type="text" placeholder="验证码" class="form-control" style="box-shadow: none"/>
+                </div>
+                <div class="col-12 form-check">
+                    <input id="remeberMe" name="remeberMe" type="checkbox" class="form-check-input" style="margin-top: 7px;margin-left: 0px"/>
+                    <label class="form-check-label" for="remeberMe" style="margin-left: 16px">记住我</label>
+                    <a style="float:right" href="#">忘记密码？</a>
+                </div>
+                <div class="col-12 form-group mt-3 mb-1">
+                    <button id="login" class="col-12 btn btn-success" style="box-shadow: none">登录</button>
+                </div>
+                <div class="m-auto">
+                    <span>没有账号？</span>
+                    <!--<a class="ml-2" href="/register">立即注册</a>-->
+                    <a class="ml-2" href="#" data-toggle="modal" data-target="#registerModal">立即注册</a>
+                </div>
+                <div class="col-12 form-group" style="text-align: center;">
+                    <span id="login_msg" style="display:none;color: blue;font-weight:bold">用户名或密码错误</span>
+                </div>
+            </form>
+        </div>
+        <div id="registerDiv" class="container tab-pane fade" style="height: 344px;">
+            <form class="row m-auto pt-4" action="/register">
+                <div class="col-12 input-group form-group">
+                    <!--<span class="input-group-prepend"><i class="fa fa-envelope-o fa-fw"></i></span>-->
+                    <input id="rusername" type="text" placeholder="用户名" class="form-control" style="box-shadow: none"/>
+                </div>
+                <div class="col-12 form-group">
+                    <input id="rpassword" type="password" placeholder="密码" class="form-control" style="box-shadow: none"/>
+                </div>
+                <div class="col-12 form-group" >
+                    <input id="rspassword" type="password" placeholder="确认密码" class="form-control" style="box-shadow: none"/>
+                </div>
+                <div class="col-12 form-group" >
+                    <input id="rviCode" name="rviCode" type="text" placeholder="验证码" class="form-control" style="box-shadow: none"/>
+                </div>
+                <div class="col-12 form-group mt-2 mb-1">
+                    <button id="btnRegister" class="col-12 btn btn-success" type="submit" style="box-shadow: none">注册</button>
+                </div>
+            </form>
+        </div>
     </div>
     <!--<button id="showLoading" class="btn-success btn">测试loading</button>-->
 </div>
+
 
 <!-- 注册模态框 -->
 <div class="modal fade" id="registerModal">
@@ -155,6 +201,7 @@
 <script src="${ctxPath}/js/bootstrap-4.0.0.js"></script>
 <script src="${ctxPath}/js/module/loading.js"></script>
 <script src="${ctxPath}/js/module/common.js"></script>
+<script src="${ctxPath}/js/module/login.js"></script>
 
 <script>
     /*$(function () {
