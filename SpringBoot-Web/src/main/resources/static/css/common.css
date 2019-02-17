@@ -33,4 +33,7 @@
     -o-transform: translate(-50%, -50%) !important;
     transform: translate(-50%, -50%) !important;
 }
-
+/*在计算机中把鼠标指针的形状弄成一只伸出食指的手*/
+.pointer{
+    cursor: pointer;
+}

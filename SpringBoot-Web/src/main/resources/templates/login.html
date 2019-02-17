@@ -8,6 +8,7 @@
     <link rel="icon" type="image/x-icon" href="${ctxPath}/imgs/favicon.ico">
     <link rel="stylesheet" href="${ctxPath}/css/bootstrap-4.0.0.css">
     <link rel="stylesheet" href="${ctxPath}/css/font-awesome4.7.0.css">
+    <link rel="stylesheet" href="${ctxPath}/css/common.css">
 
     <style>
         html{
@@ -21,37 +22,18 @@
             background-size: cover;
         }
         .divCenter{
-            width: 300px;
-            height: 320px;
+            width: 320px;
+            height: 400px;
             position: absolute;
             left: 50%;
             top: 50%;
-            margin: -150px 0 0 -160px;
+            /*margin: -160px 0 0 -200px;*/
             background-color: rgba(229, 229, 229, 0.64);
-        }
-        /*修改placeholder属性提示文字的颜色*/
-        /*input::input-placeholder{
-            !**有些资料显示需要写，有些显示不需要，但是在编辑器webstorm中该属性不被识别 *!
-            color:  #000 !important;
-        }*/
-        ::-webkit-input-placeholder { /* WebKit browsers */
-            color: rgb(191, 0, 79) !important;
-            font-size: 12px;
-        }
-        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-            /*color: rgba(255, 0, 0, 0.21);*/
-            color: #000 !important;
-            font-size: 12px;
-        }
-        ::-moz-placeholder { /* Mozilla Firefox 19+ */
-            /*color: rgba(255, 0, 0, 0.21);*/
-            color: #000 !important;
-            font-size: 12px;
-        }
-        :-ms-input-placeholder { /* Internet Explorer 10+ */
-            /*color: rgba(255, 0, 0, 0.21);*/
-            color: #000 !important;
-            font-size: 12px;
+            -webkit-transform: translate(-50%, -50%) !important;
+            -moz-transform: translate(-50%, -50%) !important;
+            -ms-transform: translate(-50%, -50%) !important;
+            -o-transform: translate(-50%, -50%) !important;
+            transform: translate(-50%, -50%) !important;
         }
         a{
             text-decoration:none;
@@ -60,19 +42,6 @@
         a:hover{
             text-decoration:none;/*下掉下划线*/
             color: #0c0c0c;/*鼠标移入时的颜色*/
-        }
-        /* 覆写自带的样式 */
-        .modal-dialog {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            z-index: 3;
-            margin: auto;
-            -webkit-transform: translate(-50%, -50%) !important;
-            -moz-transform: translate(-50%, -50%) !important;
-            -ms-transform: translate(-50%, -50%) !important;
-            -o-transform: translate(-50%, -50%) !important;
-            transform: translate(-50%, -50%) !important;
         }
 
         /**覆盖 选项卡背景颜色*/
@@ -114,7 +83,8 @@
                     <input id="password" name="password" type="password" placeholder="密码" class="form-control" style="box-shadow: none"/>
                 </div>
                 <div class="col-12 form-group" style="margin-bottom: 4px;">
-                    <input id="viCode" name="viCode" type="text" placeholder="验证码" class="form-control" style="box-shadow: none"/>
+                    <input id="verCode" name="verCode" type="text" placeholder="验证码" class="col-7 form-control" style="box-shadow: none;display: inline-block;"/>
+                    <img class="col-4 pointer pr-0 pl-0 float-right"  alt="点击刷新" src="${ctxPath}/verifyCode" style="margin-top:1px;border: 1px solid beige;"/>
                 </div>
                 <div class="col-12 form-check">
                     <input id="remeberMe" name="remeberMe" type="checkbox" class="form-check-input" style="margin-top: 7px;margin-left: 0px"/>
@@ -122,7 +92,7 @@
                     <a style="float:right" href="#">忘记密码？</a>
                 </div>
                 <div class="col-12 form-group mt-3 mb-1">
-                    <button id="login" class="col-12 btn btn-success" style="box-shadow: none">登录</button>
+                    <button id="btnLogin" class="col-12 btn btn-success" style="box-shadow: none">登录</button>
                 </div>
                 <div class="m-auto">
                     <span>没有账号？</span>
@@ -135,22 +105,26 @@
             </form>
         </div>
         <div id="registerDiv" class="container tab-pane fade" style="height: 344px;">
-            <form class="row m-auto pt-4" action="/register">
+            <form id="registerForm" class="row m-auto pt-4" action="${ctxPath}/register" method="post">
                 <div class="col-12 input-group form-group">
                     <!--<span class="input-group-prepend"><i class="fa fa-envelope-o fa-fw"></i></span>-->
-                    <input id="rusername" type="text" placeholder="用户名" class="form-control" style="box-shadow: none"/>
+                    <input id="rusername" name="rusername" type="text" placeholder="用户名" class="form-control" style="box-shadow: none"/>
                 </div>
                 <div class="col-12 form-group">
-                    <input id="rpassword" type="password" placeholder="密码" class="form-control" style="box-shadow: none"/>
+                    <input id="rpassword" name="rpassword" type="password" placeholder="密码" class="form-control" style="box-shadow: none"/>
                 </div>
                 <div class="col-12 form-group" >
                     <input id="rspassword" type="password" placeholder="确认密码" class="form-control" style="box-shadow: none"/>
                 </div>
                 <div class="col-12 form-group" >
-                    <input id="rviCode" name="rviCode" type="text" placeholder="验证码" class="form-control" style="box-shadow: none"/>
+                    <input id="rviCode" name="verCode" type="text" placeholder="验证码" class="col-7 form-control" style="box-shadow: none;display: inline-block;"/>
+                    <img class="col-4 pointer pr-0 pl-0 float-right"  alt="点击刷新" src="${ctxPath}/verifyCode" style="margin-top:1px;border: 1px solid beige;"/>
                 </div>
                 <div class="col-12 form-group mt-2 mb-1">
                     <button id="btnRegister" class="col-12 btn btn-success" type="submit" style="box-shadow: none">注册</button>
+                </div>
+                <div class="col-12 form-group" style="text-align: center;">
+                    <span id="register_msg" style="display:none;color: blue;font-weight:bold;margin-top:10px;">注册失败信息</span>
                 </div>
             </form>
         </div>
@@ -207,8 +181,23 @@
     /*$(function () {
 
     });*/
+
+
     $(document).ready(function () {
 
+        /* bootstrap tab 显示事件
+            show.bs.tab:标签页显示之前，触发该事件。
+            shown.bs.tab:标签页被显示，并且CSS动画也播放结束之后，触发该事件。
+         */
+        $('a[data-toggle="pill"]').on('show.bs.tab', function (e) {
+            //e.target          // 当前活动的标签页
+            //e.relatedTarget   // 上一次活动的标签页
+            // 清空form表单 不能直接使用$("#loginForm").reset()，jquery报错 没有这个方法
+            $("#loginForm")[0].reset();
+            $("#registerForm")[0].reset();
+            //console.log(" == tab 切换 更新验证码=== ");
+            $(".pointer").attr("src","${ctxPath}/verifyCode?t=" + $.now());
+        });
         /*hover() 方法规定当鼠标指针悬停在被选元素上时要运行的两个函数。
                 方法触发 mouseenter(当鼠标指针位于元素上方时) 和 mouseleave(鼠标移出) 事件。*/
         // $("#username").hover(function () {
@@ -252,6 +241,13 @@
         $("#reregisterpassword").bind("blur",function () {
             $(this).attr("placeholder","确认密码");
         });
+        // 刷新验证码
+        $(".pointer").bind("click",function () {
+            $(".pointer").attr("src","${ctxPath}/verifyCode?t=" + $.now());
+            $("input[name='verCode']").val("");// 查找jquery 如何根据name获取元素
+            $("input[name='verCode']").focus();// 清空后 获取焦点
+        });
+
         // $modal.on('shown.bs.modal', function(event) {
         //     var $modalDialog = $modal.find('.modal-dialog');
         //     h = $modalDialog.height();
@@ -295,12 +291,13 @@
         // 点击一次 却提交了两次
 
         // 推荐使用此方式，不会造成F5刷新时重新提交表单数据
-        $("#login").bind("click",function () {
+        $("#btnLogin").bind("click",function () {
             // var url = $("#loginForm").attr("action");
             // var method = $("#loginForm").attr("method");
             var formData = new FormData();
             formData.append("username",$("#username").val());
             formData.append("password",$("#password").val());
+            formData.append("verCode",$("#verCode").val());
             formData.append("remeberMe",$("#remeberMe").is(":checked"));
             // 不要使用checked属性，高版本不准，jquery1.6版本后选中时是true ，没选中是undefined
             console.log("remeberMe = "+$("#remeberMe").is(":checked"));
@@ -331,6 +328,35 @@
             return false;
         });
 
+        // $("#btnRegister").bind("click",function () {
+        //
+        // });
+
+        $("#registerForm").bind("submit",function () {
+            var url = $(this).attr("action");
+            var method = $(this).attr("method");
+            var formData = new FormData(this);
+            console.log("ajax register from 提交");
+            $.ajax({
+                url:url,
+                type:method,
+                data:formData,
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    var flag = result.code;
+                    if(flag == "0000"){
+                        console.log("注册成功");
+                        // $("#login_msg").hide();
+                        // location.href = "/index";
+                    }else{
+                        console.log("注册失败：" + result.msg);
+                        $("#register_msg").show().html(result.msg);
+                    }
+                }
+            });
+            return false;
+        });
 
     });
 

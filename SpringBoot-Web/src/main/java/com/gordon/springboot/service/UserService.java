@@ -1,8 +1,10 @@
 package com.gordon.springboot.service;
 
 import com.gordon.springboot.entity.GwUser;
+import com.gordon.springboot.utils.BRUtils;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
@@ -12,5 +14,7 @@ public interface UserService {
 
     GwUser selectUserByName(String username);
 
-    List<GwUser> selectUserList();
+    List<GwUser> findUserListByMap(Map<String,Object> map);
+
+
 }

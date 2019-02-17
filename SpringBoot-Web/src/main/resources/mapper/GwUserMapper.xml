@@ -15,18 +15,53 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
+
+  <sql id="allColumn">
+      user_id, username, password,
+      salt, email, mobile,
+      status, login_fail_num, lock_stime,
+      lock_duration, create_time, update_time
+  </sql>
+
+  <sql id="allWhere">
+    where 1 = 1
+    <if test="userId != null and userId != ''">and userId = #{userId}</if>
+    <if test="username != null and username != ''">and username = #{username}</if>
+    <if test="password != null and password != ''">and password = #{password}</if>
+    <if test="salt != null and salt != ''">and salt = #{salt}</if>
+    <if test="email != null and email != ''">and email = #{email}</if>
+    <if test="mobile != null and mobile != ''">and mobile = #{mobile}</if>
+    <if test="status != null and status != ''">and status = #{status}</if>
+    <if test="loginFailNum != null and loginFailNum != ''">and loginFailNum = #{loginFailNum}</if>
+    <if test="createTime != null and createTime != ''">and createTime = #{createTime}</if>
+    <if test="updateTime != null and updateTime != ''">and updateTime = #{updateTime}</if>
+    /* 开始时间 和 结束时间*/
+    <if test="startTime != null and startTime != ''">and createTime >= #{startTime}</if>
+    <if test="endTime != null and endTime != ''"><![CDATA[and createTime <= #{endTime}]]></if>
+  </sql>
+
+
+  <select id="findUserListByMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+      <include refid = "allColumn"/>
+    from gw_user
+      <include refid = "allWhere"/>
+  </select>
+
+
   <insert id="insert" parameterType="com.gordon.springboot.entity.GwUser">
-    insert into gw_user (user_id, username, `password`, 
-      salt, email, mobile, 
-      `status`, login_fail_num, lock_stime, 
+    insert into gw_user (user_id, username, `password`,
+      salt, email, mobile,
+      `status`, login_fail_num, lock_stime,
       lock_duration, create_time, update_time
       )
-    values (#{userId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{salt,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
-      #{status,jdbcType=VARCHAR}, #{loginFailNum,jdbcType=INTEGER}, #{lockStime,jdbcType=TIMESTAMP}, 
+    values (#{userId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{salt,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR},
+      #{status,jdbcType=VARCHAR}, #{loginFailNum,jdbcType=INTEGER}, #{lockStime,jdbcType=TIMESTAMP},
       #{lockDuration,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
+
   <insert id="insertSelective" parameterType="com.gordon.springboot.entity.GwUser">
     insert into gw_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -106,4 +141,6 @@
       </if>
     </trim>
   </insert>
+
+
 </mapper>

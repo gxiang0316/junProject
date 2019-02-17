@@ -11,9 +11,11 @@ public class ErrorContants {
 
 
 
-    public static final String ERROR_9000 = "9000@数据库中已存在该记录";
+    public static final String ERROR_9000 = "9000@该用户名已存在";
     public static final String ERROR_9001 = "9001@用户名或密码错误";
     public static final String ERROR_9002 = "9002@账号已被锁定";
+    public static final String ERROR_9003 = "9003@验证码错误，请重新输入!";
+    public static final String ERROR_9004 = "9004@验证码已过期，请点击刷新!";
 
 
 

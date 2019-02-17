@@ -171,8 +171,8 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <!--2.0以下将依赖关系标记为可选<optional>true</optional>是一种最佳做法，
-                可以防止使用项目将devtools传递性地应用于其他模块。
-            <optional>true</optional>-->
+                可以防止使用项目将devtools传递性地应用于其他模块。-->
+            <optional>true</optional>
             <scope>runtime</scope>
         </dependency>
     </dependencies>
@@ -199,6 +199,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <!--2.0以下配合devtools热部署:<fork>true</fork>-->
+                    <fork>true</fork>
                 </configuration>
             </plugin>
 

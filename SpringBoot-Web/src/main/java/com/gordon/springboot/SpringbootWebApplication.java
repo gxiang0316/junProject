@@ -15,6 +15,14 @@ public class SpringbootWebApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringbootWebApplication.class, args);
+        System.out.println();
+        System.out.println("        ***************************************************");
+        System.out.println("        *                                                 *");
+        System.out.println("        *               Welcome Gordon Web                *");
+        System.out.println("        *                                                 *");
+        System.out.println("        ***************************************************");
+        System.out.println();
+        System.out.println();
     }
 
     /**部署到外部tomcat，继承SpringBootServletInitializer，重写configure方法

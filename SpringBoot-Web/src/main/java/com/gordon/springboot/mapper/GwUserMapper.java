@@ -4,6 +4,7 @@ import com.gordon.springboot.entity.GwUser;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 public interface GwUserMapper {
 
@@ -19,6 +20,5 @@ public interface GwUserMapper {
     @Select("select * from gw_user where username = #{username}")
     GwUser selectUserByName(String username);
 
-    @Select("select * from gw_user")
-    List<GwUser> selectUserList();
+    List<GwUser> findUserListByMap(Map<String,Object> map);
 }

@@ -14,6 +14,7 @@ public interface GwLogMapper {
 
     @Select("select * from gw_log")
     @Results({
+        // 将结果列与实体类对应起来
         @Result(column = "create_date",property = "createDate"),
         @Result(column = "update_time",property = "updateTime"),
         @Result(column = "test_time",property = "testTime")
