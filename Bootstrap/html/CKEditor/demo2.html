@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CKEditor 2</title>
+    <script src="ckeditor/ckeditor.js"></script>
+    <!--<link rel="stylesheet" href="ckeditor/samples/css/samples.css">-->
+</head>
+<body>
+<form action="sample_posteddata.php" method="post">
+    <!-- toolbar 样式中英文对照 ：https://www.cnblogs.com/answercard/p/3709463.html -->
+    <!-- toolbar 样式配置 ：https://www.cnblogs.com/TwinklingZ/p/5980364.html -->
+    <!-- toolbar 样式配置(官网) ：https://ckeditor.com/docs/ckeditor4/latest/guide/dev_toolbar.html -->
+    <!-- toolbar 样式配置(demo中可以自动生成) ：file:///F:/WorkSpace/%E5%89%8D%E7%AB%AF/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8/ckeditor/samples/toolbarconfigurator/index.html#basic -->
+    <!-- toolbar 样式配置全部配置需要引入https://cdn.ckeditor.com/4.11.2/full/ckeditor.js -->
+    <p>
+        <label for="editor1">
+            Editor 1:
+        </label>
+        <textarea class="ckeditor" cols="40" id="editor1" name="editor1" rows="5">
+		</textarea>
+
+        <!-- 自定义配置 -->
+        <script>
+            CKEDITOR.replace( 'editor1', {
+                uiColor: '#14B8C4',// 主题颜色
+                toolbar: [ // 工具栏
+                    [ 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink' ],
+                    [ 'FontSize', 'TextColor', 'BGColor' ]
+                ]
+            });
+
+        </script>
+    </p>
+    <p>
+        <label for="editor2">
+            Editor 2:
+        </label>
+        <textarea class="ckeditor" cols="40" id="editor2" name="editor2" rows="5">
+		</textarea>
+
+        <!-- 自定义配置 -->
+        <script>
+            CKEDITOR.replace( 'editor2', {
+                toolbar: [ // 工具栏
+                    ['Source','-','Save','NewPage','Preview','-','Templates'],
+                    ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'],
+                    ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+                    ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'],
+                    // '/',
+                    // ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+                    // ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+                    // ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+                    // ['Link','Unlink','Anchor'],
+                    // ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+                    // '/',
+                    // ['Styles','Format','Font','FontSize'],
+                    // ['TextColor','BGColor']
+                ],
+                height:400
+            });
+
+        </script>
+    </p>
+    <p>
+        <label for="editor3">
+            Editor 3:
+        </label>
+        <textarea cols="40" id="editor3" name="editor3" rows="5">
+		</textarea>
+
+        <!-- 自定义配置 -->
+        <script>
+            CKEDITOR.replace( 'editor3', {
+                height:400
+            });
+
+        </script>
+    </p>
+    <p>
+        <label for="editor4">
+            Editor 4:
+        </label>
+        <textarea cols="40" id="editor4" name="editor4" rows="5">
+		</textarea>
+
+        <!-- 自定义配置 -->
+        <script>
+            CKEDITOR.replace('editor4', {
+                // Define the toolbar groups as it is a more accessible solution.
+                toolbarGroups: [{
+                        "name": "basicstyles",
+                        "groups": ["basicstyles"]
+                    },
+                    {
+                        "name": "links",
+                        "groups": ["links"]
+                    },
+                    {
+                        "name": "paragraph",
+                        "groups": ["list", "blocks"]
+                    },
+                    {
+                        "name": "document",
+                        "groups": ["mode"]
+                    },
+                    {
+                        "name": "insert",
+                        "groups": ["insert"]
+                    },
+                    {
+                        "name": "styles",
+                        "groups": ["styles"]
+                    }
+                    // ,
+                    // {
+                    //     "name": "about",
+                    //     "groups": ["about"]
+                    // }
+                ],
+                // Remove the redundant buttons from toolbar groups defined above.
+                removeButtons: 'Underline,Strike,Subscript,Superscript,Anchor,Styles,Specialchar'
+            });
+        </script>
+    </p>
+
+    <p>
+        <label for="editor5">
+            Editor 5:
+        </label>
+        <textarea cols="40" id="editor5" name="editor5" rows="5">
+		</textarea>
+
+        <!-- 自定义配置 -->
+        <script>
+            CKEDITOR.replace( 'editor5', {
+                customConfig: '/custom_config.js',
+                height:300,
+                removePlugins:'elementspath,resize', // 移除编辑器底部状态栏显示的元素路径和调整编辑器大小的按钮
+            });
+
+        </script>
+    </p>
+    <p>
+        <label for="editor6">
+            Editor 6:
+        </label>
+        <textarea cols="40" id="editor6" name="editor6" rows="5">
+		</textarea>
+
+        <!-- 自定义配置 -->
+        <script>
+            CKEDITOR.replace( 'editor6', {
+                width:600,
+                height:300,
+                removePlugins:'elementspath,resize', // 移除编辑器底部状态栏显示的元素路径和调整编辑器大小的按钮
+                toolbar:[
+                    { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+                    { name: 'editing', items: [ 'Scayt' ] },
+                    { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+                    { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] },
+                    { name: 'tools', items: [ 'Maximize' ] },
+                    { name: 'document', items: [ 'Source' ] },
+                    '/',
+                    { name: 'basicstyles',  items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'] },
+                    { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
+                    { name: 'styles', items: [ 'Styles', 'Format' ] },
+                    { name: 'about', items: [ 'About' ] }
+                ]
+            });
+
+        </script>
+    </p>
+
+    <p>
+        <input type="submit" value="Submit">
+    </p>
+</form>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CKEditor Sample</title>
+    <script src="ckeditor/ckeditor.js"></script>
+    <!--<link rel="stylesheet" href="ckeditor/samples/css/samples.css">-->
+</head>
+<body>
+<!-- ckediotr full版 ： https://www.cnblogs.com/fuchuanzhipan1209/p/6179357.html  -->
+<!-- ckeditor配置中英文对照：https://www.cnblogs.com/Tirisfal/p/5548424.html -->
+<!-- cdeditor API : https://ckeditor.com/docs/ckeditor4/latest/api/index.html-->
+<form action="sample_posteddata.php" method="post">
+    <p>
+        <label for="editor1">
+            Editor 1:
+        </label>
+        <!-- 最简单的示例  默认样式 必须定义class="ckeditor" -->
+        <!--  一个 25 个字符宽 3 行高的文本区：<textarea rows="3" cols="20"> cols 属性规定 textarea 的可见宽度 -->
+        <textarea class="ckeditor" cols="40" id="editor1" name="editor1" rows="5">
+		</textarea>
+    </p>
+    <p>
+        <label for="editor2">
+            Editor 2:
+        </label>
+        <textarea class="ckeditor" cols="80" id="editor2" name="editor2" rows="10">
+				&lt;h1&gt;&lt;img alt=&quot;Saturn V carrying Apollo 11&quot;
+                class=&quot;right&quot; src=&quot;assets/sample.jpg&quot;/&gt;
+                Apollo 11&lt;/h1&gt; &lt;p&gt;&lt;b&gt;Apollo 11&lt;/b&gt;
+                was the spaceflight that landed the first humans, Americans &lt;
+                a href=&quot;http://en.wikipedia.org/wiki/Neil_Armstrong&quot;
+                title=&quot;Neil Armstrong&quot;&gt;Neil Armstrong&lt;/a&gt;
+                and &lt;a href=&quot;http://en.wikipedia.org/wiki/Buzz_Aldrin&quot;
+                title=&quot;Buzz Aldrin&quot;&gt;Buzz Aldrin&lt;/a&gt;,
+                on the Moon on July 20, 1969, at 20:18 UTC. Armstrong became the first
+                to step onto the lunar surface 6 hours later on July 21 at 02:56 UTC.&lt;/p&gt; &lt;
+                p&gt;Armstrong spent about &lt;s&gt;three and a half&lt;/s&gt; two and a half hours outside
+                the spacecraft, Aldrin slightly less; and together they collected 47.5 pounds (21.5&amp;nbsp;kg)
+                of lunar material for return to Earth. A third member of the mission, &lt;a href=&quot;
+                http://en.wikipedia.org/wiki/Michael_Collins_(astronaut)&quot; title=&quot;
+		</textarea>
+    </p>
+    <p>
+        <input type="submit" value="Submit">
+    </p>
+</form>
+</body>
+</html>

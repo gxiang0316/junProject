@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CKEditor 3</title>
+    <script src="ckeditor/ckeditor.js"></script>
+    <!--<link rel="stylesheet" href="ckeditor/samples/css/samples.css">-->
+</head>
+<body>
+
+    <p>
+        <label for="editor">
+            Editor :
+        </label>
+        <textarea class="ckeditor" cols="80" id="editor" name="editor2" rows="10">
+				&lt;h1&gt;&lt;img alt=&quot;Saturn V carrying Apollo 11&quot;
+                class=&quot;right&quot; src=&quot;assets/sample.jpg&quot;/&gt;
+                Apollo 11&lt;/h1&gt; &lt;p&gt;&lt;b&gt;Apollo 11&lt;/b&gt;
+                was the spaceflight that landed the first humans, Americans &lt;
+                a href=&quot;http://en.wikipedia.org/wiki/Neil_Armstrong&quot;
+                title=&quot;Neil Armstrong&quot;&gt;Neil Armstrong&lt;/a&gt;
+                and &lt;a href=&quot;http://en.wikipedia.org/wiki/Buzz_Aldrin&quot;
+                title=&quot;Buzz Aldrin&quot;&gt;Buzz Aldrin&lt;/a&gt;,
+                on the Moon on July 20, 1969, at 20:18 UTC. Armstrong became the first
+                to step onto the lunar surface 6 hours later on July 21 at 02:56 UTC.&lt;/p&gt; &lt;
+                p&gt;Armstrong spent about &lt;s&gt;three and a half&lt;/s&gt; two and a half hours outside
+                the spacecraft, Aldrin slightly less; and together they collected 47.5 pounds (21.5&amp;nbsp;kg)
+                of lunar material for return to Earth. A third member of the mission, &lt;a href=&quot;
+                http://en.wikipedia.org/wiki/Michael_Collins_(astronaut)&quot; title=&quot;
+		</textarea>
+    </p>
+    <p>
+        <button id="getData" onclick="getCkEditorData()">获取数据</button>
+        <button id="setData" onclick="setCkEditorData()">填充数据</button>
+    </p>
+
+    <script>
+
+        /**获取富文本编辑器对象*/
+        var editor = CKEDITOR.replace("editor",{customConfig: '/custom_config.js'});
+
+        function getCkEditorData(){
+            var content = editor.getData();
+            console.log("获取富文本内容 : \r\n" + content);
+        }
+
+        function setCkEditorData(){
+            var content = "<p>   fjosfefl" +
+                "fsdfsdfwrwerwefsf           ^*^&(^%&%& </p>";
+            editor.setData(content);
+            console.log("填充富文本内容 : \r\n" + content)
+        }
+
+    </script>
+
+
+</body>
+</html>
