@@ -15,6 +15,8 @@ import java.util.*;
 public class PropertiesUtils {
 
     private static Environment env;
+    /**算术符号*/
+    private static final String[] reg = {"\\+","-","\\*","/","%"};
 
     @Autowired
     public PropertiesUtils(Environment env){
@@ -42,7 +44,45 @@ public class PropertiesUtils {
     }
 
     public static int getInt(String key) {
+        String value = getString(key);
+        // 去掉空格
+        value = value.replaceAll("\\s","");
+//        String[] items = null;
+//        for(int i = 0 ; i < reg.length ; i++){
+//            if (value.contains(reg[i])) {
+//                if(items == null){
+//                    items = new String[]{};
+//                }
+//                items[i] = value.split(reg[i])[i];
+//                items[i+1] = value.split(reg[i])[i+1];
+//
+//            }
+//        }
         return Integer.parseInt(env.getProperty(key));
+    }
+
+    public static String[] splitValue(String[] values,String value){
+        String[] items = null;
+        for(int i = 0 ; i < reg.length ; i++){
+            if (value.contains(reg[i])) {
+                if(items == null){
+                    items = new String[]{};
+                }
+                items[0] = value.split(reg[i])[0];
+                items[1] = value.split(reg[i])[1];
+                if(values != null && values.length > 0){
+                    values[values.length] = items[0];
+                    values[values.length+1] = reg[i];
+                    values[values.length+2] = items[1];
+                }else {
+                    values[0] = items[0];
+                    values[1] = reg[i];
+                    values[2] = items[1];
+                }
+                splitValue(values,items[1]);
+            }
+        }
+        return values;
     }
 
     public static int getInt(String key, int defaultValue) {
