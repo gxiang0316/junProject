@@ -238,7 +238,6 @@
             </plugin>
 
 
-
             <!-- 指定生成的war包到相对路径下-->
             <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>

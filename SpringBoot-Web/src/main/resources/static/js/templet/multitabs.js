@@ -116,13 +116,19 @@ if (typeof jQuery === "undefined") {
             // '<li class="mt-move-right"><a><i class="fa fa-forward"></i></a></li>' +
             '<li class="mt-move-right"><a style="border: none;margin-top:-5px;height:40px;"><i class="fa fa-forward" style="color: #3c8dbc;"></i></a></li>' +
             '<li class="mt-dropdown dropdown">' +
-            '<a href="#"  style="border: none;margin-top:-5px;height:40px;" class="dropdown-toggle" data-toggle="dropdown">{dropdown}<span class="caret"></span></a>' +
-            '<ul role="menu" class="dropdown-menu dropdown-menu-right">' +
-            '<li class="mt-show-actived-tab"><a>{showActivedTab}</a></li>' +
-            '<li class="divider"></li>' +
-            '<li class="mt-close-all-tabs"><a>{closeAllTabs}</a></li>' +
-            '<li class="mt-close-other-tabs"><a>{closeOtherTabs}</a></li>' +
-            '</ul>' +
+            '<a href="#" id="showTabDropMenu" style="border: none;margin-top:-5px;height:40px;" class="dropdown-toggle" data-toggle="dropdown">{dropdown}<span class="caret"></span></a>' +
+            '<div role="menu" id="tabDropMenu" class="dropdown-menu dropdown-menu-right">' +
+            '<a class="mt-show-actived-tab c_dropdown-item">{showActivedTab}</a>' +
+            '<a class="divider"></a>' +
+            '<a class="mt-close-all-tabs c_dropdown-item">{closeAllTabs}</a>' +
+            '<a class="mt-close-other-tabs c_dropdown-item">{closeOtherTabs}</a>' +
+            '</div>' +
+            // '<ul role="menu" class="dropdown-menu dropdown-menu-right">' +
+            // '<li class="mt-show-actived-tab c_dropdown-item"><a>{showActivedTab}</a></li>' +
+            // '<li class="divider"></li>' +
+            // '<li class="mt-close-all-tabs c_dropdown-item"><a>{closeAllTabs}</a></li>' +
+            // '<li class="mt-close-other-tabs c_dropdown-item"><a>{closeOtherTabs}</a></li>' +
+            // '</ul>' +
             '</li>' +
             '</ul>' +
             '</div>' +
@@ -448,6 +454,13 @@ if (typeof jQuery === "undefined") {
             return self;
         },
 
+        showTabDropMenu:function(){
+            var self = this,
+            $el = self.$element;
+            // $el.find("#tabDropMenu").show();
+            return self;
+        },
+
         /**
          * close navTab
          * @param navTab
@@ -495,6 +508,7 @@ if (typeof jQuery === "undefined") {
                 $navTab.parent('li').remove(); //remove navtab
             });
             $el.navPanelList.css("margin-left", "0");
+            // $el.find("#tabDropMenu").hide();
             return self;
         },
 
@@ -524,6 +538,7 @@ if (typeof jQuery === "undefined") {
                 $navTab.parent('li').remove(); //remove navtab
             });
             self.active($el.navPanelList.find('a[data-type="main"]:first').parent('li'));
+            // $el.find("#tabDropMenu").hide();
             return self;
         },
 
@@ -684,6 +699,11 @@ if (typeof jQuery === "undefined") {
             //move right
             handler($el.nav, 'click', '.mt-move-right', function () {
                 self.moveRight();
+                return false; //Avoid possible BUG
+            });
+            //打开 关闭所有页签下拉菜单 所在的a标签
+            handler($el.nav, 'click', '#showTabDropMenu', function () {
+                self.showTabDropMenu();
                 return false; //Avoid possible BUG
             });
             //show actived tab
