@@ -1,0 +1,2 @@
+# 扩展Environment获取自定义properties
+org.springframework.boot.env.EnvironmentPostProcessor=com.gordon.springboot.config.CustomEnvironment

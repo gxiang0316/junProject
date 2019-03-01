@@ -1,5 +1,6 @@
 package com.gordon.springboot;
 
+import com.gordon.springboot.utils.PropertiesUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.springframework.util.Base64Utils;
 
@@ -21,9 +22,20 @@ public class GwTest {
 
 //        c20726e7c1874ed1928ee7b51cd1a679
 //        1000001859610415
-        System.out.println(UUID.randomUUID().toString().replace("-",""));
-        System.out.println(getOrderIdByUUId());
-        System.out.println(new SecureRandomNumberGenerator().nextBytes().toHex());
+//        System.out.println(UUID.randomUUID().toString().replace("-",""));
+//        System.out.println(getOrderIdByUUId());
+//        System.out.println(new SecureRandomNumberGenerator().nextBytes().toHex());
+
+//        int anInt = PropertiesUtils.getInt("test.int");
+//        System.out.println(" main test result : " + anInt);
+
+
+        String str = "sysParam.properties";
+        String[] split = str.split("\\.");
+        for(int g = 0 ; g < split.length ;g++){
+            System.out.println(" ==== "+split[g]);
+        }
+
     }
 
     public static String getOrderIdByUUId() {

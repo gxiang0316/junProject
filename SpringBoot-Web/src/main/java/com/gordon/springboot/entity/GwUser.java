@@ -1,8 +1,9 @@
 package com.gordon.springboot.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class GwUser {
+public class GwUser implements Serializable {
     private Long userId;
 
     private String username;

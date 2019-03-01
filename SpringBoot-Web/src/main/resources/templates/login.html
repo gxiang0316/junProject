@@ -73,6 +73,7 @@
     <div class="tab-content">
         <div id="loginDiv" class="container tab-pane active">
             <div class="h3 pt-2 pb-2" style="text-align: center">Gordon Web</div>
+            <!--autocomplete="off" 不缓存input框上次输入的值-->
             <form id="loginForm" class="row m-auto">
                 <!--<form id="loginForm" class="row m-auto" action="login" method="post">-->
                 <div class="col-12 input-group form-group">
@@ -80,7 +81,8 @@
                     <input id="username" name="username" type="text" placeholder="用户名" class="form-control" style="box-shadow: none"/>
                 </div>
                 <div class="col-12 input-group form-group">
-                    <input id="password" name="password" type="password" placeholder="密码" class="form-control" style="box-shadow: none"/>
+                    <!-- autocomplete="new-password":解决form表单自动填充缓存  -->
+                    <input id="password" name="password" type="password" autocomplete="new-password" placeholder="密码" class="form-control" style="box-shadow: none"/>
                 </div>
                 <div class="col-12 form-group" style="margin-bottom: 4px;">
                     <input id="verCode" name="verCode" type="text" placeholder="验证码" class="col-7 form-control" style="box-shadow: none;display: inline-block;"/>
@@ -195,6 +197,8 @@
             // 清空form表单 不能直接使用$("#loginForm").reset()，jquery报错 没有这个方法
             $("#loginForm")[0].reset();
             $("#registerForm")[0].reset();
+            $("#login_msg").hide();
+            $("#register_msg").hide();
             //console.log(" == tab 切换 更新验证码=== ");
             $(".pointer").attr("src","${ctxPath}/verifyCode?t=" + $.now());
         });
@@ -222,25 +226,30 @@
         });
         $("#registerusername").bind("focus",function () {
             $(this).attr("placeholder","");
-            $("#login_msg").hide();
+            $("#register_msg").hide();
         });
         $("#registerusername").bind("blur",function () {
             $(this).attr("placeholder","用户名");
         });
         $("#registerpassword").bind("focus",function () {
             $(this).attr("placeholder","");
-            $("#login_msg").hide();
+            $("#register_msg").hide();
         });
         $("#registerpassword").bind("blur",function () {
             $(this).attr("placeholder","密码");
         });
         $("#reregisterpassword").bind("focus",function () {
             $(this).attr("placeholder","");
-            $("#login_msg").hide();
+            $("#register_msg").hide();
         });
         $("#reregisterpassword").bind("blur",function () {
             $(this).attr("placeholder","确认密码");
         });
+        $("input[name='verCode']").bind("focus",function () {
+            $("#login_msg").hide();
+            $("#register_msg").hide();
+        });
+
         // 刷新验证码
         $(".pointer").bind("click",function () {
             $(".pointer").attr("src","${ctxPath}/verifyCode?t=" + $.now());
@@ -316,7 +325,11 @@
                     var flag = result.code;
                     if(flag == "0000"){
                         console.log("登录成功");
-                        location.href = "index.html";
+                        // location.href = "index.html";
+                        // /toHome 和 toHome 的区别 ：
+                        //      加了/的不会自动添加ctxPath，导致404
+                        //      不加/会自动添加ctxPath
+                        location.href = "${ctxPath}/toMain";
                     }else{
                         console.log("登录失败");
                         $("#login_msg").show().html(result.msg);
@@ -327,10 +340,6 @@
             // 必须返回false，否则form或formData提交时会自动跳转页面
             return false;
         });
-
-        // $("#btnRegister").bind("click",function () {
-        //
-        // });
 
         $("#registerForm").bind("submit",function () {
             var url = $(this).attr("action");

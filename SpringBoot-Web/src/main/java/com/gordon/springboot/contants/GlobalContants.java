@@ -5,6 +5,11 @@ package com.gordon.springboot.contants;
  */
 public class GlobalContants {
 
+    /** 正常 */
+    public static final String STATUS_ON = "0";
+    /** 禁用 */
+    public static final String STATUS_OFF = "1";
+
     public static final String USER_STATUS_ON = "0";
     public static final String USER_STATUS_LOCKED = "1";
     public static final String USER_STATUS_OFF = "2";

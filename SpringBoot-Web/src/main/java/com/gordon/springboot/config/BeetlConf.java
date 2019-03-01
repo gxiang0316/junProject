@@ -25,7 +25,7 @@ import java.util.Map;
  *     beetl.enabled 默认为true，集成beetl。
  *     beetl.suffix 默认为btl，表示只处理视图后缀为btl的模板，
  *      比如controller里代码是“return /common/index.btl”,则能被Beetl处理，
- *      你写成"return /common/index",或者"/common/index.html",都会出现404错误。
+ *      你写成"return /common/index",或者"/common/main.html",都会出现404错误。
  */
 @Configuration
 public class BeetlConf {

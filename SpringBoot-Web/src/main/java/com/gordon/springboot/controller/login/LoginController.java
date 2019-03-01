@@ -1,11 +1,14 @@
 package com.gordon.springboot.controller.login;
 
 import com.gordon.springboot.contants.ErrorContants;
+import com.gordon.springboot.entity.GwMenu;
 import com.gordon.springboot.entity.GwUser;
 import com.gordon.springboot.exception.GwException;
+import com.gordon.springboot.service.GwMenuService;
 import com.gordon.springboot.service.UserService;
 import com.gordon.springboot.shiro.ShiroUtils;
 import com.gordon.springboot.utils.BRUtils;
+import com.gordon.springboot.utils.JsonUtils;
 import com.gordon.springboot.utils.PropertiesUtils;
 import com.gordon.springboot.utils.VerifyCodeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -29,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -36,6 +40,8 @@ public class LoginController {
 
     @Autowired
     private UserService userServiceImpl;
+    @Autowired
+    private GwMenuService menuServiceImpl;
 
     @RequestMapping(value = {"/","/toLogin"})
     public String toLogin(){
@@ -49,7 +55,7 @@ public class LoginController {
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
         response.setContentType("image/jpeg");
-        System.out.println(" ===== 生成验证码 ======== ");
+//        System.out.println(" ===== 生成验证码 ======== ");
         //生成随机字串
         String verifyCode = VerifyCodeUtils.generateVerifyCode(4);
 
@@ -58,12 +64,12 @@ public class LoginController {
         //存入会话session
         ShiroUtils.setAttribute(ShiroUtils.VERIFY_KEY, verifyCode.toLowerCase());// 忽略大小写
         //设置过期时间 5 分钟
-        System.out.println(" 验证码过期时长 ： " + PropertiesUtils.getLong("shiro.verifyCode.timeout"));
+//        System.out.println(" 验证码过期时长 ： " + PropertiesUtils.getLong("shiro.verifyCode.timeout"));
         ShiroUtils.getSession().setTimeout(PropertiesUtils.getLong("shiro.verifyCode.timeout"));
         //生成图片
         int w = 100, h = 40;
         VerifyCodeUtils.outputImage(w, h, response.getOutputStream(), verifyCode);
-        System.out.println(" ==== 验证码： " + ShiroUtils.getAttribute(ShiroUtils.VERIFY_KEY));
+//        System.out.println(" ==== 验证码： " + ShiroUtils.getAttribute(ShiroUtils.VERIFY_KEY));
     }
 
     @RequestMapping(value = "/toRegister")
@@ -80,7 +86,7 @@ public class LoginController {
     @ResponseBody
     @RequestMapping(value = "/register",method=RequestMethod.POST)
     public Map<String,Object> register(String rusername,String rpassword, String verCode){
-        System.out.println("=========== register ==========");
+//        System.out.println("=========== register =========="+rpassword);
         String valiResult = ShiroUtils.validateCode(verCode);
         if(valiResult.equals("timeout")){
             return BRUtils.error(ErrorContants.ERROR_9004);
@@ -92,34 +98,20 @@ public class LoginController {
         gwUser.setPassword(rpassword);
         try {
             Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-//        try {
             int insert = userServiceImpl.insert(gwUser);
-            System.out.println(" insert : " + insert);
+//            System.out.println(" insert : " + insert);
             // 注册成功 直接后台登录
             return login(rusername, rpassword, verCode, true);
-//            if(insert > 0) {
-//            }else {
-//                return BRUtils.error();
-//            }
-//        } catch (GwException e) {//SQLIntegrityConstraintViolationException
-//            System.out.println("  1111111111  " + " code : " + e.getCode() + "  msg : " +e.getMsg());
-//        }catch (Exception e) {//SQLIntegrityConstraintViolationException
-//            System.out.println("  222222222  ");
-//        }
-//        return BRUtils.ok();
+        } catch (Exception e) {
+//            e.printStackTrace();
+            return BRUtils.error(ErrorContants.ERROR_500);
+        }
     }
 
 
     @ResponseBody
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public Map<String,Object> login(String username, String password,String verCode,boolean remeberMe) {
-//        System.out.println("=========== login ==========");
-        System.out.println(" name : " + username + "   password : " + password + "   verCode : "+verCode +"   remeberMe : " + remeberMe);
-        //Thread.sleep(5000);
-
         String valiResult = ShiroUtils.validateCode(verCode);
         if(valiResult.equals("timeout")){
             return BRUtils.error(ErrorContants.ERROR_9004);
@@ -127,14 +119,27 @@ public class LoginController {
             return BRUtils.error(ErrorContants.ERROR_9003);
         }
         UsernamePasswordToken token = new UsernamePasswordToken(username,password,remeberMe);
-        System.out.println(" name : " + username + "   password : " + password + "   remeberMe : " + remeberMe);
         try {
             ShiroUtils.getSubject().login(token);
         } catch (LockedAccountException e){
             return BRUtils.error(ErrorContants.ERROR_9002);
         } catch (AuthenticationException e) {
-            return BRUtils.error(ErrorContants.ERROR_9001);
+
+            return userServiceImpl.loginFailUpdate(username);
+            // 记录登录失败次数，并返回这个次数
+//            int failNum = userServiceImpl.loginFailUpdate(username);
+//            if(failNum >= 5){
+//                return BRUtils.error(ErrorContants.ERROR_9002);
+//            }else {
+//                return BRUtils.error(ErrorContants.ERROR_9001, new Object[]{5-failNum});
+//            }
         }
+        // 获取用户当前角色对应的菜单
+        List<GwMenu> menuList = menuServiceImpl.getUserRoleMenuList(username);
+        if(menuList == null || menuList.size() == 0){
+            return BRUtils.error(ErrorContants.ERROR_9006);
+        }
+        ShiroUtils.setAttribute(ShiroUtils.MENULIST_KEY, JsonUtils.listToJson(menuList));
         // 因为在生成验证码的时候设置的时间仅用于验证码校验，登录成功恢复默认时长
         ShiroUtils.getSession().setTimeout(PropertiesUtils.getLong("shiro.sessionTimeout"));
         return BRUtils.ok();

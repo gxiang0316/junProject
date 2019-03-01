@@ -454,13 +454,6 @@ if (typeof jQuery === "undefined") {
             return self;
         },
 
-        showTabDropMenu:function(){
-            var self = this,
-            $el = self.$element;
-            // $el.find("#tabDropMenu").show();
-            return self;
-        },
-
         /**
          * close navTab
          * @param navTab
@@ -509,6 +502,8 @@ if (typeof jQuery === "undefined") {
             });
             $el.navPanelList.css("margin-left", "0");
             // $el.find("#tabDropMenu").hide();
+            // 点击后，关闭自身
+            $el.navToolsRight.find('.mt-dropdown,.dropdown-menu-right').toggleClass('show ');
             return self;
         },
 
@@ -521,6 +516,8 @@ if (typeof jQuery === "undefined") {
                 $el = self.$element;
             var navTab = $el.navPanelList.find('li.active:first a');
             self._fixTabPosition(navTab);
+            // 点击后，关闭自身
+            $el.navToolsRight.find('.mt-dropdown,.dropdown-menu-right').toggleClass('show ');
             return self;
         },
 
@@ -539,6 +536,8 @@ if (typeof jQuery === "undefined") {
             });
             self.active($el.navPanelList.find('a[data-type="main"]:first').parent('li'));
             // $el.find("#tabDropMenu").hide();
+            // 点击后，关闭自身
+            $el.navToolsRight.find('.mt-dropdown,.dropdown-menu-right').toggleClass('show ');
             return self;
         },
 
@@ -699,11 +698,6 @@ if (typeof jQuery === "undefined") {
             //move right
             handler($el.nav, 'click', '.mt-move-right', function () {
                 self.moveRight();
-                return false; //Avoid possible BUG
-            });
-            //打开 关闭所有页签下拉菜单 所在的a标签
-            handler($el.nav, 'click', '#showTabDropMenu', function () {
-                self.showTabDropMenu();
                 return false; //Avoid possible BUG
             });
             //show actived tab

@@ -495,6 +495,8 @@ if (typeof jQuery === "undefined") {
                 $navTab.parent('li').remove(); //remove navtab
             });
             $el.navPanelList.css("margin-left", "0");
+            // 点击后，关闭自身
+            $el.navToolsRight.find('.mt-dropdown,.dropdown-menu-right').toggleClass('show ');
             return self;
         },
 
@@ -507,6 +509,8 @@ if (typeof jQuery === "undefined") {
                 $el = self.$element;
             var navTab = $el.navPanelList.find('li.active:first a');
             self._fixTabPosition(navTab);
+            // 点击后，关闭自身
+            $el.navToolsRight.find('.mt-dropdown,.dropdown-menu-right').toggleClass('show ');
             return self;
         },
 
@@ -524,6 +528,8 @@ if (typeof jQuery === "undefined") {
                 $navTab.parent('li').remove(); //remove navtab
             });
             self.active($el.navPanelList.find('a[data-type="main"]:first').parent('li'));
+            // 点击后，关闭自身
+            $el.navToolsRight.find('.mt-dropdown,.dropdown-menu-right').toggleClass('show ');
             return self;
         },
 

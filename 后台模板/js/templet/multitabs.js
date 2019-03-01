@@ -118,10 +118,11 @@ if (typeof jQuery === "undefined") {
             '<li class="mt-dropdown dropdown">' +
             '<a href="#"  style="border: none;margin-top:-5px;height:40px;" class="dropdown-toggle" data-toggle="dropdown">{dropdown}<span class="caret"></span></a>' +
             '<ul role="menu" class="dropdown-menu dropdown-menu-right">' +
-            '<li class="mt-show-actived-tab"><a>{showActivedTab}</a></li>' +
-            '<li class="divider"></li>' +
-            '<li class="mt-close-all-tabs"><a>{closeAllTabs}</a></li>' +
-            '<li class="mt-close-other-tabs"><a>{closeOtherTabs}</a></li>' +
+            '<li class="mt-show-actived-tab dropdown-item"><a onMouseOver="this.style.backgroundColor:transparent;this.style.cursor: none;this.style.textDecoration=\'none\'"\n' +
+            ' onMouseOut="this.style.textDecoration=\'none\'">{showActivedTab}</a></li>' +
+            '<li class="dropdown-divider"></li>' +
+            '<li class="mt-close-all-tabs dropdown-item"><a>{closeAllTabs}</a></li>' +
+            '<li class="mt-close-other-tabs dropdown-item"><a>{closeOtherTabs}</a></li>' +
             '</ul>' +
             '</li>' +
             '</ul>' +
@@ -495,6 +496,8 @@ if (typeof jQuery === "undefined") {
                 $navTab.parent('li').remove(); //remove navtab
             });
             $el.navPanelList.css("margin-left", "0");
+            // 点击后，关闭自身
+            $el.navToolsRight.find('.mt-dropdown,.dropdown-menu-right').toggleClass('show ');
             return self;
         },
 
@@ -507,6 +510,8 @@ if (typeof jQuery === "undefined") {
                 $el = self.$element;
             var navTab = $el.navPanelList.find('li.active:first a');
             self._fixTabPosition(navTab);
+            // 点击后，关闭自身
+            $el.navToolsRight.find('.mt-dropdown,.dropdown-menu-right').toggleClass('show ');
             return self;
         },
 
@@ -524,6 +529,8 @@ if (typeof jQuery === "undefined") {
                 $navTab.parent('li').remove(); //remove navtab
             });
             self.active($el.navPanelList.find('a[data-type="main"]:first').parent('li'));
+            // 点击后，关闭自身
+            $el.navToolsRight.find('.mt-dropdown,.dropdown-menu-right').toggleClass('show ');
             return self;
         },
 
