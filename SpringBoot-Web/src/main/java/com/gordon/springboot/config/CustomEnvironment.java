@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.gordon.springboot.config;
 
 import org.springframework.boot.SpringApplication;
