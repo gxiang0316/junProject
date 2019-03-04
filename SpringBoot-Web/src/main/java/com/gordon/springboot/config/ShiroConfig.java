@@ -57,12 +57,12 @@ public class ShiroConfig {
     private int cookieMaxAge;
 
 
-    @Bean(name = "ehcacheManager")
-    public EhCacheManager getEhCacheManager() {
-        EhCacheManager em = new EhCacheManager();
-        em.setCacheManagerConfigFile(ehcachePath);
-        return em;
-    }
+//    @Bean(name = "ehcacheManager")
+//    public EhCacheManager getEhCacheManager() {
+//        EhCacheManager em = new EhCacheManager();
+//        em.setCacheManagerConfigFile(ehcachePath);
+//        return em;
+//    }
 
     /**
      * 凭证匹配器
