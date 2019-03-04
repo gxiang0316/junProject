@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AA Multitabs </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!--标签页图标-->
+    <link rel="icon" type="image/x-icon" href="${ctxPath}/imgs/favicon.ico">
+    <link rel="stylesheet" href="${ctxPath}/css/bootstrap-4.0.0.css">
+    <link rel="stylesheet" href="${ctxPath}/css/font-awesome4.7.0.css">
+
+    <link rel="stylesheet" href="${ctxPath}/css/templet/templet-main.css">
+    <link rel="stylesheet" href="${ctxPath}/css/templet/skin-blue.css">
+    <!-- Multi Tabs -->
+    <link rel="stylesheet" href="${ctxPath}/css/templet/multi-tabs-style.css">
+
+    <style type="text/css">
+        /*为了自适应iframe高度，请依照下面这个样式添加CSS。 其中 .content-wrapper 是当前使用multitabs的wrapper。
+         .wrapper 为 .content-wrapper 的父层，需要将所有父层都添加 height: 100%*/
+        body,
+        body.full-height-layout .wrapper,
+        html{
+            height: 100% ;
+        }
+        body.full-height-layout .content-wrapper{/*使用multitabs的wrapper*/
+            height: calc(100% - 140px)           /*减去网页header和footer的高度，AdminLTE的为140px*/
+        }
+        .nav>li>a {
+            position: relative;
+            display: block;
+            padding: 10px 18px;/*覆盖bootstrap 导航 a 标签 padding*/
+        }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>-->
+    <!--使IE6、7、8版本浏览器兼容html5新增的标签，引入下面代码文件。-->
+    <script src="${ctxPath}/js/html5shiv.min.js"></script>
+    <!--使IE6、7、8版本浏览器兼容css3样式，引入下面代码文件-->
+    <script src="${ctxPath}/js/respond.min.js"></script>
+    <!--<![endif]-->
+</head>
+<body class="hold-transition sidebar-mini sidebar-collapse fixed skin-blue">
+<div class="wrapper">
+
+    <!-- Main Header -->
+    <header class="main-header">
+
+        <!-- Logo -->
+        <a href="#" class="logo">
+        <!--<a href="index2.html" class="logo">-->
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <!--  左侧菜单隐藏时显示的文字  -->
+            <span class="logo-mini"><b>G</b>W</span>
+            <!-- logo for regular state and mobile devices -->
+            <!--  左侧菜单展开时显示的文字  -->
+            <span class="logo-lg"><b>Gordon</b>Web</span>
+        </a>
+
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button 三横按钮(展开、关闭左侧菜单) -->
+            <a href="#" class="sidebar-toggle open-menu" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <!-- Navbar Right Menu 顶部右边自定义菜单-->
+            <div class="navbar-custom-menu dropdown" style="padding:0px 10px;margin-right:10px;display: flex;justify-content:center;align-items:Center;">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:white;display: flex;justify-content:center;align-items:Center;">
+                    <img src="${ctxPath}/imgs/user.jpg" style="border-radius: 50%;" alt="">
+                    <div style="text-align: center;margin-left:5px;float:right;">
+                        <span style="position:relative;top:3px;color: floralwhite">欢迎</span>
+                        <br>
+                        <span style="position:relative;top:-3px;color: floralwhite">gordon</span>
+                    </div>
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">设置</a>
+                    <div class="dropdown-divider"></div><!--分割线-->
+                    <a class="dropdown-item" href="#">退出</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <!-- 左侧菜单 -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu">
+                <li class="header">HEADER</li>
+                <!-- Optionally, you can add icons to the links -->
+                <li class="active">
+                    <a class="multitabs" href="pages/index-ajax-1.html" data-type="main"><i class="fa fa-dashboard"></i> <span> MAIN Tab</span></a>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-briefcase"></i> <span>External Link</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a class="multitabs" href="https://en.wikipedia.org" data-type="info"><i class="fa fa-angle-double-right"></i> Wikipedia</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-shopping-cart"></i> <span>Local link in iframe mode</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a class="multitabs" href="index-1.html" data-type="info" data-iframe="true" ><i class="fa fa-angle-double-right"></i> iframe INFO tab 1</a></li>
+                        <li><a class="multitabs" href="pages/index-2.html" data-type="main" data-iframe="true" ><i class="fa fa-angle-double-right"></i> iframe MAIN tab 2</a></li>
+                        <li><a class="multitabs" href="pages/index-3.html" data-type="info" data-iframe="true" ><i class="fa fa-angle-double-right"></i> iframe INFO tab 3</a></li>
+                        <li><a class="multitabs" href="pages/index-4.html" data-type="info" data-iframe="true" ><i class="fa fa-angle-double-right"></i> iframe INFO tab 4</a></li>
+                        <li><a class="multitabs" href="pages/index-5.html" data-type="info" data-iframe="true" ><i class="fa fa-angle-double-right"></i> iframe INFO tab 5</a></li>
+                        <li><a class="multitabs" href="pages/index-6.html" data-type="info" data-iframe="true" ><i class="fa fa-angle-double-right"></i> iframe INFO tab 6</a></li>
+                        <li><a class="multitabs" href="pages/index-2.html" data-type="main" data-iframe="true" ><i class="fa fa-angle-double-right"></i> iframe MAIN tab 2 long long long long long long long text</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-shopping-cart"></i> <span>Local link in ajax mode(default)</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a class="multitabs" href="pages/index-ajax-1.html" data-type="info" ><i class="fa fa-angle-double-right"></i> ajax INFO Tab 1</a></li>
+                        <li><a class="multitabs" href="pages/index-ajax-2.html"><i class="fa fa-angle-double-right"></i> ajax INFO Tab 2</a></li>
+                        <li><a class="multitabs" href="pages/index-ajax-3.html" data-type="main" ><i class="fa fa-angle-double-right"></i> ajax MAIN Tab 3</a></li>
+                        <li><a class="multitabs" href="pages/index-ajax-4.html"><i class="fa fa-angle-double-right"></i> ajax INFO Tab 4</a></li>
+                        <li><a class="multitabs" href="pages/index-ajax-5.html"><i class="fa fa-angle-double-right"></i> ajax INFO Tab 5</a></li>
+                        <li><a class="multitabs" href="pages/index-ajax-6.html"><i class="fa fa-angle-double-right"></i> ajax INFO Tab 6</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <!-- 主内容区  -->
+    <div id="content_wrapper" class="content-wrapper" style="height: 100%;background-color: white">
+
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            Anything you want
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2019 <a href="#">Company</a>.</strong> All rights reserved.
+    </footer>
+
+
+</div>
+<!-- ./wrapper -->
+
+<script src="${ctxPath}/js/jQuery-2.2.0.min.js"></script>
+<!--<script src="js/common/jquery-3.2.1.js"></script> 3版本 关闭无效果-->
+<script src="${ctxPath}/js/popper-1.12.9.js"></script>
+<script src="${ctxPath}/js/bootstrap-4.0.0.js"></script>
+<!-- Slimscroll -->
+<script src="${ctxPath}/js/jquery.slimscroll.js"></script>
+
+<script src="${ctxPath}/js/templet/gw-app.js"></script>
+<!-- Multi Tabs -->
+<script src="${ctxPath}/js/templet/multitabs.js"></script>
+
+<script>
+    var multitabs = $('#content_wrapper').multitabs({
+        refresh: true,
+        init:[
+            {
+                type : 'main',
+                title : '首页',
+                content : '',
+                url : '${ctxPath}/toHome'
+            }
+        ],
+        nav : {
+            showCloseOnHover : false
+        }
+    });
+</script>
+
+</body>
+</html>
