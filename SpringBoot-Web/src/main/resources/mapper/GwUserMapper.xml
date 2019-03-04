@@ -61,6 +61,19 @@
       #{lockDuration,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
+    <!--上面的和下面的这个插入数据后 数据库建表中使用的默认值都不会生效，因为此时它们都有默认值""-->
+  <insert id="insertUser" parameterType="com.gordon.springboot.entity.GwUser">
+    insert into gw_user (user_id, username, `password`,
+      salt, email, mobile,
+      `status`, login_fail_num, lock_stime,
+      lock_duration
+      )
+    values (#{userId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{salt,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR},
+      #{status,jdbcType=VARCHAR}, #{loginFailNum,jdbcType=INTEGER}, #{lockStime,jdbcType=TIMESTAMP},
+      #{lockDuration,jdbcType=INTEGER}
+      )
+  </insert>
 
   <insert id="insertSelective" parameterType="com.gordon.springboot.entity.GwUser">
     insert into gw_user
@@ -141,6 +154,44 @@
       </if>
     </trim>
   </insert>
+
+  <update id="updateUser" parameterType="com.gordon.springboot.entity.GwUser">
+    update gw_user
+      <set>
+          <if test="username != null and username != ''">
+            username = #{username,jdbcType=VARCHAR},
+          </if>
+          <if test="password != null and password != ''">
+            `password` = #{password,jdbcType=VARCHAR},
+          </if>
+          <if test="salt != null and salt != ''">
+            salt = #{salt,jdbcType=VARCHAR},
+          </if>
+          <if test="email != null and email != ''">
+            email = #{email,jdbcType=VARCHAR},
+          </if>
+          <if test="mobile != null and mobile != ''">
+            mobile = #{mobile,jdbcType=VARCHAR},
+          </if>
+          <if test="status != null and status != ''">
+            `status` = #{status,jdbcType=VARCHAR},
+          </if>
+          /*Java代码中传递的整数0在mybatis中被识别成null*/
+          <if test="loginFailNum != null and loginFailNum != '' or loginFailNum == 0">
+            login_fail_num = #{loginFailNum,jdbcType=INTEGER},
+          </if>
+          <if test="lockStime != null">
+            lock_stime = #{lockStime,jdbcType=TIMESTAMP},
+          </if>
+          <if test="lockDuration != null and lockDuration != ''">
+            lock_duration = #{lockDuration,jdbcType=INTEGER}
+          </if>
+      </set>
+      where 1=1 and
+      <if  test="userId != null and userId != ''">
+          user_id = #{userId,jdbcType=BIGINT}
+      </if>
+  </update>
 
 
 </mapper>

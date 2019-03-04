@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gordon.springboot.mapper.GwPermissionMapper">
+  <resultMap id="BaseResultMap" type="com.gordon.springboot.entity.GwPermission">
+    <result column="ep_id" jdbcType="BIGINT" property="epId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="own_page" jdbcType="VARCHAR" property="ownPage" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <insert id="insert" parameterType="com.gordon.springboot.entity.GwPermission">
+    insert into gw_element_permission (ep_id, `name`, permission_name, 
+      icon, url, `type`, own_page, 
+      parent_id, `status`, remark
+      )
+    values (#{epId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{permissionName,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{ownPage,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gordon.springboot.entity.GwPermission">
+    insert into gw_element_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="epId != null">
+        ep_id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="permissionName != null">
+        permission_name,
+      </if>
+      <if test="icon != null">
+        icon,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="ownPage != null">
+        own_page,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="epId != null">
+        #{epId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionName != null">
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ownPage != null">
+        #{ownPage,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

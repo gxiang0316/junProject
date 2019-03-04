@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gordon.springboot.mapper.GwMenuMapper">
+  <resultMap id="BaseResultMap" type="com.gordon.springboot.entity.GwMenu">
+    <result column="menu_id" jdbcType="INTEGER" property="menuId" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
+    <result column="menu_desc" jdbcType="VARCHAR" property="menuDesc" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+    <sql id="allColumn">
+        menu_id,menu_name,url,parent_id,icon,order_num,menu_desc,status,create_time,update_time
+    </sql>
+
+    <sql id="allWhere">
+        where 1=1
+        <if test="menu_id != null and menu_id != ''">menu_id = #{menuId,jdbcType=INTEGER}</if>
+        <if test="menu_name != null and menu_name != ''">menu_name = #{menuName,jdbcType=VARCHAR}</if>
+        <if test="url != null and url != ''">url = #{url,jdbcType=VARCHAR}</if>
+        <if test="parent_id != null and parent_id != ''">parent_id = #{parentId,jdbcType=INTEGER}</if>
+        <if test="icon != null and icon != ''">icon = #{icon,jdbcType=VARCHAR}</if>
+        <if test="order_num != null and order_num != ''">order_num = #{orderNum,jdbcType=INTEGER}</if>
+        <if test="status != null and status != ''">status = #{status,jdbcType=VARCHAR}</if>
+    </sql>
+
+  <insert id="insert" parameterType="com.gordon.springboot.entity.GwMenu">
+    insert into gw_menu (menu_id, menu_name, url, 
+      parent_id, icon, order_num, 
+      menu_desc, `status`, create_time, 
+      update_time)
+    values (#{menuId,jdbcType=INTEGER}, #{menuName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER}, 
+      #{menuDesc,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gordon.springboot.entity.GwMenu">
+    insert into gw_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="menuId != null">
+        menu_id,
+      </if>
+      <if test="menuName != null">
+        menu_name,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="icon != null">
+        icon,
+      </if>
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="menuDesc != null">
+        menu_desc,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="menuId != null">
+        #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="menuName != null">
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="menuDesc != null">
+        #{menuDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+    <select id="getUserRoleMenuList" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select gm.* from gw_menu gm left join gw_menu_role gmr on gmr.menu_id = gm.menu_id
+          left join
+            (select username,role_id from gw_user_role gur left join gw_user gu on gu.user_id = gur.user_id) t
+          on gmr.role_id = t.role_id
+        where 1=1
+          and <![CDATA[gm.status < "1"]]>
+          and t.username = #{username,jdbcType=VARCHAR};
+    </select>
+</mapper>

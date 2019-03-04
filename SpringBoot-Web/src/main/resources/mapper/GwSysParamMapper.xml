@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gordon.springboot.mapper.GwSysParamMapper">
+  <resultMap id="BaseResultMap" type="com.gordon.springboot.entity.GwSysParam">
+    <result column="param_id" jdbcType="BIGINT" property="paramId" />
+    <result column="module_id" jdbcType="INTEGER" property="moduleId" />
+    <result column="param_name" jdbcType="VARCHAR" property="paramName" />
+    <result column="param_value" jdbcType="VARCHAR" property="paramValue" />
+    <result column="param_desc" jdbcType="VARCHAR" property="paramDesc" />
+  </resultMap>
+  <insert id="insert" parameterType="com.gordon.springboot.entity.GwSysParam">
+    insert into gw_sys_param (param_id, module_id, param_name, 
+      param_value, param_desc)
+    values (#{paramId,jdbcType=BIGINT}, #{moduleId,jdbcType=INTEGER}, #{paramName,jdbcType=VARCHAR}, 
+      #{paramValue,jdbcType=VARCHAR}, #{paramDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gordon.springboot.entity.GwSysParam">
+    insert into gw_sys_param
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="paramId != null">
+        param_id,
+      </if>
+      <if test="moduleId != null">
+        module_id,
+      </if>
+      <if test="paramName != null">
+        param_name,
+      </if>
+      <if test="paramValue != null">
+        param_value,
+      </if>
+      <if test="paramDesc != null">
+        param_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="paramId != null">
+        #{paramId,jdbcType=BIGINT},
+      </if>
+      <if test="moduleId != null">
+        #{moduleId,jdbcType=INTEGER},
+      </if>
+      <if test="paramName != null">
+        #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValue != null">
+        #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="paramDesc != null">
+        #{paramDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+          param_id,module_id,param_name,param_value,param_desc
+        from gw_sys_param
+        where 1=1
+          and param_id = #{paramId,jdbcType=BIGINT}
+    </select>
+
+
+
+</mapper>
