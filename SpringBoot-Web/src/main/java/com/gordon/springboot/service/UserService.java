@@ -1,5 +1,6 @@
 package com.gordon.springboot.service;
 
+import com.gordon.springboot.entity.GwMenu;
 import com.gordon.springboot.entity.GwUser;
 import com.gordon.springboot.utils.BRUtils;
 
@@ -16,5 +17,8 @@ public interface UserService {
 
     List<GwUser> findUserListByMap(Map<String,Object> map);
 
+    BRUtils loginFailUpdate(String username);
+
+    void update(GwUser user);
 
 }

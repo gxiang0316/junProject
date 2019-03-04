@@ -3,6 +3,7 @@ package com.gordon.springboot.utils;
 import com.github.pagehelper.Page;
 import com.gordon.springboot.contants.ErrorContants;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,10 +40,19 @@ public class BRUtils extends HashMap<String,Object> {
 
     public static BRUtils error(String code){
         BRUtils brUtils = new BRUtils();
-//        String c = code.split("@")[0];
-//        String m = code.split("@")[1];
         brUtils.put(KEY_CODE,code.split("@")[0]);
         brUtils.put(KEY_MSG,code.split("@")[1]);
+        return brUtils;
+    }
+
+    public static BRUtils error(String code,Object[] objs){
+        BRUtils brUtils = new BRUtils();
+        brUtils.put(KEY_CODE,code.split("@")[0]);
+        if(objs != null && objs.length > 0){
+            brUtils.put(KEY_MSG, MessageFormat.format(code.split("@")[1],objs));
+        }else {
+            brUtils.put(KEY_MSG, code.split("@")[1]);
+        }
         return brUtils;
     }
 

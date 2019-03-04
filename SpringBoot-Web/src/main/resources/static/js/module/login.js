@@ -110,7 +110,7 @@ $(document).ready(function () {
                 var flag = result.code;
                 if(flag == "0000"){
                     console.log("登录成功");
-                    location.href = "index.html";
+                    location.href = "main.html";
                 }else{
                     console.log("登录失败");
                     $("#login_msg").show().html(result.msg);

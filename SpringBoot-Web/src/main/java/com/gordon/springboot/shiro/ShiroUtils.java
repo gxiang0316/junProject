@@ -14,6 +14,7 @@ public class ShiroUtils {
 
     public static String hashAlgorithmName = "SHA-256";
     public static int hashIterations = 5;
+    public static String MENULIST_KEY = "menuList";
     public static String VERIFY_KEY = "verifyCode";
 
     public static Session getSession() {

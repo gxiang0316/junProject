@@ -4951,7 +4951,7 @@ table.text-center th {
 .c_dropdown-item:hover, .c_dropdown-item:focus {
     color: #16181b;
     text-decoration: none;
-    background-color: #f8f9fa;
+    background-color: #ebf6f7;
 }
 
 .c_dropdown-item.active, .c_dropdown-item:active {

@@ -1,3 +1,15 @@
+
+-- 系统参数表
+drop table if exists `gw_sys_param`;
+create table `gw_sys_param`(
+  `param_id` bigint not null auto_increment,
+  `module_id` int(10) default null comment '模块id',
+  `param_name` varchar(50) default null comment '配置项名称',
+  `param_value` varchar(200) default null comment '参数值',
+  `param_desc` varchar(1000) default null comment '配置项描述',
+  primary key (`param_id`)
+) ENGINE=InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT='系统参数表';
+
 -- 系统用户
 DROP TABLE IF EXISTS `gw_user`;
 CREATE TABLE `gw_user` (
@@ -57,7 +69,7 @@ drop table if exists `gw_menu`;
 create table `gw_menu`(
   `menu_id` int(10) not null comment '菜单id',
   `menu_name` varchar(50) character  set utf8mb4 collate utf8mb4_general_ci not null comment '菜单名称',
-  `url` varchar(250) character  set utf8mb4 collate utf8mb4_general_ci not null comment '菜单链接',
+  `url` varchar(250) default null comment '菜单链接',
   `parent_id` int(10) default null comment '父菜单id',
   `icon` varchar(50) default null comment '菜单图标',
   `order_num` int(10) default null comment '菜单排序序号',

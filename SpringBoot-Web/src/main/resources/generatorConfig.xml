@@ -62,7 +62,7 @@
         </javaClientGenerator>
         
         <!-- 需要生成的表名以及实体类命名 -->
-        <table tableName="gw_menu" domainObjectName="GwMenu" schema="springboot-web"
+        <table tableName="gw_sys_param" domainObjectName="GwSysParam" schema="springboot-web"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
@@ -70,23 +70,23 @@
                 而为TRUE，表示原样输出数据库字段中的值(那么表字段可以写成这样userName)-->
             <!--<property name="useActualColumnNames" value="true"/>-->
         </table>
-        <!-- 需要生成的表名以及实体类命名 -->
-        <table tableName="gw_role" domainObjectName="GwRole" schema="springboot-web"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <!--这个值原来默认是FALSE的，表示针对字段的下划线转换为驼峰写法，
-                而为TRUE，表示原样输出数据库字段中的值(那么表字段可以写成这样userName)-->
-            <!--<property name="useActualColumnNames" value="true"/>-->
-        </table>
-        <!-- 需要生成的表名以及实体类命名 -->
-        <table tableName="gw_element_permission" domainObjectName="GwPermission" schema="springboot-web"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <!--这个值原来默认是FALSE的，表示针对字段的下划线转换为驼峰写法，
-                而为TRUE，表示原样输出数据库字段中的值(那么表字段可以写成这样userName)-->
-            <!--<property name="useActualColumnNames" value="true"/>-->
-        </table>
+        <!--&lt;!&ndash; 需要生成的表名以及实体类命名 &ndash;&gt;-->
+        <!--<table tableName="gw_role" domainObjectName="GwRole" schema="springboot-web"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+            <!--&lt;!&ndash;这个值原来默认是FALSE的，表示针对字段的下划线转换为驼峰写法，-->
+                <!--而为TRUE，表示原样输出数据库字段中的值(那么表字段可以写成这样userName)&ndash;&gt;-->
+            <!--&lt;!&ndash;<property name="useActualColumnNames" value="true"/>&ndash;&gt;-->
+        <!--</table>-->
+        <!--&lt;!&ndash; 需要生成的表名以及实体类命名 &ndash;&gt;-->
+        <!--<table tableName="gw_element_permission" domainObjectName="GwPermission" schema="springboot-web"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+            <!--&lt;!&ndash;这个值原来默认是FALSE的，表示针对字段的下划线转换为驼峰写法，-->
+                <!--而为TRUE，表示原样输出数据库字段中的值(那么表字段可以写成这样userName)&ndash;&gt;-->
+            <!--&lt;!&ndash;<property name="useActualColumnNames" value="true"/>&ndash;&gt;-->
+        <!--</table>-->
     </context>
 </generatorConfiguration>
