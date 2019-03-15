@@ -1,7 +1,10 @@
 package com.gordon.springboot.controller.main;
 
+import com.gordon.springboot.shiro.ShiroUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by gordon on 2019/2/26.
@@ -19,8 +22,11 @@ public class HomeController {
     }
 
     @RequestMapping("/toMain")
-    public String toMain(){
+    public String toMain(HttpServletRequest request){
         System.out.println(" -======HomeController===== toMain");
+        // 返回当前登录用户名
+        request.setAttribute("username",ShiroUtils.getUserEntity().getUsername());
+        // beetl获取：${username}
         return "main/main.html";
     }
 

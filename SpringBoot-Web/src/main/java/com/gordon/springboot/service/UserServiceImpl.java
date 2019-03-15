@@ -82,6 +82,14 @@ public class UserServiceImpl implements UserService {
             throw new GwException(ErrorContants.ERROR_9005);
         }
         Integer loginFailNum = guser.getLoginFailNum();
+        if(loginFailNum > 0) {
+            // 判断上次登录失败时间是否超过30分钟，超过则从0开始
+            long curTime = System.currentTimeMillis();
+            long updateTime = guser.getUpdateTime().getTime();
+            if ((curTime - updateTime)/60/1000 > 30) {
+                loginFailNum = 0;
+            }
+        }
         loginFailNum++;
         guser.setLoginFailNum(loginFailNum);
 
