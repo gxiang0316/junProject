@@ -1,6 +1,8 @@
 package com.gordon.springboot.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class GwMenu {
     private Integer menuId;
@@ -22,6 +24,8 @@ public class GwMenu {
     private Date createTime;
 
     private Date updateTime;
+
+    private List<GwMenu> childrenList;
 
     public Integer getMenuId() {
         return menuId;
@@ -101,5 +105,16 @@ public class GwMenu {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public List<GwMenu> getChildrenList() {
+        if(childrenList == null){
+            setChildrenList(new ArrayList<>());
+        }
+        return childrenList;
+    }
+
+    public void setChildrenList(List<GwMenu> childrenList) {
+        this.childrenList = childrenList;
     }
 }

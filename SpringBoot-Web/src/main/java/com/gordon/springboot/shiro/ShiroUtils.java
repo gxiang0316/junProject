@@ -26,7 +26,11 @@ public class ShiroUtils {
     }
 
     public static GwUser getUserEntity() {
-        return (GwUser)SecurityUtils.getSubject().getPrincipal();
+        Object principal = SecurityUtils.getSubject().getPrincipal();
+        if(principal == null || principal == ""){
+            return new GwUser();
+        }
+        return (GwUser)principal;
     }
 
     public static Long getUserId() {

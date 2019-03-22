@@ -114,6 +114,7 @@
           on gmr.role_id = t.role_id
         where 1=1
           and <![CDATA[gm.status < "1"]]>
-          and t.username = #{username,jdbcType=VARCHAR};
+          and t.username = #{username,jdbcType=VARCHAR}
+        order by gm.parent_id,gm.order_num;
     </select>
 </mapper>

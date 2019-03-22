@@ -1,6 +1,9 @@
 package com.gordon.springboot.controller.main;
 
+import com.gordon.springboot.mapper.GwMenuMapper;
+import com.gordon.springboot.service.GwMenuService;
 import com.gordon.springboot.shiro.ShiroUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -26,6 +29,7 @@ public class HomeController {
         System.out.println(" -======HomeController===== toMain");
         // 返回当前登录用户名
         request.setAttribute("username",ShiroUtils.getUserEntity().getUsername());
+        request.setAttribute("menuList",ShiroUtils.getAttribute(ShiroUtils.MENULIST_KEY));
         // beetl获取：${username}
         return "main/main.html";
     }
