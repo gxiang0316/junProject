@@ -297,8 +297,8 @@ if (typeof jQuery === "undefined") {
                 options = self.options;
             var closeBtnHtml, display;
 
-            // display = options.nav.showCloseOnHover ? '' : 'display:inline;';
-            display = options.nav.showCloseOnHover ? '' : 'display:inline;padding:3px 3px 3px 5px;color:#c2d5df';
+            display = options.nav.showCloseOnHover ? '' : 'display:inline;';
+            // display = options.nav.showCloseOnHover ? '' : 'display:inline;padding:3px 3px 3px 3px;color:#c2d5df';
             closeBtnHtml = (param.type === 'main') ? '' : defaultLayoutTemplates.closeBtn.replace('{style}', display); //main content can not colse.
             return defaultLayoutTemplates.navTab
                 .replace('{index}', param.index)
