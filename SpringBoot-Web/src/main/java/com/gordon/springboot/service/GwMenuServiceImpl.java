@@ -29,21 +29,22 @@ public class GwMenuServiceImpl implements GwMenuService {
             return new ArrayList<>();
         }
 
-        List<GwMenu> gwMenuList = new ArrayList<>();
-        for(int i = 0 ; i < menuList.size() ; i++){
-            GwMenu gwMenu = menuList.get(i);
-            List<GwMenu> childrenList = gwMenu.getChildrenList();
-            for(int j = 0 ; j < menuList.size() ; j++){
-                GwMenu gwMenu1 = menuList.get(j);
-                if(gwMenu.getMenuId().equals(gwMenu1.getParentId())){
-                    childrenList.add(gwMenu1);
-                }
-            }
-            if(childrenList.size() > 0) {
-                gwMenuList.add(gwMenu);
-            }
-        }
+//        List<GwMenu> gwMenuList = new ArrayList<>();
+//        for(int i = 0 ; i < menuList.size() ; i++){
+//            GwMenu gwMenu = menuList.get(i);
+//            List<GwMenu> childrenList = gwMenu.getChildrenList();
+//            for(int j = 0 ; j < menuList.size() ; j++){
+//                GwMenu gwMenu1 = menuList.get(j);
+//                if(gwMenu.getMenuId().equals(gwMenu1.getParentId())){
+//                    childrenList.add(gwMenu1);
+//                }
+//            }
+//            if(childrenList.size() > 0) {
+//                gwMenuList.add(gwMenu);
+//            }
+//        }
 
-        return gwMenuList;
+        return menuList;
+//        return gwMenuList;
     }
 }

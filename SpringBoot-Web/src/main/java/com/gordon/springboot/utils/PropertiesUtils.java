@@ -1,7 +1,6 @@
 package com.gordon.springboot.utils;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.util.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;

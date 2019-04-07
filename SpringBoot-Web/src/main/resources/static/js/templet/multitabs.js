@@ -161,7 +161,7 @@ if (typeof jQuery === "undefined") {
             '</div>',
         // navTab: '<a data-id="{navTabId}" class="mt-nav-tab" data-type="{type}" data-index="{index}" data-url="{url}">{title}</a>',
         navTab: '<a data-id="{navTabId}" class="mt-nav-tab" style="height: 35px;line-height:1.1285;" data-type="{type}" data-index="{index}" data-url="{url}">{title}</a>',
-        closeBtn: '<i class="mt-close-tab fa fa-times" style="{style}" onMouseOver="this.style.color=\'#A8C73D\';this.style.fontWeight=900" onMouseOut="this.style.color=\'#c2d5df\';this.style.fontWeight=\'normal\'"></i>',
+        closeBtn: '<i class="mt-close-tab fa fa-times" style="{style}" onMouseOver="this.style.color=\'#A8C73D\';this.style.fontWeight=900" onMouseOut="this.style.color=\'#c2d5df\';this.style.fontWeight=300"></i>',
         ajaxTabPane: '<div id="{tabPaneId}" class="tab-pane {class}">{content}</div>',
         iframeTabPane: '<iframe id="{tabPaneId}" class="tab-pane {class}"  width="100%" height="100%" frameborder="0" src="" seamless></iframe>'
     };
@@ -1060,9 +1060,12 @@ if (typeof jQuery === "undefined") {
             nav: {
                 title: 'Tab', //default tab's tittle
                 dropdown: '<i class="fa fa-bars"></i>', //right tools dropdown name
-                showActivedTab: 'Show Activated Tab', //show active tab
-                closeAllTabs: 'Close All Tabs', //close all tabs
-                closeOtherTabs: 'Close Other Tabs', //close other tabs
+                // showActivedTab: 'Show Activated Tab', //show active tab
+                // closeAllTabs: 'Close All Tabs', //close all tabs
+                // closeOtherTabs: 'Close Other Tabs', //close other tabs
+                showActivedTab: '关闭当前标签', //show active tab
+                closeAllTabs: '关闭所有标签', //close all tabs
+                closeOtherTabs: '关闭其他标签', //close other tabs
             }
         }
     };

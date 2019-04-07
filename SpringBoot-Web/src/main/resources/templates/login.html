@@ -333,6 +333,7 @@
                     }else{
                         console.log("登录失败");
                         $("#login_msg").show().html(result.msg);
+                        $(".pointer").attr("src","${ctxPath}/verifyCode?t=" + $.now());
                     }
                     $.loading.hide();
                 },
@@ -361,6 +362,7 @@
                     }else{
                         console.log("注册失败：" + result.msg);
                         $("#register_msg").show().html(result.msg);
+                        $(".pointer").attr("src","${ctxPath}/verifyCode?t=" + $.now());
                     }
                 }
             });

@@ -2,16 +2,11 @@ package com.gordon.springboot.service;
 
 import com.gordon.springboot.contants.ErrorContants;
 import com.gordon.springboot.contants.GlobalContants;
-import com.gordon.springboot.entity.GwMenu;
 import com.gordon.springboot.entity.GwUser;
 import com.gordon.springboot.exception.GwException;
-import com.gordon.springboot.mapper.GwMenuMapper;
-import com.gordon.springboot.mapper.GwSysParamMapper;
 import com.gordon.springboot.mapper.GwUserMapper;
 import com.gordon.springboot.shiro.ShiroUtils;
 import com.gordon.springboot.utils.BRUtils;
-import com.gordon.springboot.utils.PropertiesUtils;
-import com.gordon.springboot.utils.ResourcesUtil;
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
