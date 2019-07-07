@@ -2,6 +2,7 @@ package com.gordon.springboot.service;
 
 import com.gordon.springboot.entity.GwMenu;
 import com.gordon.springboot.mapper.GwMenuMapper;
+import com.gordon.springboot.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,23 +29,48 @@ public class GwMenuServiceImpl implements GwMenuService {
         if(menuList == null || menuList.size() == 0){
             return new ArrayList<>();
         }
+//        System.out.println("  menuList : " + JsonUtils.listToJson(menuList));
 
-//        List<GwMenu> gwMenuList = new ArrayList<>();
-//        for(int i = 0 ; i < menuList.size() ; i++){
-//            GwMenu gwMenu = menuList.get(i);
-//            List<GwMenu> childrenList = gwMenu.getChildrenList();
-//            for(int j = 0 ; j < menuList.size() ; j++){
-//                GwMenu gwMenu1 = menuList.get(j);
-//                if(gwMenu.getMenuId().equals(gwMenu1.getParentId())){
-//                    childrenList.add(gwMenu1);
-//                }
-//            }
-//            if(childrenList.size() > 0) {
-//                gwMenuList.add(gwMenu);
-//            }
-//        }
+
+//        menuList = convertToTree(0,menuList);
 
         return menuList;
-//        return gwMenuList;
     }
+
+    /**
+     * 递归拼成树形结构
+     * @param rootId
+     * @param menuList
+     * @return
+     */
+    private List<GwMenu> convertToTree(int rootId,List<GwMenu> menuList) {
+        List<GwMenu> parentList = new ArrayList<>();
+        for(int i = 0 ; i < menuList.size() ; i++){
+            GwMenu gwMenu = menuList.get(i);
+            Integer parentId = gwMenu.getParentId();
+            if(parentId == rootId){ // 获取一级菜单
+                parentList.add(gwMenu);
+                convertChildren(gwMenu,menuList);
+            }
+        }
+
+        return parentList;
+
+    }
+
+    // 获取当前节点下所有子节点
+    private void convertChildren(GwMenu gwMenu,List<GwMenu> menuList) {
+        Integer menuId = gwMenu.getMenuId();
+        for(int i = 0 ; i < menuList.size() ; i++){
+            GwMenu child = menuList.get(i);
+            Integer parentId = child.getParentId();
+            if(menuId.equals(parentId)){// 不能用 == 比较， == 比较的是地址 有时为true 有时为false
+                List<GwMenu> childrenList = gwMenu.getChildrenList();
+                childrenList.add(child);
+                convertChildren(child,menuList);
+            }
+        }
+    }
+
+
 }

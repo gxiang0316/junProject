@@ -78,10 +78,11 @@ public class LoginController {
         return "register.html";
     }
 
-    @RequestMapping("/logout")
-    public void logout(){
-        ShiroUtils.logout();
-    }
+    // shrio默认有退出，配置在ShiroConfig.java中
+//    @RequestMapping("/logout")
+//    public void logout(){
+//        ShiroUtils.logout();
+//    }
 
     @ResponseBody
     @RequestMapping(value = "/register",method=RequestMethod.POST)
@@ -143,6 +144,13 @@ public class LoginController {
         // 因为在生成验证码的时候设置的时间仅用于验证码校验，登录成功恢复默认时长
         ShiroUtils.getSession().setTimeout(PropertiesUtils.getLong("shiro.sessionTimeout"));
         return BRUtils.ok();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getMenuList",method = RequestMethod.GET)
+    public String getMenuList(String username) {
+        List<GwMenu> menuList = menuServiceImpl.getUserRoleMenuList(username);
+        return JsonUtils.listToJson(menuList);
     }
 
     @RequestMapping(value = {"index","index.html"})

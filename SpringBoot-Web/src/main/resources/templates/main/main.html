@@ -79,7 +79,19 @@
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#">设置</a>
                     <div class="dropdown-divider"></div><!--分割线-->
-                    <a class="dropdown-item" href="#">退出</a>
+                    <!--
+                        a标签的href和onclick属性同时存在点击事件先触发:
+                                onclick的事件被先执行，其次是href中定义的（页面跳转或者javascript）
+                                同时存在两个定义的时候（onclick与href都定义了），如果想阻止href的动作，在onclick必须加上return false; 一般是这样写onclick="xxx();return false;".
+                                在href中定义的函数如果有返回值的话，当前页面的内容将被返回值代替
+
+                                1.如果页面过长有滚动条，且希望通过链接的 onclick 事件执行操作。应将它的 href 属性设为 javascript:void(0);，而不要是 #，这可以防止不必要的页面跳动；
+
+                                2.所以，比较推荐的写法是<a href="javascript:void(0)" onclick="fn(this)">
+
+                                3.<a href="javascript:void(0);" onclick="javascript:goUrl('http://www.sina.com');return false;">跳转3</a>
+                    -->
+                    <a class="dropdown-item" href="javascript:void(0)" onclick="loginOut()">退出</a>
                 </div>
             </div>
         </nav>
@@ -226,6 +238,12 @@
             showCloseOnHover : false
         }
     });
+
+    function loginOut(){
+        location.href = "logout";
+    }
+
+
 </script>
 
 </body>
