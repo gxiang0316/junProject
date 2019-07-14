@@ -1,9 +1,10 @@
-package com.gordon.springboot.service;
+package com.gordon.springboot.service.impl;
 
 import com.gordon.springboot.entity.GwLog;
 import com.gordon.springboot.entity.GwUser;
 import com.gordon.springboot.mapper.GwLogMapper;
 import com.gordon.springboot.mapper.GwUserMapper;
+import com.gordon.springboot.service.GwLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

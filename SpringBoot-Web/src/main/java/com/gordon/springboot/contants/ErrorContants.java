@@ -20,6 +20,8 @@ public class ErrorContants {
     public static final String ERROR_9005 = "9005@用户名或密码错误";
     public static final String ERROR_9006 = "9006@当前用户没有任何操作权限 ！";
 
+    public static final String ERROR_9007 = "9007@请检查请求参数，{0}为必填参数！";
+
 
 
 

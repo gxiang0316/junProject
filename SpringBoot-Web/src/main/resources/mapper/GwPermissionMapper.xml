@@ -90,4 +90,24 @@
       </if>
     </trim>
   </insert>
+
+  <select id="getPermissionByUserId" resultType="string">
+      SELECT
+          gep.permission_name
+      FROM
+          gw_element_permission gep
+      INNER JOIN
+          (SELECT
+                  grp.ep_id
+              FROM
+                  gw_role_permission grp
+                  INNER JOIN gw_user_role gur
+                  ON grp.role_id = gur.role_id
+                  AND gur.user_id = #{userId,jdbcType=BIGINT}) t
+      ON gep.ep_id = t.ep_id
+
+
+  </select>
+
+
 </mapper>

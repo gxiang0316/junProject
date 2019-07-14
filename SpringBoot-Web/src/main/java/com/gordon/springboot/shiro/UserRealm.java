@@ -4,6 +4,7 @@ import com.gordon.springboot.contants.ErrorContants;
 import com.gordon.springboot.contants.GlobalContants;
 import com.gordon.springboot.entity.GwUser;
 import com.gordon.springboot.exception.GwException;
+import com.gordon.springboot.service.GwPermissionService;
 import com.gordon.springboot.service.SysParamService;
 import com.gordon.springboot.service.UserService;
 import org.apache.shiro.authc.*;
@@ -17,7 +18,7 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.Date;
+import java.util.*;
 
 public class UserRealm  extends AuthorizingRealm {
 
@@ -26,6 +27,9 @@ public class UserRealm  extends AuthorizingRealm {
 
     @Autowired
     private SysParamService sysParamServiceImpl;
+
+    @Autowired
+    private GwPermissionService gwPermissionServiceImpl;
 
 
     /**
@@ -76,10 +80,20 @@ public class UserRealm  extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(
             PrincipalCollection principalCollection) {
-        Object username = principalCollection.getPrimaryPrincipal();
-        System.out.println(" =========== ");
+        // getPrimaryPrincipal()获取的是 登录验证方法中构造SimpleAuthenticationInfo时的第一个参数
+        GwUser gwUser = (GwUser) principalCollection.getPrimaryPrincipal();
+        Long userId = gwUser.getUserId();
+
+        if(userId == GlobalContants.USER_ADMIN){//系统管理员拥有所有权限
+            // 设计：做一个权限页面，增删改查  每次都插入或更新admin的数据
+        }
+
+        List<String> permList = gwPermissionServiceImpl.getPermissionByUserId(userId);
+        System.out.println("  当前用户拥有的权限 ： " + permList.get(0));
+        Set<String> permSet = new HashSet<>();
+        permSet.addAll(permList);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.setStringPermissions(null);
+        info.setStringPermissions(permSet);
         return info;
     }
 

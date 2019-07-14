@@ -14,6 +14,9 @@ public class GlobalContants {
     public static final String USER_STATUS_LOCKED = "1";
     public static final String USER_STATUS_OFF = "2";
 
+    /**系统管理员*/
+    public static final long USER_ADMIN = 1;
+
 
 
 

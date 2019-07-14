@@ -1,10 +1,12 @@
-package com.gordon.springboot.service;
+package com.gordon.springboot.service.impl;
 
 import com.gordon.springboot.contants.ErrorContants;
 import com.gordon.springboot.contants.GlobalContants;
 import com.gordon.springboot.entity.GwUser;
 import com.gordon.springboot.exception.GwException;
 import com.gordon.springboot.mapper.GwUserMapper;
+import com.gordon.springboot.service.SysParamService;
+import com.gordon.springboot.service.UserService;
 import com.gordon.springboot.shiro.ShiroUtils;
 import com.gordon.springboot.utils.BRUtils;
 import org.apache.shiro.crypto.RandomNumberGenerator;
@@ -30,6 +32,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insert(GwUser user) {
+        GwUser guser = selectUserByName(user.getUsername());
+        if(guser != null){
+            throw new GwException(ErrorContants.ERROR_9000);
+        }
         RandomNumberGenerator randomNumberGenerator = new SecureRandomNumberGenerator();
         String salt = randomNumberGenerator.nextBytes().toHex();
         String password = new SimpleHash(ShiroUtils.hashAlgorithmName,
@@ -40,11 +46,6 @@ public class UserServiceImpl implements UserService {
 //        System.out.println(" salt : " + salt);
         user.setPassword(password);
 //        System.out.println("password : " + password);
-        GwUser guser = selectUserByName(user.getUsername());
-        if(guser != null){
-            throw new GwException(ErrorContants.ERROR_9000);
-        }
-
         int id = -1;
         try {
             id = userMapper.insertSelective(user);

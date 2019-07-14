@@ -1,7 +1,8 @@
-package com.gordon.springboot.service;
+package com.gordon.springboot.service.impl;
 
 import com.gordon.springboot.entity.GwMenu;
 import com.gordon.springboot.mapper.GwMenuMapper;
+import com.gordon.springboot.service.GwMenuService;
 import com.gordon.springboot.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

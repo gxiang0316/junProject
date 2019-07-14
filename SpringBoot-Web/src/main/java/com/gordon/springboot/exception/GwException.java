@@ -1,5 +1,7 @@
 package com.gordon.springboot.exception;
 
+import java.text.MessageFormat;
+
 /**
  * 自定义异常
  */
@@ -38,8 +40,11 @@ public class GwException extends RuntimeException {
 
     public GwException(String code,String msg,Throwable e){
         super(msg,e);
-        this.msg = msg;
-        this.code = code;
+    }
+
+    public GwException(String code,Object[] objects){
+        super(code);
+        this.msg = MessageFormat.format(msg,objects);
     }
 
     public String getMsg() {

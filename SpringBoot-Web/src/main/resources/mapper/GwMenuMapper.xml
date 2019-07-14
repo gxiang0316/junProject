@@ -107,15 +107,18 @@
     </trim>
   </insert>
 
+
     <select id="getUserRoleMenuList" parameterType="java.lang.String" resultMap="BaseResultMap">
-        /*select gm.* from gw_menu gm left join gw_menu_role gmr on gmr.menu_id = gm.menu_id
-          left join
-            (select username,role_id from gw_user_role gur left join gw_user gu on gu.user_id = gur.user_id) t
-          on gmr.role_id = t.role_id
+        <!--
+        select gm.* from gw_menu gm left join gw_menu_role gmr on gmr.menu_id = gm.menu_id
+        left join
+        (select username,role_id from gw_user_role gur left join gw_user gu on gu.user_id = gur.user_id) t
+        on gmr.role_id = t.role_id
         where 1=1
-          and <![CDATA[gm.status < "1"]]>
-          and t.username = #{username,jdbcType=VARCHAR}
-        order by gm.parent_id,gm.order_num;*/
+        and <![CDATA[gm.status < "1"]]>
+        and t.username = #{username,jdbcType=VARCHAR}
+        order by gm.parent_id,gm.order_num;
+        -->
         SELECT
             gm.*
         FROM
