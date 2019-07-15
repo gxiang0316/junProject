@@ -193,7 +193,12 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/register", "anon");
         filterChainDefinitionMap.put("/verifyCode", "anon");
+
+        // ---------   测试请求 ----------------- //
         filterChainDefinitionMap.put("/getMenuList", "anon");
+        filterChainDefinitionMap.put("/test/getUserPermission", "anon");
+        // ---------   测试请求 ----------------- //
+
 
         //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/logout", "logout");

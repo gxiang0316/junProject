@@ -22,9 +22,48 @@
             <span>gordon</span>
             </div>
         </div>
+
     </div>
 
+    <br>
+    <br>
+    <br>
+
+    <div>
+        <input type="radio" value="0" name="testRadio" id="test-radio">
+        <label for="test-radio">非定向</label>
+
+        <br>
+
+        <input type="radio" value="0" name="testRadio" id="test-radio1">
+        <label for="test-radio1">定向</label>
+
+    </div>
+
+
 </div>
+<script src="../static/js/jquery-3.2.1.js"></script>
+
+<script>
+    $(document).ready(function(){
+        // $("input[name='testRadio']").each(function () {
+        //    $(this).change(function () {
+        //        var check = $(this).is(":checked");
+        //        alert("check : " + check);
+        //    }) ;
+        // });
+        //
+        // $("#test-radio").click(function () {
+        //    var check = $(this).is(":checked");
+        //    alert("check : " + check);
+        // });
+
+        var radio = document.getElementById("test-radio");
+        var echekc = radio.checked;
+        alert(" echekc : " + echekc);
+
+    });
+</script>
 
 </body>
 </html>

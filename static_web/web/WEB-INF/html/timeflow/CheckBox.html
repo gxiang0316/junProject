@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Title</title>
+</head>
+<body>
+
+    <div style="display: block;background-color: rgba(236,236,236,0.22);padding-bottom: 10px;">
+        <input name="nc" type="radio" value="7" id="A">
+        <lable for="A">鸡蛋捐</lable>
+        <br>
+        <br>
+        <input name="nc" type="radio" value="8" id="B">
+        <lable for="B">牛奶捐</lable>
+        <br>
+        <br>
+        <input name="nc" type="radio" value="9" id="C">
+        <lable for="C">小树捐</lable>
+    </div>
+
+    <div>
+        <button onclick="getRadio()">获取radio值</button>
+    </div>
+
+
+    <script src="../../js/jquery-3.2.1.js"></script>
+    <script>
+        function getRadio(){
+            var value = $("input[name='nc']:checked").val();  //获取被选中Radio的Value值
+            console.log("value : " + value);
+        }
+
+    </script>
+
+
+</body>
+</html>

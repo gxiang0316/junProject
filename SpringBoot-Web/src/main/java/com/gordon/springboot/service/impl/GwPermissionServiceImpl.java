@@ -6,9 +6,10 @@ import com.gordon.springboot.exception.GwException;
 import com.gordon.springboot.mapper.GwPermissionMapper;
 import com.gordon.springboot.service.GwPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class GwPermissionServiceImpl implements GwPermissionService {
 
     @Autowired

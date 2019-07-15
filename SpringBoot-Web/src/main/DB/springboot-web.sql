@@ -52,7 +52,7 @@ CREATE TABLE `gw_element_permission` (
   `status` varchar(2) DEFAULT '0' COMMENT '元素状态 0:正常  1:禁用',
   `remark` varchar(200) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`ep_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='页面元素权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='页面元素权限表';
 
 -- ----------------------------
 -- Records of gw_element_permission

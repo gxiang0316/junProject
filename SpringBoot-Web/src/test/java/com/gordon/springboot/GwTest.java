@@ -30,12 +30,16 @@ public class GwTest {
 //        System.out.println(" main test result : " + anInt);
 
 
-        String str = "sysParam.properties";
-        String[] split = str.split("\\.");
-        for(int g = 0 ; g < split.length ;g++){
-            System.out.println(" ==== "+split[g]);
-        }
+//        String str = "sysParam.properties";
+//        String[] split = str.split("\\.");
+//        for(int g = 0 ; g < split.length ;g++){
+//            System.out.println(" ==== "+split[g]);
+//        }
 
+
+        String date = "2018-12-03";
+        String newDate = date.replace("-","");
+        System.out.println(" djflsjfl : " + date.replace("-",""));
     }
 
     public static String getOrderIdByUUId() {

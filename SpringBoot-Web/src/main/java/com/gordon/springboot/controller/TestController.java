@@ -3,6 +3,7 @@ package com.gordon.springboot.controller;
 import com.gordon.springboot.contants.ErrorContants;
 import com.gordon.springboot.entity.Student;
 import com.gordon.springboot.exception.GwException;
+import com.gordon.springboot.mapper.GwPermissionMapper;
 import com.gordon.springboot.mapper.StudentMapper;
 import com.gordon.springboot.utils.PropertiesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 //@RestController
 @Controller
 @RequestMapping("/test")
@@ -18,6 +21,9 @@ public class TestController {
 
     @Autowired(required=false)
     private StudentMapper studentMapper;
+
+    @Autowired(required=false)
+    private GwPermissionMapper gwPermissionMapper;
 
     @ResponseBody
     @RequestMapping("/mybatis")
@@ -70,7 +76,13 @@ public class TestController {
     }
 
 
-
+    @ResponseBody
+    @RequestMapping("/getUserPermission")
+    public Object getUserPermission(Long userId){
+        List<String> list = gwPermissionMapper.getPermissionByUserId(userId);
+        System.out.println(" student name : " + list.toString());
+        return list;
+    }
 
 
 
