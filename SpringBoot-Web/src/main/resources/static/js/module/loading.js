@@ -3,15 +3,15 @@ $(document).ready(function () {
         show: function () {
             // data-backdrop="static" ：点击外部不消失  data-backdrop="false":去掉半透明背景
             var loadingHtml = '<div class="modal" id="loadingModal" ' +
-                'tabindex="-1" role="dialog" aria-labelledby="imgModalLabel" aria-hidden="true" ' +
-                'data-backdrop="false" data-keyboard="false" style="z-index: 9990; display: none;">\n' +
-                '    <div class="modal-dialog" style="padding-right: 15px;">\n' +
-                '        <div>\n' +
-                '            <div><img src=' + 'imgs/Spinner-1s-80px.gif></div>\n' +
-                '            \n' +
-                '        </div>\n' +
-                '    </div>\n' +
-                '</div>';
+            'tabindex="-1" role="dialog" aria-labelledby="imgModalLabel" aria-hidden="true" ' +
+            'data-backdrop="false" data-keyboard="false" style="z-index: 9990; display: none;">\n' +
+            '    <div class="modal-dialog" style="padding-right: 15px;">\n' +
+            '        <div>\n' +
+            '            <div><img src=' + 'imgs/Spinner-1s-80px.gif></div>\n' +
+            '            \n' +
+            '        </div>\n' +
+            '    </div>\n' +
+            '</div>';
 
             $("body").append(loadingHtml);
 
@@ -22,6 +22,7 @@ $(document).ready(function () {
         hide: function () {
             $('#loadingModal').modal('hide');
         }
+
     }
 });
 /**

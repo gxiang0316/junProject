@@ -84,8 +84,8 @@
                     <!-- autocomplete="new-password":解决form表单自动填充缓存  -->
                     <input id="password" name="password" type="password" autocomplete="new-password" placeholder="密码" class="form-control" style="box-shadow: none"/>
                 </div>
-                <div class="col-12 form-group" style="margin-bottom: 4px;">
-                    <input id="verCode" name="verCode" type="text" placeholder="验证码" class="col-7 form-control" style="box-shadow: none;display: inline-block;"/>
+                <div class="col-12 form-group" style="margin-bottom: 4px;"><!--  autocomplete="off" : 去掉输入框的历史记录-->
+                    <input id="verCode" name="verCode" type="text" placeholder="验证码" autocomplete="off" class="col-7 form-control" style="box-shadow: none;display: inline-block;"/>
                     <img class="col-4 pointer pr-0 pl-0 float-right"  alt="点击刷新" src="${ctxPath}/verifyCode" style="margin-top:1px;border: 2px solid rgba(219,219,194,0.75);"/>
                 </div>
                 <div class="col-12 form-check">
@@ -119,7 +119,7 @@
                     <input id="rspassword" type="password" placeholder="确认密码" class="form-control" style="box-shadow: none"/>
                 </div>
                 <div class="col-12 form-group" >
-                    <input id="rviCode" name="verCode" type="text" placeholder="验证码" class="col-7 form-control" style="box-shadow: none;display: inline-block;"/>
+                    <input id="rviCode" name="verCode" type="text" placeholder="验证码" autocomplete="off" class="col-7 form-control" style="box-shadow: none;display: inline-block;"/>
                     <img class="col-4 pointer pr-0 pl-0 float-right"  alt="点击刷新" src="${ctxPath}/verifyCode" style="margin-top:1px;border: 2px solid rgba(219,219,194,0.75);"/>
                 </div>
                 <div class="col-12 form-group mt-2 mb-1">

@@ -3,6 +3,8 @@ package com.gordon.springboot.config;
 //import org.beetl.core.resource.ClasspathResourceLoader;
 //import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 //import org.beetl.ext.spring.BeetlSpringViewResolver;
+import com.gordon.springboot.shiro.ShiroExt;
+import com.ibeetl.starter.BeetlTemplateCustomize;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.resource.ClasspathResourceLoader;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
@@ -77,6 +79,7 @@ public class BeetlConf {
         groupTemplate.setClassLoader(loader);
         //注册自定义标签
         //groupTemplate.registerTag("simpleTag", SimpleHtmlTag.class);
+
         return beetlGroupUtilConfiguration;
     }
 
@@ -92,6 +95,18 @@ public class BeetlConf {
         beetlSpringViewResolver.setOrder(0);
         beetlSpringViewResolver.setConfig(beetlGroupUtilConfiguration);
         return beetlSpringViewResolver;
+    }
+
+
+//  BeetlTemplateCustomize: 在 beetl start包下，单独 beetl包没有这个类
+    @Bean
+    public BeetlTemplateCustomize beetlTemplateCustomize() {
+        return new BeetlTemplateCustomize() {
+            public void customize(GroupTemplate groupTemplate) {
+                //将实现了shiro标签的beetl方法注册到groupTemplate里
+                groupTemplate.registerFunctionPackage("shiro",new ShiroExt());
+            }
+        };
     }
 
 

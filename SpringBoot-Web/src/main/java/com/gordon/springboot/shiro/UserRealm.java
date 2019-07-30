@@ -7,6 +7,7 @@ import com.gordon.springboot.exception.GwException;
 import com.gordon.springboot.service.GwPermissionService;
 import com.gordon.springboot.service.SysParamService;
 import com.gordon.springboot.service.UserService;
+import com.gordon.springboot.service.impl.GwRoleServiceImpl;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -30,6 +31,9 @@ public class UserRealm  extends AuthorizingRealm {
 
     @Autowired
     private GwPermissionService gwPermissionServiceImpl;
+
+    @Autowired
+    private GwRoleServiceImpl gwRoleServiceImpl;
 
 
     /**
@@ -92,8 +96,14 @@ public class UserRealm  extends AuthorizingRealm {
         System.out.println("  当前用户拥有的权限 ： " + permList.get(0));
         Set<String> permSet = new HashSet<>();
         permSet.addAll(permList);
+
+        List<String> roleList = gwRoleServiceImpl.getRolesByUserId(userId);
+        Set<String> rolesSet = new HashSet<>();
+        rolesSet.addAll(roleList);
+
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setStringPermissions(permSet);
+        info.setRoles(rolesSet);
         return info;
     }
 

@@ -35,19 +35,21 @@
         </dependency>
 
         <!--beetl模板引擎-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.ibeetl</groupId>
             <artifactId>beetl</artifactId>
             <version>2.9.3</version>
-        </dependency>
+        </dependency>-->
         <!--beetl-framework-starter包含了beetl所有功能-->
-        <!--
+
+
         <dependency>
             <groupId>com.ibeetl</groupId>
             <artifactId>beetl-framework-starter</artifactId>
-            <version>1.1.70.RELEASE</version>
+            <version>1.2.0.RELEASE</version>
         </dependency>
-        -->
+
+
         <!-- 解决 Warning:java: 来自注释处理程序
             'org.antlr.v4.runtime.misc.NullUsageProcessor'
             的受支持 source 版本 'RELEASE_6' 低于 -source '1.8' begin-->

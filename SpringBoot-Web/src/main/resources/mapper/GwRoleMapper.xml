@@ -51,4 +51,24 @@
       </if>
     </trim>
   </insert>
+
+    <select id="getRolesByUserId" resultType="string">
+        select
+            gr.`role_name`
+        from
+            gw_role gr
+            left join
+                (select
+                    gur.`role_id`
+                   from
+                       gw_user_role gur
+                       inner join gw_user gu
+                           on gur.`user_id` = gu.`user_id`
+                   where gu.`user_id` = #{userId,jdbcType=BIGINT}
+                ) t
+            on gr.`role_id` = t.role_id ;
+
+    </select>
+
+
 </mapper>

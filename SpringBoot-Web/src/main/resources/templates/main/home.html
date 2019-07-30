@@ -13,8 +13,11 @@
     <button onclick="testLayJs()">测试iframe中能否使用主页面已进入的js，这里测试layui</button>
     <a class="list-group-item" href="#"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp; 首页</a>
 
-    <button id="testParemter" onclick="hasParamter()">测试获取权限</button>
+    dfsferws
 
+    <% if(shiro.hasRole("超级管理员")){ %>
+        <button id="testParemter" onclick="hasParamter()">测试获取权限</button>
+    <% } %>
 
 
     <script>
